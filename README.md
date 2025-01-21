@@ -1,4 +1,4 @@
-# Soccer Analysis Project
+# Super Lig Analytics Project
 
 ## Overview
 This project is focused on analyzing Turkish soccer league data to calculate and present insights such as team rankings, SPI (Soccer Power Index) scores, and probabilities of winning championship. The goal is to provide detailed and transparent data analysis that can eventually be published on an open-source website.
