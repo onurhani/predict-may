@@ -1,0 +1,21 @@
+name: 'predict_may'
+version: '1.0.0'
+config-version: 2
+
+profile: 'predict_may'
+
+model-paths: ["models"]
+
+models:
+  predict_may:
+    +schema: main   # <-- important
+    +materialized: view
+
+    staging:
+      +materialized: view
+
+    intermediate:
+      +materialized: view
+
+    marts:
+      +materialized: view

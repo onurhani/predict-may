@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: football
+    schema: main
+    tables:
+      - name: fixtures
+        description: Raw fixtures ingested from Football API

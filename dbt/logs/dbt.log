@@ -1,0 +1,69 @@
+[0m12:27:24.446342 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105135370>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d37050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d36b40>]}
+
+
+============================== 12:27:24.449151 | efbdfe22-52fa-4216-91cf-4d8d4b650e50 ==============================
+[0m12:27:24.449151 [info ] [MainThread]: Running with dbt=1.11.2
+[0m12:27:24.449492 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'indirect_selection': 'eager', 'introspect': 'True', 'debug': 'False', 'no_print': 'None', 'use_colors': 'True', 'target_path': 'None', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_format': 'default', 'empty': 'None', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt init predict_may', 'static_parser': 'True', 'quiet': 'False', 'profiles_dir': '/Users/onurhan.irkin/.dbt', 'printer_width': '80', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'write_json': 'True', 'warn_error': 'None'}
+[0m12:27:24.460173 [debug] [MainThread]: Starter project path: /Users/onurhan.irkin/Documents/GitHub/predict-may/venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m12:27:24.465078 [info ] [MainThread]: 
+Your new dbt project "predict_may" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m12:27:24.465452 [info ] [MainThread]: Setting up your profile.
+[0m12:27:37.664544 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 13.294916, "process_in_blocks": "0", "process_kernel_time": 0.114049, "process_mem_max_rss": "120897536", "process_out_blocks": "0", "process_user_time": 0.665481}
+[0m12:27:37.664951 [debug] [MainThread]: Command `dbt init` succeeded at 12:27:37.664883 after 13.30 seconds
+[0m12:27:37.665187 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d36de0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d36840>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106db9850>]}
+[0m12:27:37.665429 [debug] [MainThread]: Flushing usage events
+[0m12:27:38.237384 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m12:49:58.698586 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104c3f740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1108aee40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1108ae960>]}
+
+
+============================== 12:49:58.701182 | a62e6bbe-ef7c-456a-b66c-e819355b0563 ==============================
+[0m12:49:58.701182 [info ] [MainThread]: Running with dbt=1.11.2
+[0m12:49:58.701577 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'indirect_selection': 'eager', 'partial_parse': 'True', 'quiet': 'False', 'log_path': 'logs', 'warn_error': 'None', 'debug': 'False', 'target_path': 'None', 'write_json': 'True', 'empty': 'None', 'use_colors': 'True', 'fail_fast': 'False', 'printer_width': '80', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'introspect': 'True', 'no_print': 'None', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt debug', 'log_cache_events': 'False', 'log_format': 'default', 'profiles_dir': '/Users/onurhan.irkin/.dbt'}
+[0m12:49:58.709303 [info ] [MainThread]: dbt version: 1.11.2
+[0m12:49:58.709498 [info ] [MainThread]: python version: 3.12.6
+[0m12:49:58.709644 [info ] [MainThread]: python path: /Users/onurhan.irkin/Documents/GitHub/predict-may/dbt/venv/bin/python3.12
+[0m12:49:58.709780 [info ] [MainThread]: os info: macOS-15.7.2-arm64-arm-64bit
+[0m12:49:58.711980 [info ] [MainThread]: Error importing adapter: No module named 'dbt.adapters.redshift'
+[0m12:49:58.760964 [info ] [MainThread]: Using profiles dir at /Users/onurhan.irkin/.dbt
+[0m12:49:58.761229 [info ] [MainThread]: Using profiles.yml file at /Users/onurhan.irkin/.dbt/profiles.yml
+[0m12:49:58.761394 [info ] [MainThread]: Using dbt_project.yml file at /Users/onurhan.irkin/Documents/GitHub/predict-may/dbt/dbt_project.yml
+[0m12:49:58.761559 [info ] [MainThread]: Configuration:
+[0m12:49:58.761700 [info ] [MainThread]:   profiles.yml file [[31mERROR invalid[0m]
+[0m12:49:58.761830 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m12:49:58.761959 [info ] [MainThread]: Required dependencies:
+[0m12:49:58.762135 [debug] [MainThread]: Executing "git --help"
+[0m12:49:58.776789 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m12:49:58.777251 [debug] [MainThread]: STDERR: "b''"
+[0m12:49:58.777427 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m12:49:58.777597 [info ] [MainThread]: Connection test skipped since no profile was found
+[0m12:49:58.777816 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m12:49:58.777961 [info ] [MainThread]: Could not load dbt_project.yml
+Profile loading failed for the following reason:
+Runtime Error
+  Credentials in profile "default_profile", target "dev" invalid: Runtime Error
+    Could not find adapter type redshift!
+
+
+[0m12:49:58.778111 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/onurhan.irkin/Documents/GitHub/predict-may/dbt/dbt_project.yml> not found
+
+[0m12:49:58.779920 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.11800712, "process_in_blocks": "0", "process_kernel_time": 0.113306, "process_mem_max_rss": "120848384", "process_out_blocks": "0", "process_user_time": 0.699712}
+[0m12:49:58.780227 [debug] [MainThread]: Command `dbt debug` failed at 12:49:58.780176 after 0.12 seconds
+[0m12:49:58.780505 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107d27170>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104c3f740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1108e1070>]}
+[0m12:49:58.780718 [debug] [MainThread]: Flushing usage events
+[0m12:49:59.293383 [debug] [MainThread]: An error was encountered while trying to flush usage events
