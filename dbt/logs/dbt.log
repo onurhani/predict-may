@@ -67,3 +67,60 @@ Runtime Error
 [0m12:49:58.780505 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107d27170>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104c3f740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1108e1070>]}
 [0m12:49:58.780718 [debug] [MainThread]: Flushing usage events
 [0m12:49:59.293383 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m10:28:45.927271 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105eb8440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d1fc50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106d1fb10>]}
+
+
+============================== 10:28:45.932096 | f3b73f48-ddfa-4b31-b4ab-dfb7410822ef ==============================
+[0m10:28:45.932096 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:28:45.932356 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'version_check': 'True', 'printer_width': '80', 'use_colors': 'True', 'debug': 'False', 'log_path': 'logs', 'introspect': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'profiles_dir': '/Users/onur/.dbt', 'warn_error': 'None', 'invocation_command': 'dbt debug', 'log_cache_events': 'False', 'quiet': 'False', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'target_path': 'None', 'log_format': 'default', 'indirect_selection': 'eager', 'partial_parse': 'True', 'no_print': 'None'}
+[0m10:28:45.939787 [info ] [MainThread]: dbt version: 1.11.2
+[0m10:28:45.939949 [info ] [MainThread]: python version: 3.13.5
+[0m10:28:45.940064 [info ] [MainThread]: python path: /Users/onur/git/predict-may/.venv/bin/python3.13
+[0m10:28:45.940167 [info ] [MainThread]: os info: macOS-14.4-arm64-arm-64bit-Mach-O
+[0m10:28:46.032248 [info ] [MainThread]: Using profiles dir at /Users/onur/.dbt
+[0m10:28:46.032471 [info ] [MainThread]: Using profiles.yml file at /Users/onur/.dbt/profiles.yml
+[0m10:28:46.032602 [info ] [MainThread]: Using dbt_project.yml file at /Users/onur/git/predict-may/dbt/dbt_project.yml
+[0m10:28:46.033573 [info ] [MainThread]: adapter type: duckdb
+[0m10:28:46.033734 [info ] [MainThread]: adapter version: 1.10.0
+[0m10:28:46.033864 [info ] [MainThread]: Configuration:
+[0m10:28:46.033969 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m10:28:46.034077 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m10:28:46.034180 [info ] [MainThread]: Required dependencies:
+[0m10:28:46.034312 [debug] [MainThread]: Executing "git --help"
+[0m10:28:46.050201 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m10:28:46.050609 [debug] [MainThread]: STDERR: "b''"
+[0m10:28:46.050763 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m10:28:46.050898 [info ] [MainThread]: Connection:
+[0m10:28:46.051036 [info ] [MainThread]:   database: new_user_behavior
+[0m10:28:46.051140 [info ] [MainThread]:   schema: main
+[0m10:28:46.051242 [info ] [MainThread]:   path: new_user_behavior.duckdb
+[0m10:28:46.051338 [info ] [MainThread]:   config_options: None
+[0m10:28:46.051435 [info ] [MainThread]:   extensions: None
+[0m10:28:46.051531 [info ] [MainThread]:   settings: {}
+[0m10:28:46.051629 [info ] [MainThread]:   external_root: .
+[0m10:28:46.051721 [info ] [MainThread]:   use_credential_provider: None
+[0m10:28:46.051817 [info ] [MainThread]:   attach: None
+[0m10:28:46.051909 [info ] [MainThread]:   filesystems: None
+[0m10:28:46.052002 [info ] [MainThread]:   remote: None
+[0m10:28:46.052094 [info ] [MainThread]:   plugins: None
+[0m10:28:46.052188 [info ] [MainThread]:   disable_transactions: False
+[0m10:28:46.052448 [info ] [MainThread]: Registered adapter: duckdb=1.10.0
+[0m10:28:46.089239 [debug] [MainThread]: Acquiring new duckdb connection 'debug'
+[0m10:28:46.107930 [debug] [MainThread]: Using duckdb connection "debug"
+[0m10:28:46.108109 [debug] [MainThread]: On debug: select 1 as id
+[0m10:28:46.108229 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m10:28:46.120006 [debug] [MainThread]: SQL status: OK in 0.012 seconds
+[0m10:28:46.120471 [debug] [MainThread]: On debug: Close
+[0m10:28:46.120807 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m10:28:46.120942 [info ] [MainThread]: [31m1 check failed:[0m
+[0m10:28:46.121047 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/onur/git/predict-may/dbt/dbt_project.yml> not found
+
+[0m10:28:46.122612 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.22789441, "process_in_blocks": "0", "process_kernel_time": 0.118708, "process_mem_max_rss": "130269184", "process_out_blocks": "0", "process_user_time": 0.588944}
+[0m10:28:46.122875 [debug] [MainThread]: Command `dbt debug` failed at 10:28:46.122828 after 0.23 seconds
+[0m10:28:46.123023 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m10:28:46.123174 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107209350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f33650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106fe0050>]}
+[0m10:28:46.123351 [debug] [MainThread]: Flushing usage events
+[0m10:28:46.672612 [debug] [MainThread]: An error was encountered while trying to flush usage events

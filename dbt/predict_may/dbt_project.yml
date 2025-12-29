@@ -2,20 +2,20 @@ name: 'predict_may'
 version: '1.0.0'
 config-version: 2
 
-profile: 'predict_may'
+profile: predict_may
 
 model-paths: ["models"]
 
 models:
   predict_may:
-    +schema: main   # <-- important
-    +materialized: view
-
     staging:
+      +schema: staging
       +materialized: view
 
     intermediate:
+      +schema: intermediate
       +materialized: view
 
     marts:
-      +materialized: view
+      +schema: marts
+      +materialized: table

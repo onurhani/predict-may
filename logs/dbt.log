@@ -1,0 +1,99 @@
+[0m10:30:32.032988 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104354440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1051bbc50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1051bbb10>]}
+
+
+============================== 10:30:32.035364 | c0a4e009-ead0-4f00-a781-1e97bbcde74d ==============================
+[0m10:30:32.035364 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:30:32.035627 [debug] [MainThread]: running dbt with arguments {'empty': 'None', 'invocation_command': 'dbt debug', 'introspect': 'True', 'send_anonymous_usage_stats': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'indirect_selection': 'eager', 'debug': 'False', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'partial_parse': 'True', 'write_json': 'True', 'use_colors': 'True', 'log_path': 'logs', 'profiles_dir': '/Users/onur/.dbt', 'fail_fast': 'False', 'no_print': 'None', 'log_format': 'default', 'version_check': 'True', 'quiet': 'False', 'warn_error': 'None', 'printer_width': '80', 'target_path': 'None'}
+[0m10:30:32.043096 [info ] [MainThread]: dbt version: 1.11.2
+[0m10:30:32.043281 [info ] [MainThread]: python version: 3.13.5
+[0m10:30:32.043399 [info ] [MainThread]: python path: /Users/onur/git/predict-may/.venv/bin/python3.13
+[0m10:30:32.043511 [info ] [MainThread]: os info: macOS-14.4-arm64-arm-64bit-Mach-O
+[0m10:30:32.149225 [info ] [MainThread]: Using profiles dir at /Users/onur/.dbt
+[0m10:30:32.149544 [info ] [MainThread]: Using profiles.yml file at /Users/onur/.dbt/profiles.yml
+[0m10:30:32.149701 [info ] [MainThread]: Using dbt_project.yml file at /Users/onur/git/predict-may/dbt_project.yml
+[0m10:30:32.150822 [info ] [MainThread]: adapter type: duckdb
+[0m10:30:32.150988 [info ] [MainThread]: adapter version: 1.10.0
+[0m10:30:32.151188 [info ] [MainThread]: Configuration:
+[0m10:30:32.151307 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m10:30:32.151411 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m10:30:32.151516 [info ] [MainThread]: Required dependencies:
+[0m10:30:32.151702 [debug] [MainThread]: Executing "git --help"
+[0m10:30:32.168964 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m10:30:32.169398 [debug] [MainThread]: STDERR: "b''"
+[0m10:30:32.169543 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m10:30:32.169679 [info ] [MainThread]: Connection:
+[0m10:30:32.169814 [info ] [MainThread]:   database: new_user_behavior
+[0m10:30:32.169920 [info ] [MainThread]:   schema: main
+[0m10:30:32.170021 [info ] [MainThread]:   path: new_user_behavior.duckdb
+[0m10:30:32.170117 [info ] [MainThread]:   config_options: None
+[0m10:30:32.170216 [info ] [MainThread]:   extensions: None
+[0m10:30:32.170311 [info ] [MainThread]:   settings: {}
+[0m10:30:32.170407 [info ] [MainThread]:   external_root: .
+[0m10:30:32.170499 [info ] [MainThread]:   use_credential_provider: None
+[0m10:30:32.170594 [info ] [MainThread]:   attach: None
+[0m10:30:32.170688 [info ] [MainThread]:   filesystems: None
+[0m10:30:32.170780 [info ] [MainThread]:   remote: None
+[0m10:30:32.170875 [info ] [MainThread]:   plugins: None
+[0m10:30:32.170965 [info ] [MainThread]:   disable_transactions: False
+[0m10:30:32.171246 [info ] [MainThread]: Registered adapter: duckdb=1.10.0
+[0m10:30:32.206452 [debug] [MainThread]: Acquiring new duckdb connection 'debug'
+[0m10:30:32.223345 [debug] [MainThread]: Using duckdb connection "debug"
+[0m10:30:32.223513 [debug] [MainThread]: On debug: select 1 as id
+[0m10:30:32.223621 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m10:30:32.235213 [debug] [MainThread]: SQL status: OK in 0.012 seconds
+[0m10:30:32.235603 [debug] [MainThread]: On debug: Close
+[0m10:30:32.235917 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m10:30:32.236069 [info ] [MainThread]: [31m1 check failed:[0m
+[0m10:30:32.236177 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/onur/git/predict-may/dbt_project.yml> not found
+
+[0m10:30:32.237407 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.23543, "process_in_blocks": "0", "process_kernel_time": 0.120779, "process_mem_max_rss": "130400256", "process_out_blocks": "0", "process_user_time": 0.593066}
+[0m10:30:32.237613 [debug] [MainThread]: Command `dbt debug` failed at 10:30:32.237568 after 0.24 seconds
+[0m10:30:32.237758 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m10:30:32.237909 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1056a90f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1053c7770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105277df0>]}
+[0m10:30:32.238084 [debug] [MainThread]: Flushing usage events
+[0m10:30:32.813012 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m10:44:23.451292 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108100440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f67c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f67b10>]}
+
+
+============================== 10:44:23.453959 | 92f1c72b-7a98-44f6-8916-228217236836 ==============================
+[0m10:44:23.453959 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:44:23.454238 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'cache_selected_only': 'False', 'fail_fast': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'use_experimental_parser': 'False', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'write_json': 'True', 'profiles_dir': '/Users/onur/.dbt', 'log_format': 'default', 'version_check': 'True', 'indirect_selection': 'eager', 'debug': 'False', 'static_parser': 'True', 'empty': 'None', 'partial_parse': 'True', 'warn_error': 'None', 'no_print': 'None', 'log_path': 'logs', 'invocation_command': 'dbt debug', 'quiet': 'False', 'use_colors': 'True', 'introspect': 'True'}
+[0m10:44:23.462130 [info ] [MainThread]: dbt version: 1.11.2
+[0m10:44:23.462300 [info ] [MainThread]: python version: 3.13.5
+[0m10:44:23.462414 [info ] [MainThread]: python path: /Users/onur/git/predict-may/.venv/bin/python3.13
+[0m10:44:23.462522 [info ] [MainThread]: os info: macOS-14.4-arm64-arm-64bit-Mach-O
+[0m10:44:23.505680 [info ] [MainThread]: Using profiles dir at /Users/onur/.dbt
+[0m10:44:23.505891 [info ] [MainThread]: Using profiles.yml file at /Users/onur/.dbt/profiles.yml
+[0m10:44:23.506025 [info ] [MainThread]: Using dbt_project.yml file at /Users/onur/git/predict-may/dbt_project.yml
+[0m10:44:23.506174 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m10:44:23.507550 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.09123009, "process_in_blocks": "0", "process_kernel_time": 0.088044, "process_mem_max_rss": "122126336", "process_out_blocks": "0", "process_user_time": 0.562394}
+[0m10:44:23.507765 [debug] [MainThread]: Command `dbt debug` failed at 10:44:23.507727 after 0.09 seconds
+[0m10:44:23.507903 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1091a0640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1091756d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109027f00>]}
+[0m10:44:23.508039 [debug] [MainThread]: Flushing usage events
+[0m10:44:24.072468 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:40:31.471950 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107f90440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108df7c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108df7b10>]}
+
+
+============================== 14:40:31.474571 | 5cd98d50-8d4e-46eb-a9a9-c2fdb5942063 ==============================
+[0m14:40:31.474571 [info ] [MainThread]: Running with dbt=1.11.2
+[0m14:40:31.474833 [debug] [MainThread]: running dbt with arguments {'log_path': 'logs', 'indirect_selection': 'eager', 'log_format': 'default', 'no_print': 'None', 'profiles_dir': '/Users/onur/.dbt', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False', 'introspect': 'True', 'use_colors': 'True', 'invocation_command': 'dbt debug', 'cache_selected_only': 'False', 'target_path': 'None', 'log_cache_events': 'False', 'partial_parse': 'True', 'write_json': 'True', 'quiet': 'False', 'use_experimental_parser': 'False', 'printer_width': '80', 'debug': 'False', 'warn_error': 'None', 'version_check': 'True', 'send_anonymous_usage_stats': 'True', 'empty': 'None'}
+[0m14:40:31.482883 [info ] [MainThread]: dbt version: 1.11.2
+[0m14:40:31.483072 [info ] [MainThread]: python version: 3.13.5
+[0m14:40:31.483192 [info ] [MainThread]: python path: /Users/onur/git/predict-may/.venv/bin/python3.13
+[0m14:40:31.483306 [info ] [MainThread]: os info: macOS-14.4-arm64-arm-64bit-Mach-O
+[0m14:40:31.592228 [info ] [MainThread]: Using profiles dir at /Users/onur/.dbt
+[0m14:40:31.592444 [info ] [MainThread]: Using profiles.yml file at /Users/onur/.dbt/profiles.yml
+[0m14:40:31.592569 [info ] [MainThread]: Using dbt_project.yml file at /Users/onur/git/predict-may/dbt_project.yml
+[0m14:40:31.592712 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m14:40:31.594144 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.15267213, "process_in_blocks": "0", "process_kernel_time": 0.105716, "process_mem_max_rss": "118177792", "process_out_blocks": "0", "process_user_time": 0.545513}
+[0m14:40:31.594391 [debug] [MainThread]: Command `dbt debug` failed at 14:40:31.594347 after 0.15 seconds
+[0m14:40:31.594540 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109048640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1090016d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108eb7f00>]}
+[0m14:40:31.594683 [debug] [MainThread]: Flushing usage events
+[0m14:40:32.250264 [debug] [MainThread]: An error was encountered while trying to flush usage events

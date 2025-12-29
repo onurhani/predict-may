@@ -2,7 +2,23 @@ version: 2
 
 sources:
   - name: football
-    schema: main
+    database: football
+    schema: raw
+    description: "Raw football data ingested from API-Football"
+
     tables:
       - name: fixtures
-        description: Raw fixtures ingested from Football API
+        description: "Match-level fixtures including scores, teams, dates"
+        columns:
+          - name: season
+            description: "Season year (start year)"
+          - name: date
+            description: "Match date"
+          - name: home_team
+            description: "Home team name"
+          - name: away_team
+            description: "Away team name"
+          - name: home_goals
+            description: "Goals scored by home team"
+          - name: away_goals
+            description: "Goals scored by away team"

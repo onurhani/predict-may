@@ -1,92 +1,74 @@
-# Super Lig Analytics Project
+# Predict May  
+### Analyze Turkish football with the intention of predicting the standings in May
 
 ## Overview
-This project is focused on analyzing Turkish soccer league data to calculate and present insights such as team rankings, SPI (Soccer Power Index) scores, and probabilities of winning championship. The goal is to provide detailed and transparent data analysis that can eventually be published on an open-source website.
+**Predict May** is a personal analytics and data journalism project focused on the Turkish Süper Lig.  
+The goal is to build transparent, reproducible models that analyze league dynamics and estimate end-of-season outcomes — especially **how the table might look by May**.
 
-For now, the project focuses on the **exploratory analysis and some **, including:
+The project is inspired by data-driven football analysis (e.g. FiveThirtyEight), but prioritizes:
+- simplicity
+- explainability
+- open-source reproducibility
 
-- Collecting data from public APIs or scraping websites.
-- Cleaning and processing the data.
-- Calculating metrics like SPI and championship probabilities.
-- Sharing the processed results in an open-source format.
+## Current Status (v1 – in progress)
+The project is currently in **Version 1**, focusing on results-based modeling using historical match data.
 
-Future phases will include the development of a backend and frontend for publishing the analysis online.
+Completed so far:
+- ✅ Data ingestion into DuckDB
+- ✅ Raw fixtures table
+- ✅ dbt project setup
+- ✅ Staging model (`stg_fixtures`) with:
+  - cleaned team names
+  - parsed dates
+  - computed points
+  - deterministic `match_id`
 
----
+Next steps:
+- 🔜 Intermediate team-centric models
+- 🔜 Rolling form features
+- 🔜 Match-level prediction features
+- 🔜 Season simulation & probabilities
+- 🔜 Visualizations and analytical articles
 
-## Features
-- Fetching league data (e.g., Turkish Süper Lig).
-- Cleaning and processing data for analysis.
-- Calculating:
-  - SPI (Soccer Power Index)
-  - Championship probabilities
-- Sharing reproducible results through processed datasets and Python scripts.
-
----
-
-## Getting Started
-
-### Prerequisites
-To run the scripts, ensure you have the following installed:
-
-- Python 3.8+
-- pip (Python package manager)
-
-### Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/soccer-analysis.git
-   cd soccer-analysis
-   ```
-
-2. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Set up API keys or data source configurations:
-   - If using a soccer data API, add your API key to a `.env` file (template provided in `.env.example`).
-   - For web scraping, ensure compliance with the website’s terms of service.
-
-### Running the Analysis
-Run the main script to fetch, process, and analyze the data:
-   ```bash
-   python data_pipeline.py
-   ```
-
-Output files will be saved in the `data/processed` directory.
-
----
+## Tech Stack
+- **DuckDB** – local analytical database
+- **dbt** – data modeling & transformations
+- **Python** – ingestion & future modeling
+- **DBeaver** – data exploration
+- **GitHub** – version control & open source
 
 ## Project Structure
-```
-.
+
 ├── data/
-│   ├── raw/            # Raw data files
-│   ├── processed/      # Cleaned and analyzed data
-├── scripts/
-│   ├── fetch_data.py   # Script for fetching data
-│   ├── process_data.py # Script for processing and cleaning data
-│   ├── calculate_spi.py # Script for calculating SPI and probabilities
-├── requirements.txt    # Python dependencies
-├── .env.example        # Template for environment variables (e.g., API keys)
-├── README.md           # Project documentation
-```
+│ └── football.duckdb # DuckDB database (not committed)
+├── src/
+│ └── ingestion/ # Data ingestion scripts
+├── dbt/
+│ ├── models/
+│ │ ├── staging/ # Cleaned, standardized models
+│ │ ├── intermediate/ # Team-centric & rolling features
+│ │ └── marts/ # Prediction-ready views
+│ ├── dbt_project.yml
+│ └── packages.yml
+├── README.md
 
----
 
-## Next Steps
-- Add a backend (Flask/FastAPI) to serve data via APIs.
-- Develop a frontend to visualize the data.
-- Expand the analysis to include historical trends and player statistics.
+## Modeling Philosophy
+- Start with **results-only data**
+- Avoid unnecessary complexity early
+- Use **team-centric, time-aware** features
+- Prefer SQL + dbt for transparency
+- Iterate toward stronger models incrementally
 
----
+This project intentionally starts simple and improves over time.
 
-## Contributing
-Contributions are welcome! Feel free to fork the repository, make changes, and submit a pull request. Please ensure that your contributions adhere to the project’s coding style and include relevant documentation.
-
----
+## Future Ideas
+- SPI / Elo-style team strength models
+- Monte Carlo season simulations
+- Home/away & form-based adjustments
+- Data journalism articles explaining insights
+- Public-facing visualizations
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
+MIT License.  
+Feel free to explore, fork, or adapt the ideas.
