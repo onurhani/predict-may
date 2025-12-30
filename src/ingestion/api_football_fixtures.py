@@ -47,8 +47,11 @@ def fetch_season(season: int) -> pd.DataFrame:
 
 def main():
     con = duckdb.connect(DB_PATH)
+
+    con.execute("CREATE SCHEMA IF NOT EXISTS raw")
+
     con.execute("""
-        CREATE TABLE IF NOT EXISTS fixtures (
+        CREATE OR REPLACE TABLE raw.fixtures (
             season INTEGER,
             date DATE,
             home_team VARCHAR,
