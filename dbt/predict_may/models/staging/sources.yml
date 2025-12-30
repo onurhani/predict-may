@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: football
     database: football
-    schema: main
+    schema: raw
     description: "Raw football data ingested from API-Football"
 
     tables:

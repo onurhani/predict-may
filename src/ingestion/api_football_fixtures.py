@@ -67,7 +67,7 @@ def main():
 
         if not df.empty:
             con.register("df", df)
-            con.execute("INSERT INTO fixtures SELECT * FROM df")
+            con.execute("INSERT INTO raw.fixtures SELECT * FROM df")
 
         sleep(2)
 
