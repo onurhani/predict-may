@@ -1,7 +1,25 @@
+# dbt & DuckDB
 dbt-core>=1.7
 dbt-duckdb>=1.7
 duckdb
+
+# Data manipulation
 pandas
 numpy
+pyarrow
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# API & utilities
 requests
 python-dotenv
+
+# Analysis & notebooks
+jupyter
+jupyterlab
+
+# Reporting
+streamlit

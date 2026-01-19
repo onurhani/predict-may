@@ -1,73 +1,57 @@
 with base as (
-
     select
         season,
         match_date,
         team,
         opponent,
         is_home,
-
         goals_for,
         goals_against,
-        goal_diff,
-
-        row_number() over (
-            partition by season, team
-            order by match_date
-        ) as match_number
-
+        -- Calculate Goal Difference
+        goals_for - goals_against as goal_diff,
+        -- Apply a "cap" to goal difference to reduce noise from blowouts
+        case 
+            when (goals_for - goals_against) > 3 then 3
+            when (goals_for - goals_against) < -3 then -3
+            else (goals_for - goals_against)
+        end as capped_goal_diff
     from {{ ref('int_team_matches') }}
-
 ),
 
-rolling as (
-
+rolling_metrics as (
     select
-        season,
-        match_date,
-        team,
-
-        avg(goal_diff) over (
-            partition by season, team
-            order by match_number
-            rows between 4 preceding and current row
-        ) as rolling_avg_goal_diff,
+        *,
+        -- Use a larger window (10 games) for mid-season stability
+        avg(capped_goal_diff) over (
+            partition by team 
+            order by match_date 
+            rows between 10 preceding and 1 preceding
+        ) as rolling_gdiff_10,
 
         avg(goals_for) over (
-            partition by season, team
-            order by match_number
-            rows between 4 preceding and current row
-        ) as rolling_goals_for,
-
-        avg(goals_against) over (
-            partition by season, team
-            order by match_number
-            rows between 4 preceding and current row
-        ) as rolling_goals_against
-
+            partition by team 
+            order by match_date 
+            rows between 10 preceding and 1 preceding
+        ) as rolling_gf_10
     from base
 ),
 
-spi as (
-
+spi_calc as (
     select
         season,
         match_date,
         team,
+        rolling_gdiff_10,
+        rolling_gf_10,
 
-        rolling_avg_goal_diff,
-        rolling_goals_for,
-        rolling_goals_against,
-
-        -- SPI v1 formula (intentionally simple & explainable)
-        50
-        + rolling_avg_goal_diff * 10
-        + rolling_goals_for * 5
-        - rolling_goals_against * 5
-        as spi_rating
-
-    from rolling
+        -- THE FORMULA
+        -- 50 is the league average baseline
+        -- We multiply GDiff by 15 to create a spread
+        -- We subtract a small "Home Neutralizer" if they were home, to see true strength
+        50 
+        + (rolling_gdiff_10 * 15) 
+        + (case when is_home = 1 then -0.3 else 0.3 end) as adjusted_spi
+    from rolling_metrics
 )
 
-select *
-from spi
+select * from spi_calc
