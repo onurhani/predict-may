@@ -1,3 +1,6 @@
+# IDE settings (personal preference)
+.vscode/
+
 # Python
 venv/
 __pycache__/
