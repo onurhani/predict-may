@@ -1,5 +1,4 @@
-# Predict May  
-### Data-driven Turkish Süper Lig analysis and May standings projections
+# Data-driven football analysis and May standings projections
 
 ## Overview
 
