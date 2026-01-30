@@ -2,21 +2,105 @@ version: 2
 
 models:
   - name: stg_fixtures
-    description: Cleaned and standardized match-level fixtures.
+    description: >
+      Cleaned and standardized completed match fixtures.
+      Contains only finished matches (status = 'FT') with goals scored.
+      This is the primary training dataset for building prediction models.
     columns:
       - name: match_id
+        description: "Unique identifier for each match (surrogate key from date + teams)"
         tests:
           - not_null
           - unique
 
+      - name: season
+        description: "Season year (start year, e.g., 2024 for 2024-25 season)"
+        tests:
+          - not_null
+
       - name: match_date
+        description: "Date the match was played"
         tests:
           - not_null
 
       - name: home_team
+        description: "Home team name (cleaned and trimmed)"
         tests:
           - not_null
 
       - name: away_team
+        description: "Away team name (cleaned and trimmed)"
+        tests:
+          - not_null
+
+      - name: home_goals
+        description: "Goals scored by home team"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: away_goals
+        description: "Goals scored by away team"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: home_points
+        description: "Points earned by home team (3 for win, 1 for draw, 0 for loss)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 3]
+
+      - name: away_points
+        description: "Points earned by away team (3 for win, 1 for draw, 0 for loss)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 3]
+
+  - name: stg_fixtures_future
+    description: >
+      Upcoming fixtures that have not been played yet.
+      Contains matches with status IN ('NS', 'TBD', 'PST').
+      Used as input for predictions and season simulations.
+    columns:
+      - name: match_id
+        description: "Unique identifier for each match (surrogate key from date + teams)"
+        tests:
+          - not_null
+          - unique
+
+      - name: season
+        description: "Season year (start year)"
+        tests:
+          - not_null
+
+      - name: match_date
+        description: "Scheduled date for the match"
+        tests:
+          - not_null
+
+      - name: home_team
+        description: "Home team name (cleaned and trimmed)"
+        tests:
+          - not_null
+
+      - name: away_team
+        description: "Away team name (cleaned and trimmed)"
+        tests:
+          - not_null
+
+      - name: status
+        description: "Match status: NS (not started), TBD (to be defined), PST (postponed)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['NS', 'TBD', 'PST']
+
+      - name: fixture_id
+        description: "API Football fixture ID for reference"
         tests:
           - not_null

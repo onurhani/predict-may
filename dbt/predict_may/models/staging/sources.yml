@@ -2,13 +2,12 @@ version: 2
 
 sources:
   - name: football
-    database: football
     schema: raw
     description: "Raw football data ingested from API-Football"
 
     tables:
       - name: fixtures
-        description: "Match-level fixtures including scores, teams, dates"
+        description: "All match fixtures (both completed and upcoming)"
         columns:
           - name: season
             description: "Season year (start year)"
@@ -19,6 +18,10 @@ sources:
           - name: away_team
             description: "Away team name"
           - name: home_goals
-            description: "Goals scored by home team"
+            description: "Goals scored by home team (NULL for future fixtures)"
           - name: away_goals
-            description: "Goals scored by away team"
+            description: "Goals scored by away team (NULL for future fixtures)"
+          - name: status
+            description: "Match status: FT (finished), NS (not started), TBD, PST (postponed)"
+          - name: fixture_id
+            description: "API fixture ID"

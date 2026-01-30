@@ -1,3 +1,5 @@
+-- Team strength ratings over time using SPI-style approach
+
 with base as (
     select
         season,
@@ -7,51 +9,107 @@ with base as (
         is_home,
         goals_for,
         goals_against,
-        -- Calculate Goal Difference
-        goals_for - goals_against as goal_diff,
-        -- Apply a "cap" to goal difference to reduce noise from blowouts
-        case 
-            when (goals_for - goals_against) > 3 then 3
-            when (goals_for - goals_against) < -3 then -3
-            else (goals_for - goals_against)
-        end as capped_goal_diff
+        goal_diff,
+        points,
+        
+        row_number() over (
+            partition by season, team
+            order by match_date
+        ) as match_number
+        
     from {{ ref('int_team_matches') }}
 ),
 
-rolling_metrics as (
-    select
-        *,
-        -- Use a larger window (10 games) for mid-season stability
-        avg(capped_goal_diff) over (
-            partition by team 
-            order by match_date 
-            rows between 10 preceding and 1 preceding
-        ) as rolling_gdiff_10,
-
-        avg(goals_for) over (
-            partition by team 
-            order by match_date 
-            rows between 10 preceding and 1 preceding
-        ) as rolling_gf_10
-    from base
-),
-
-spi_calc as (
+-- Calculate rolling metrics using prior matches
+rolling_form as (
     select
         season,
         match_date,
         team,
-        rolling_gdiff_10,
-        rolling_gf_10,
+        match_number,
+        
+        -- Prior 5 matches (excluding current match)
+        avg(goal_diff) over (
+            partition by season, team
+            order by match_number
+            rows between 5 preceding and 1 preceding
+        ) as prior_avg_goal_diff_5,
+        
+        avg(goals_for) over (
+            partition by season, team
+            order by match_number
+            rows between 5 preceding and 1 preceding
+        ) as prior_avg_goals_for_5,
+        
+        avg(goals_against) over (
+            partition by season, team
+            order by match_number
+            rows between 5 preceding and 1 preceding
+        ) as prior_avg_goals_against_5,
+        
+        -- Season-to-date (excluding current match)
+        avg(goal_diff) over (
+            partition by season, team
+            order by match_number
+            rows between unbounded preceding and 1 preceding
+        ) as prior_season_goal_diff,
+        
+        avg(goals_for) over (
+            partition by season, team
+            order by match_number
+            rows between unbounded preceding and 1 preceding
+        ) as prior_season_goals_for,
+        
+        avg(goals_against) over (
+            partition by season, team
+            order by match_number
+            rows between unbounded preceding and 1 preceding
+        ) as prior_season_goals_against
+        
+    from base
+),
 
-        -- THE FORMULA
-        -- 50 is the league average baseline
-        -- We multiply GDiff by 15 to create a spread
-        -- We subtract a small "Home Neutralizer" if they were home, to see true strength
-        50 
-        + (rolling_gdiff_10 * 15) 
-        + (case when is_home = 1 then -0.3 else 0.3 end) as adjusted_spi
-    from rolling_metrics
+spi_calculated as (
+    select
+        season,
+        match_date,
+        team,
+        match_number,
+        
+        prior_avg_goal_diff_5,
+        prior_avg_goals_for_5,
+        prior_avg_goals_against_5,
+        prior_season_goal_diff,
+        prior_season_goals_for,
+        prior_season_goals_against,
+        
+        -- SPI Rating (v1 formula - simple & explainable)
+        -- Base of 50, then adjust by recent form
+        case
+            when match_number <= 5 then
+                -- Early season: use season-to-date
+                50 
+                + coalesce(prior_season_goal_diff * 10, 0)
+                + coalesce(prior_season_goals_for * 5, 0)
+                - coalesce(prior_season_goals_against * 5, 0)
+            else
+                -- After 5 matches: use rolling 5-match form
+                50
+                + coalesce(prior_avg_goal_diff_5 * 10, 0)
+                + coalesce(prior_avg_goals_for_5 * 5, 0)
+                - coalesce(prior_avg_goals_against_5 * 5, 0)
+        end as spi_rating,
+        
+        -- Confidence indicator
+        case
+            when match_number <= 3 then 'Low'
+            when match_number <= 10 then 'Medium'
+            else 'High'
+        end as rating_confidence
+        
+    from rolling_form
 )
 
-select * from spi_calc
+select *
+from spi_calculated
+order by season desc, match_date desc, team
