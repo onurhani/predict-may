@@ -1,4 +1,6 @@
 -- Team strength ratings over time using SPI-style approach
+-- Uses constants from dbt_project.yml for easy calibration
+-- CRITICAL: Uses ONLY past matches for each rating (no data leakage)
 
 with base as (
     select
@@ -20,7 +22,7 @@ with base as (
     from {{ ref('int_team_matches') }}
 ),
 
--- Calculate rolling metrics using prior matches
+-- Calculate rolling metrics using ONLY prior matches
 rolling_form as (
     select
         season,
@@ -83,21 +85,20 @@ spi_calculated as (
         prior_season_goals_for,
         prior_season_goals_against,
         
-        -- SPI Rating (v1 formula - simple & explainable)
-        -- Base of 50, then adjust by recent form
+        -- SPI Rating using constants from dbt_project.yml
         case
             when match_number <= 5 then
                 -- Early season: use season-to-date
-                50 
-                + coalesce(prior_season_goal_diff * 10, 0)
-                + coalesce(prior_season_goals_for * 5, 0)
-                - coalesce(prior_season_goals_against * 5, 0)
+                {{ get_constant('spi_base') }}
+                + coalesce(prior_season_goal_diff * {{ get_constant('spi_goal_diff_weight') }}, 0)
+                + coalesce(prior_season_goals_for * {{ get_constant('spi_goals_for_weight') }}, 0)
+                - coalesce(prior_season_goals_against * {{ get_constant('spi_goals_against_weight') }}, 0)
             else
                 -- After 5 matches: use rolling 5-match form
-                50
-                + coalesce(prior_avg_goal_diff_5 * 10, 0)
-                + coalesce(prior_avg_goals_for_5 * 5, 0)
-                - coalesce(prior_avg_goals_against_5 * 5, 0)
+                {{ get_constant('spi_base') }}
+                + coalesce(prior_avg_goal_diff_5 * {{ get_constant('spi_goal_diff_weight') }}, 0)
+                + coalesce(prior_avg_goals_for_5 * {{ get_constant('spi_goals_for_weight') }}, 0)
+                - coalesce(prior_avg_goals_against_5 * {{ get_constant('spi_goals_against_weight') }}, 0)
         end as spi_rating,
         
         -- Confidence indicator

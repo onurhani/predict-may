@@ -1,4 +1,5 @@
 -- Predictions for upcoming matches
+-- Uses calibrated constants from dbt_project.yml
 -- Uses latest SPI ratings to forecast results
 
 with future_fixtures as (
@@ -59,15 +60,18 @@ predictions as (
         h.home_spi - a.away_spi as spi_difference,
         h.home_form_5 - a.away_form_5 as form_difference,
         
-        -- Home advantage
-        0.3 as assumed_home_advantage,
+        -- Home advantage from constants
+        {{ get_constant('home_advantage') }}::float as assumed_home_advantage,
         
-        -- Calculate raw win probabilities using logistic function
-        1.0 / (1 + exp(-0.04 * (h.home_spi - a.away_spi + 0.3 * 10))) as raw_prob_home_win,
-        1.0 / (1 + exp(-0.04 * (a.away_spi - h.home_spi))) as raw_prob_away_win,
+        -- Step 1: Calculate draw probability first (higher for evenly matched teams)
+        {{ get_constant('base_draw_prob') }} + 
+        ({{ get_constant('bonus_draw_prob') }} * exp(-abs(h.home_spi - a.away_spi) / {{ get_constant('draw_decay_rate') }}))
+        as prob_draw,
         
-        -- Draw probability based on match closeness (closer matches = higher draw probability)
-        0.20 + (0.15 * exp(-abs(h.home_spi - a.away_spi) / 20.0)) as raw_prob_draw
+        -- Step 2: Home win ratio from logistic function (used to split remaining probability)
+        1.0 / (1 + exp(-{{ get_constant('spi_scaling_factor') }} * 
+            (h.home_spi - a.away_spi + {{ get_constant('home_advantage') }} * {{ get_constant('home_advantage_multiplier') }}))
+        ) as home_win_ratio
         
     from future_fixtures f
     
@@ -82,19 +86,20 @@ predictions as (
         and a.recency_rank = 1
 ),
 
-normalized as (
+split as (
     select
         *,
-        raw_prob_home_win + raw_prob_away_win + raw_prob_draw as prob_sum,
+        -- Step 3: Split remaining probability (1 - draw) between home and away
+        (1.0 - prob_draw) * home_win_ratio as prob_home_win,
+        (1.0 - prob_draw) * (1.0 - home_win_ratio) as prob_away_win,
         
-        -- Normalize to ensure probabilities sum to 1.0
-        raw_prob_home_win / (raw_prob_home_win + raw_prob_away_win + raw_prob_draw) as prob_home_win,
-        raw_prob_draw / (raw_prob_home_win + raw_prob_away_win + raw_prob_draw) as prob_draw,
-        raw_prob_away_win / (raw_prob_home_win + raw_prob_away_win + raw_prob_draw) as prob_away_win,
+        -- Expected goals using constants
+        {{ get_constant('expected_goals_home_base') }} + 
+        (spi_difference * {{ get_constant('goals_per_spi_point') }}) + 
+        (assumed_home_advantage * {{ get_constant('home_advantage_goals') }}) as expected_home_goals,
         
-        -- Expected goals
-        1.5 + (spi_difference * 0.02) + (assumed_home_advantage * 0.5) as expected_home_goals,
-        1.3 + (-spi_difference * 0.02) as expected_away_goals
+        {{ get_constant('expected_goals_away_base') }} + 
+        (-spi_difference * {{ get_constant('goals_per_spi_point') }}) as expected_away_goals
         
     from predictions
 ),
@@ -120,18 +125,18 @@ final as (
         expected_home_goals,
         expected_away_goals,
         
-        -- Most likely result
+        -- Predicted result using improved logic with draw threshold
         case
-            when prob_home_win > prob_draw and prob_home_win > prob_away_win then 'H'
-            when prob_away_win > prob_draw and prob_away_win > prob_home_win then 'A'
-            else 'D'
+            when prob_draw >= {{ get_constant('draw_prediction_threshold') }} then 'D'
+            when prob_home_win > prob_away_win then 'H'
+            else 'A'
         end as predicted_result,
         
         -- Expected points for each team
         (prob_home_win * 3) + (prob_draw * 1) as expected_home_points,
         (prob_away_win * 3) + (prob_draw * 1) as expected_away_points
         
-    from normalized
+    from split
 )
 
 select *
