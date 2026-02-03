@@ -28,10 +28,10 @@ vars:
   home_advantage_multiplier: 10      # Converts home_advantage to SPI points
   
   # Draw probability parameters
-  base_draw_prob: 0.27               # Minimum draw probability (calibrate to league avg ~27%)
-  bonus_draw_prob: 0.05              # Additional draw prob for evenly matched teams
-  draw_decay_rate: 25.0              # How quickly draw prob decreases with SPI difference
-  
+  base_draw_prob: 0.25               # Minimum draw probability (calibrate to league avg ~27%)
+  bonus_draw_prob: 0.07              # Additional draw prob for evenly matched teams
+  draw_decay_rate: 30.0              # How quickly draw prob decreases with SPI difference
+
   # Expected goals parameters
   expected_goals_home_base: 1.59      # League average home team goals
   expected_goals_away_base: 1.27      # League average away team goals
@@ -39,11 +39,10 @@ vars:
   home_advantage_goals: 0.32          # Goal advantage for home team
   
   # Prediction thresholds
-  draw_prediction_threshold: 0.29    # Predict draw if probability >= this
+  draw_prediction_threshold: 0.30    # Predict draw if probability >= this
   
   # SPI calculation parameters
   spi_base: 50                       # Base SPI rating (center point)
   spi_goal_diff_weight: 10           # Weight for goal difference in SPI
   spi_goals_for_weight: 5            # Weight for goals scored in SPI
   spi_goals_against_weight: 5        # Weight for goals conceded in SPI
-  
