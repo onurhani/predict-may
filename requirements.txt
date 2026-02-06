@@ -9,9 +9,10 @@ numpy
 pyarrow
 
 # Visualization
-matplotlib
-seaborn
-plotly
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+kaleido>=0.2.1
 
 # API & utilities
 requests

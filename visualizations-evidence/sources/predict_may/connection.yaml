@@ -1,0 +1,4 @@
+name: predict_may
+type: duckdb
+filename: ../../data/football.duckdb
+schema: main_marts
