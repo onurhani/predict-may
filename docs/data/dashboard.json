@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-04-10",
     "matchday_current": 28,
     "matchday_total": 34,
     "matches_remaining_total": 56
@@ -328,22 +328,22 @@
   ],
   "next_matches": [
     {
-      "home_team": "Alanyaspor",
-      "away_team": "Kayserispor",
+      "home_team": "Besiktas",
+      "away_team": "Antalyaspor",
       "match_date": null,
-      "prob_home": 43,
-      "prob_draw": 30,
-      "prob_away": 27,
-      "predicted_result": "D"
+      "prob_home": 60,
+      "prob_draw": 27,
+      "prob_away": 13,
+      "predicted_result": "H"
     },
     {
-      "home_team": "Konyaspor",
-      "away_team": "Fenerbahce",
+      "home_team": "Buyuksehyr",
+      "away_team": "Genclerbirligi",
       "match_date": null,
-      "prob_home": 36,
-      "prob_draw": 32,
-      "prob_away": 32,
-      "predicted_result": "D"
+      "prob_home": 48,
+      "prob_draw": 29,
+      "prob_away": 23,
+      "predicted_result": "H"
     },
     {
       "home_team": "Alanyaspor",
@@ -355,17 +355,17 @@
       "predicted_result": "A"
     },
     {
-      "home_team": "Antalyaspor",
-      "away_team": "Alanyaspor",
+      "home_team": "Kayserispor",
+      "away_team": "Fenerbahce",
       "match_date": null,
-      "prob_home": 23,
-      "prob_draw": 28,
-      "prob_away": 49,
-      "predicted_result": "A"
+      "prob_home": 31,
+      "prob_draw": 30,
+      "prob_away": 39,
+      "predicted_result": "D"
     },
     {
-      "home_team": "Antalyaspor",
-      "away_team": "Kocaelispor",
+      "home_team": "Konyaspor",
+      "away_team": "Karagumruk",
       "match_date": null,
       "prob_home": 43,
       "prob_draw": 30,
@@ -373,40 +373,40 @@
       "predicted_result": "D"
     },
     {
-      "home_team": "Antalyaspor",
-      "away_team": "Konyaspor",
+      "home_team": "Goztep",
+      "away_team": "Kasimpasa",
       "match_date": null,
-      "prob_home": 23,
-      "prob_draw": 28,
-      "prob_away": 49,
-      "predicted_result": "A"
+      "prob_home": 33,
+      "prob_draw": 31,
+      "prob_away": 36,
+      "predicted_result": "D"
     },
     {
-      "home_team": "Besiktas",
-      "away_team": "Antalyaspor",
+      "home_team": "Galatasaray",
+      "away_team": "Kocaelispor",
       "match_date": null,
-      "prob_home": 60,
-      "prob_draw": 27,
-      "prob_away": 13,
+      "prob_home": 66,
+      "prob_draw": 26,
+      "prob_away": 8,
       "predicted_result": "H"
     },
     {
-      "home_team": "Besiktas",
-      "away_team": "Karagumruk",
-      "match_date": null,
-      "prob_home": 54,
-      "prob_draw": 28,
-      "prob_away": 18,
-      "predicted_result": "H"
-    },
-    {
-      "home_team": "Besiktas",
-      "away_team": "Trabzonspor",
+      "home_team": "Eyupspor",
+      "away_team": "Samsunspor",
       "match_date": null,
       "prob_home": 36,
       "prob_draw": 32,
       "prob_away": 32,
       "predicted_result": "D"
+    },
+    {
+      "home_team": "Rizespor",
+      "away_team": "Gaziantep",
+      "match_date": null,
+      "prob_home": 50,
+      "prob_draw": 29,
+      "prob_away": 21,
+      "predicted_result": "H"
     }
   ]
 }
