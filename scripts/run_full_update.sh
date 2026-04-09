@@ -1,31 +1,26 @@
 #!/bin/bash
-set -e  # Exit on error
+set -e
 
 echo "🔄 Starting full pipeline update..."
 
-# Update current season data
-echo "📥 Fetching current season fixtures..."
+# Fetch current data from football-data.co.uk
+echo "📥 Fetching match data..."
 python src/ingestion/fetch_fixtures_current.py
 
-# Build models locally
+# Rebuild dbt models
 echo "🔨 Building dbt models..."
-cd dbt/predict_may
-dbt run
-cd ../..
+cd dbt/predict_may && dbt run && cd ../..
 
-# Run simulation
-echo "🎲 Running Monte Carlo simulation..."
+# Run Monte Carlo simulation
+echo "🎲 Running simulation..."
 python scripts/simulate_season.py
 
-# Optional: sync to MotherDuck
-read -p "Sync to MotherDuck? (y/n) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    python scripts/sync_to_motherduck.py
-    cd dbt/predict_may
-    dbt run --target motherduck
-    cd ../..
-fi
+# Export dashboard JSON
+echo "📊 Exporting dashboard data..."
+python scripts/export_dashboard.py
 
-echo "✅ Pipeline update complete!"
+echo "✅ Done. Commit docs/data/dashboard.json to update the dashboard."
+echo ""
+echo "   git add docs/data/dashboard.json"
+echo "   git commit -m 'data: matchday XX update'"
+echo "   git push"

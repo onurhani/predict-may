@@ -1,0 +1,1 @@
+select * from main_marts.season_projections

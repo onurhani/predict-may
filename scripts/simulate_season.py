@@ -9,7 +9,7 @@ from collections import defaultdict
 
 DB_PATH = "data/football.duckdb"
 N_SIMULATIONS = 10000
-CURRENT_SEASON = 2025
+CURRENT_SEASON = 2025  # 2025-26 season
 
 def get_current_standings(con):
     """Get current points for each team"""
