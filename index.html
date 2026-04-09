@@ -623,71 +623,79 @@
 ─────────────────────────────────────────────────────────── */
 
 const MOCK = {
-  meta: {
-    last_updated: "Apr 7, 2025",
-    matchday: 30,
-    total_matchdays: 34,
-    matches_remaining: 4,
-    simulations: 10000
+  "meta": {"updated_at":"2026-04-09","matchday_current":28,"matchday_total":34,"matches_remaining_total":56},
+  "accuracy": {
+    "overall_pct":46.8,"rolling_4week_pct":26.4,"best_week_pct":83.3,
+    "weekly":[
+      {"week_label":"Aug W1","weekly_pct":0.0,"rolling_pct":0.0},
+      {"week_label":"Aug W2","weekly_pct":66.7,"rolling_pct":33.4},
+      {"week_label":"Aug W3","weekly_pct":66.7,"rolling_pct":44.5},
+      {"week_label":"Aug W4","weekly_pct":40.0,"rolling_pct":43.4},
+      {"week_label":"Sep W2","weekly_pct":12.5,"rolling_pct":46.5},
+      {"week_label":"Sep W3","weekly_pct":41.7,"rolling_pct":40.2},
+      {"week_label":"Sep W4","weekly_pct":50.0,"rolling_pct":36.0},
+      {"week_label":"Sep W5","weekly_pct":50.0,"rolling_pct":38.6},
+      {"week_label":"Oct W2","weekly_pct":50.0,"rolling_pct":47.9},
+      {"week_label":"Oct W3","weekly_pct":40.0,"rolling_pct":47.5},
+      {"week_label":"Oct W4","weekly_pct":50.0,"rolling_pct":47.5},
+      {"week_label":"Nov W1","weekly_pct":41.7,"rolling_pct":45.4},
+      {"week_label":"Nov W3","weekly_pct":71.4,"rolling_pct":50.8},
+      {"week_label":"Nov W4","weekly_pct":66.7,"rolling_pct":57.4},
+      {"week_label":"Dec W1","weekly_pct":22.2,"rolling_pct":50.5},
+      {"week_label":"Dec W2","weekly_pct":30.0,"rolling_pct":47.6},
+      {"week_label":"Dec W3","weekly_pct":75.0,"rolling_pct":48.5},
+      {"week_label":"Dec W4","weekly_pct":0.0,"rolling_pct":31.8},
+      {"week_label":"Jan W2","weekly_pct":50.0,"rolling_pct":38.8},
+      {"week_label":"Jan W3","weekly_pct":81.8,"rolling_pct":51.7},
+      {"week_label":"Jan W4","weekly_pct":44.4,"rolling_pct":44.0},
+      {"week_label":"Feb W1","weekly_pct":57.1,"rolling_pct":58.3},
+      {"week_label":"Feb W2","weekly_pct":36.4,"rolling_pct":54.9},
+      {"week_label":"Feb W3","weekly_pct":33.3,"rolling_pct":42.8},
+      {"week_label":"Feb W4","weekly_pct":60.0,"rolling_pct":46.7},
+      {"week_label":"Mar W1","weekly_pct":83.3,"rolling_pct":53.2},
+      {"week_label":"Mar W2","weekly_pct":50.0,"rolling_pct":56.6},
+      {"week_label":"Mar W3","weekly_pct":42.9,"rolling_pct":59.0},
+      {"week_label":"Mar W5","weekly_pct":12.5,"rolling_pct":47.2},
+      {"week_label":"Apr W1","weekly_pct":0.0,"rolling_pct":26.4}
+    ]
   },
-  stats: {
-    accuracy_4wk: 63,
-    title_favorite: "Galatasaray",
-    title_favorite_pct: 72,
-    matches_predicted: 211,
-    overall_accuracy: 47.8,
-    matches_remaining_total: 72
-  },
-  standings: [
-    { name:"Galatasaray",  pts:68, xpts:75.2, likelyPos:1,  top4:98, rel:0  },
-    { name:"Fenerbahçe",   pts:65, xpts:72.4, likelyPos:1,  top4:96, rel:0,  highlight:true },
-    { name:"Beşiktaş",     pts:52, xpts:57.1, likelyPos:3,  top4:71, rel:0  },
-    { name:"Trabzonspor",  pts:49, xpts:53.8, likelyPos:4,  top4:48, rel:0  },
-    { name:"Başakşehir",   pts:46, xpts:50.3, likelyPos:5,  top4:22, rel:0  },
-    { name:"Alanyaspor",   pts:43, xpts:47.1, likelyPos:6,  top4:8,  rel:0  },
-    { name:"Sivasspor",    pts:40, xpts:43.6, likelyPos:7,  top4:2,  rel:2  },
-    { name:"Kasımpaşa",    pts:38, xpts:41.3, likelyPos:8,  top4:1,  rel:5  },
-    { name:"Kayserispor",  pts:36, xpts:39.8, likelyPos:9,  top4:0,  rel:9  },
-    { name:"Konyaspor",    pts:35, xpts:38.5, likelyPos:10, top4:0,  rel:13 },
-    { name:"Antalyaspor",  pts:33, xpts:36.2, likelyPos:11, top4:0,  rel:19 },
-    { name:"Eyüpspor",     pts:31, xpts:34.1, likelyPos:12, top4:0,  rel:26 },
-    { name:"Hatayspor",    pts:29, xpts:32.3, likelyPos:13, top4:0,  rel:33 },
-    { name:"Samsunspor",   pts:27, xpts:30.1, likelyPos:14, top4:0,  rel:44 },
-    { name:"Gaziantep",    pts:25, xpts:27.8, likelyPos:15, top4:0,  rel:59 },
-    { name:"Rizespor",     pts:22, xpts:24.4, likelyPos:16, top4:0,  rel:76 },
-    { name:"Bodrum",       pts:20, xpts:22.3, likelyPos:17, top4:0,  rel:88 },
-    { name:"Kocaelispor",  pts:18, xpts:20.8, likelyPos:18, top4:0,  rel:94 },
+  "standings":[
+    {"rank":1,"team":"Galatasaray","current_pts":64,"expected_pts":78.0,"likely_position":1,"top4_pct":100.0,"relegation_pct":0.0},
+    {"rank":2,"team":"Trabzonspor","current_pts":63,"expected_pts":73.4,"likely_position":2,"top4_pct":100.0,"relegation_pct":0.0},
+    {"rank":3,"team":"Fenerbahce","current_pts":63,"expected_pts":71.1,"likely_position":3,"top4_pct":100.0,"relegation_pct":0.0},
+    {"rank":4,"team":"Besiktas","current_pts":52,"expected_pts":62.4,"likely_position":4,"top4_pct":95.8,"relegation_pct":0.0},
+    {"rank":5,"team":"Goztep","current_pts":46,"expected_pts":53.8,"likely_position":5,"top4_pct":3.5,"relegation_pct":0.0},
+    {"rank":6,"team":"Buyuksehyr","current_pts":44,"expected_pts":52.5,"likely_position":6,"top4_pct":0.7,"relegation_pct":0.0},
+    {"rank":7,"team":"Samsunspor","current_pts":36,"expected_pts":43.6,"likely_position":7,"top4_pct":0.0,"relegation_pct":0.0},
+    {"rank":8,"team":"Gaziantep","current_pts":34,"expected_pts":41.4,"likely_position":9,"top4_pct":0.0,"relegation_pct":0.0},
+    {"rank":9,"team":"Kocaelispor","current_pts":34,"expected_pts":39.9,"likely_position":11,"top4_pct":0.0,"relegation_pct":0.0},
+    {"rank":10,"team":"Alanyaspor","current_pts":32,"expected_pts":41.2,"likely_position":9,"top4_pct":0.0,"relegation_pct":0.2},
+    {"rank":11,"team":"Konyaspor","current_pts":31,"expected_pts":39.4,"likely_position":12,"top4_pct":0.0,"relegation_pct":0.6},
+    {"rank":12,"team":"Rizespor","current_pts":30,"expected_pts":41.4,"likely_position":7,"top4_pct":0.0,"relegation_pct":0.2},
+    {"rank":13,"team":"Antalyaspor","current_pts":28,"expected_pts":34.2,"likely_position":14,"top4_pct":0.0,"relegation_pct":17.2},
+    {"rank":14,"team":"Kasimpasa","current_pts":27,"expected_pts":34.3,"likely_position":13,"top4_pct":0.0,"relegation_pct":16.3},
+    {"rank":15,"team":"Genclerbirligi","current_pts":25,"expected_pts":31.5,"likely_position":15,"top4_pct":0.0,"relegation_pct":40.9},
+    {"rank":16,"team":"Kayserispor","current_pts":23,"expected_pts":30.3,"likely_position":16,"top4_pct":0.0,"relegation_pct":62.5},
+    {"rank":17,"team":"Eyupspor","current_pts":22,"expected_pts":29.2,"likely_position":18,"top4_pct":0.0,"relegation_pct":76.4},
+    {"rank":18,"team":"Karagumruk","current_pts":20,"expected_pts":28.0,"likely_position":18,"top4_pct":0.0,"relegation_pct":85.8}
   ],
-  next_matches: [
-    { home:"Galatasaray", away:"Beşiktaş",    ph:55, pd:22, pa:23, pred:"H" },
-    { home:"Fenerbahçe",  away:"Trabzonspor", ph:62, pd:21, pa:17, pred:"H" },
-    { home:"Başakşehir",  away:"Sivasspor",   ph:48, pd:26, pa:26, pred:"D" },
-    { home:"Alanyaspor",  away:"Kayserispor", ph:45, pd:27, pa:28, pred:"D" },
-    { home:"Kocaelispor", away:"Gaziantep",   ph:38, pd:28, pa:34, pred:"A" },
-    { home:"Rizespor",    away:"Eyüpspor",    ph:42, pd:27, pa:31, pred:"D" },
-  ],
-  accuracy: {
-    weekly: [40,50,38,45,55,42,48,60,44,52,58,50,64,55,67,58,72,64,82,70,58,67,71,63,75,68,72],
-    labels:  ["Aug 1","Aug 2","Aug 3","Sep 1","Sep 2","Sep 3","Oct 1","Oct 2","Oct 3","Oct 4","Nov 1","Nov 2","Nov 3","Dec 1","Dec 2","Dec 3","Jan 1","Jan 2","Jan 3","Jan 4","Feb 1","Feb 2","Mar 1","Mar 2","Mar 3","Apr 1","Apr 2"],
-    next_matchday: 31,
-    next_dates: "Apr 12–14"
-  }
+  "next_matches":[
+    {"home_team":"Alanyaspor","away_team":"Kayserispor","match_date":null,"prob_home":43,"prob_draw":30,"prob_away":27,"predicted_result":"D"},
+    {"home_team":"Konyaspor","away_team":"Fenerbahce","match_date":null,"prob_home":36,"prob_draw":32,"prob_away":32,"predicted_result":"D"},
+    {"home_team":"Alanyaspor","away_team":"Trabzonspor","match_date":null,"prob_home":27,"prob_draw":29,"prob_away":44,"predicted_result":"A"},
+    {"home_team":"Antalyaspor","away_team":"Alanyaspor","match_date":null,"prob_home":23,"prob_draw":28,"prob_away":49,"predicted_result":"A"},
+    {"home_team":"Besiktas","away_team":"Antalyaspor","match_date":null,"prob_home":60,"prob_draw":27,"prob_away":13,"predicted_result":"H"},
+    {"home_team":"Besiktas","away_team":"Karagumruk","match_date":null,"prob_home":54,"prob_draw":28,"prob_away":18,"predicted_result":"H"}
+  ]
 };
 
 /* ── Load data ──────────────────────────────────────────── */
-fetch('https://onurhani.github.io/predict-may/data/dashboard.json')
+fetch('./docs/data/dashboard.json')
   .then(r => { if (!r.ok) throw new Error('no data'); return r.json(); })
   .then(data => render(data))
   .catch(() => render(MOCK));
 
 /* ── Helpers ────────────────────────────────────────────── */
-function rolling4(arr) {
-  return arr.map((_, i) => {
-    const sl = arr.slice(Math.max(0, i-3), i+1);
-    return Math.round(sl.reduce((a,b)=>a+b,0) / sl.length);
-  });
-}
-
 function zoneColor(rank) {
   if (rank <= 4) return "#2980b9";
   if (rank === 5) return "#e67e22";
@@ -710,128 +718,124 @@ function relColor(v) {
 
 /* ── Render ─────────────────────────────────────────────── */
 function render(data) {
+  const meta = data.meta || {};
+  const acc  = data.accuracy || {};
+
   // Meta
-  if (data.meta) {
-    document.getElementById('dash-meta').innerHTML =
-      `Last updated: <strong>${data.meta.last_updated}</strong><br>
-       Matchday ${data.meta.matchday} of ${data.meta.total_matchdays} · ${data.meta.matches_remaining} matches remaining`;
-  }
+  document.getElementById('dash-meta').innerHTML =
+    `Last updated: <strong>${meta.updated_at}</strong><br>
+     Matchday ${meta.matchday_current} of ${meta.matchday_total} · ${meta.matches_remaining_total} matches remaining`;
 
   // Stats strip
-  if (data.stats) {
-    const s = data.stats;
-    document.getElementById('stats-strip').innerHTML = `
-      <div class="stat-card">
-        <div class="stat-accent" style="background:#27ae60;"></div>
-        <div class="stat-label">4-Week Accuracy</div>
-        <div class="stat-value" style="color:#27ae60;">${s.accuracy_4wk}%</div>
-        <div class="stat-sub">vs. 33% random baseline</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-accent" style="background:#c0392b;"></div>
-        <div class="stat-label">Title Favorite</div>
-        <div class="stat-value" style="font-size:22px;letter-spacing:-0.5px;padding-top:2px;">${s.title_favorite}</div>
-        <div class="stat-sub">${s.title_favorite_pct}% chance to win title</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-accent" style="background:#2980b9;"></div>
-        <div class="stat-label">Matches Predicted</div>
-        <div class="stat-value">${s.matches_predicted}</div>
-        <div class="stat-sub">this season · ${s.overall_accuracy}% overall</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-accent" style="background:#8e44ad;"></div>
-        <div class="stat-label">Matches Remaining</div>
-        <div class="stat-value">${s.matches_remaining_total}</div>
-        <div class="stat-sub">4 per team in the league</div>
-      </div>`;
-  }
+  const top = (data.standings || [])[0] || {};
+  document.getElementById('stats-strip').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-accent" style="background:#27ae60;"></div>
+      <div class="stat-label">4-Week Accuracy</div>
+      <div class="stat-value" style="color:#27ae60;">${acc.rolling_4week_pct}%</div>
+      <div class="stat-sub">vs. 33% random baseline</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:#c0392b;"></div>
+      <div class="stat-label">Top of Table</div>
+      <div class="stat-value" style="font-size:22px;letter-spacing:-0.5px;padding-top:2px;">${top.team}</div>
+      <div class="stat-sub">${top.current_pts} pts · xPts ${top.expected_pts}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:#2980b9;"></div>
+      <div class="stat-label">Season Accuracy</div>
+      <div class="stat-value">${acc.overall_pct}%</div>
+      <div class="stat-sub">best week: ${acc.best_week_pct}%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:#8e44ad;"></div>
+      <div class="stat-label">Matches Remaining</div>
+      <div class="stat-value">${meta.matches_remaining_total}</div>
+      <div class="stat-sub">${meta.matchday_total - meta.matchday_current} matchdays left</div>
+    </div>`;
 
   // Standings
   const tbody = document.getElementById("standings-body");
   tbody.innerHTML = '';
-  (data.standings || []).forEach((t, i) => {
-    const rank = i + 1;
-    const zc   = zoneColor(rank);
-    const t4c  = top4Color(t.top4);
-    const rc   = relColor(t.rel);
-    const fb   = t.highlight ? ' class="fb-row"' : '';
+  (data.standings || []).forEach(t => {
+    const zc  = zoneColor(t.rank);
+    const t4c = top4Color(t.top4_pct);
+    const rc  = relColor(t.relegation_pct);
+    const isFb = t.team.toLowerCase().includes('fenerbah');
+    const fb  = isFb ? ' class="fb-row"' : '';
     tbody.innerHTML += `
       <tr${fb}>
-        <td>${rank}</td>
+        <td>${t.rank}</td>
         <td>
           <div class="team-cell">
             <span class="zone-stripe" style="background:${zc};"></span>
-            ${t.name}${t.highlight ? ' <span style="color:#e67e22;font-size:10px;">★</span>' : ''}
+            ${t.team}${isFb ? ' <span style="color:#e67e22;font-size:10px;">★</span>' : ''}
           </div>
         </td>
-        <td style="font-weight:800;color:#111;">${t.pts}</td>
-        <td style="color:#555;">${t.xpts}</td>
-        <td style="color:#888;font-weight:600;">${t.likelyPos}</td>
+        <td style="font-weight:800;color:#111;">${t.current_pts}</td>
+        <td style="color:#555;">${t.expected_pts.toFixed(1)}</td>
+        <td style="color:#888;font-weight:600;">${t.likely_position}</td>
         <td>
           <div class="mini-bar-wrap">
-            <span class="mini-bar-pct" style="color:${t4c};">${t.top4}%</span>
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:${t.top4}%;background:${t4c};"></div></div>
+            <span class="mini-bar-pct" style="color:${t4c};">${t.top4_pct}%</span>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:${t.top4_pct}%;background:${t4c};"></div></div>
           </div>
         </td>
         <td>
           <div class="mini-bar-wrap">
-            <span class="mini-bar-pct" style="color:${rc};">${t.rel}%</span>
-            <div class="mini-bar"><div class="mini-bar-fill" style="width:${t.rel}%;background:${rc};"></div></div>
+            <span class="mini-bar-pct" style="color:${rc};">${t.relegation_pct}%</span>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:${t.relegation_pct}%;background:${rc};"></div></div>
           </div>
         </td>
       </tr>`;
   });
 
-  // Match cards
-  const acc = data.accuracy || {};
-  if (acc.next_matchday) {
-    document.getElementById('matchday-title').textContent = `Matchday ${acc.next_matchday} Predictions`;
-  }
-  if (acc.next_dates) {
-    document.getElementById('matchday-dates').textContent = acc.next_dates;
-  }
+  // Matchday title
+  document.getElementById('matchday-title').textContent =
+    `Matchday ${meta.matchday_current + 1} Predictions`;
 
+  // Match cards
   const PRED_STYLES = {
-    H: { bg:"#dbeafe", color:"#1d4ed8", label: m => `${m.home} to win` },
-    A: { bg:"#fee2e2", color:"#b91c1c", label: m => `${m.away} to win` },
-    D: { bg:"#f3f4f6", color:"#374151", label: ()  => "Draw likely"    },
+    H: { bg:"#dbeafe", color:"#1d4ed8", label: m => `${m.home_team} to win` },
+    A: { bg:"#fee2e2", color:"#b91c1c", label: m => `${m.away_team} to win` },
+    D: { bg:"#f3f4f6", color:"#374151", label: ()  => "Draw likely"         },
   };
   const container = document.getElementById("match-cards");
   container.innerHTML = '';
   (data.next_matches || []).forEach(m => {
-    const s = PRED_STYLES[m.pred];
-    const showH = m.ph >= 15 ? `${m.ph}%` : "";
-    const showD = m.pd >= 15 ? `${m.pd}%` : "";
-    const showA = m.pa >= 15 ? `${m.pa}%` : "";
+    const s = PRED_STYLES[m.predicted_result];
+    const showH = m.prob_home >= 15 ? `${m.prob_home}%` : "";
+    const showD = m.prob_draw >= 15 ? `${m.prob_draw}%` : "";
+    const showA = m.prob_away >= 15 ? `${m.prob_away}%` : "";
     container.innerHTML += `
       <div class="match-card">
         <div class="match-header">
-          <span class="match-team-name">${m.home}</span>
+          <span class="match-team-name">${m.home_team}</span>
           <div class="match-center">
             <span class="match-vs-label">vs</span>
             <span class="match-prediction-tag" style="background:${s.bg};color:${s.color};">▶ ${s.label(m)}</span>
           </div>
-          <span class="match-team-name away">${m.away}</span>
+          <span class="match-team-name away">${m.away_team}</span>
         </div>
         <div class="prob-bar-stack">
-          <div class="prob-seg" style="flex:${m.ph};background:#2980b9;">${showH}</div>
-          <div class="prob-seg" style="flex:${m.pd};background:#95a5a6;">${showD}</div>
-          <div class="prob-seg" style="flex:${m.pa};background:#c0392b;">${showA}</div>
+          <div class="prob-seg" style="flex:${m.prob_home};background:#2980b9;">${showH}</div>
+          <div class="prob-seg" style="flex:${m.prob_draw};background:#95a5a6;">${showD}</div>
+          <div class="prob-seg" style="flex:${m.prob_away};background:#c0392b;">${showA}</div>
         </div>
         <div class="prob-bar-labels">
-          <span class="prob-bar-label">Home ${m.ph}%</span>
-          <span class="prob-bar-label">Draw ${m.pd}%</span>
-          <span class="prob-bar-label">Away ${m.pa}%</span>
+          <span class="prob-bar-label">Home ${m.prob_home}%</span>
+          <span class="prob-bar-label">Draw ${m.prob_draw}%</span>
+          <span class="prob-bar-label">Away ${m.prob_away}%</span>
         </div>
       </div>`;
   });
 
   // Accuracy chart
-  const weekly  = (acc.weekly  || MOCK.accuracy.weekly);
-  const labels  = (acc.labels  || MOCK.accuracy.labels);
-  const rolling = rolling4(weekly);
-  const baseline = weekly.map(() => 33);
+  const weekly     = acc.weekly || [];
+  const labels     = weekly.map(w => w.week_label);
+  const weeklyData = weekly.map(w => w.weekly_pct);
+  const rollingData= weekly.map(w => w.rolling_pct);
+  const baseline   = weekly.map(() => 33);
   const ctx = document.getElementById("accuracyChart").getContext("2d");
   new Chart(ctx, {
     type: "line",
@@ -839,8 +843,8 @@ function render(data) {
       labels,
       datasets: [
         { label:"Baseline (33%)", data:baseline, borderColor:"#ddd", borderWidth:1, borderDash:[4,3], pointRadius:0, fill:false, tension:0 },
-        { label:"Weekly", data:weekly, borderColor:"#ddd", backgroundColor:"transparent", borderWidth:1.5, pointRadius:2.5, pointBackgroundColor:"#ccc", pointBorderColor:"#ccc", tension:0.3, fill:false },
-        { label:"4-week rolling avg", data:rolling, borderColor:"#c0392b", backgroundColor:"rgba(192,57,43,0.06)", borderWidth:2.5, pointRadius:0, fill:true, tension:0.4 }
+        { label:"Weekly", data:weeklyData, borderColor:"#ddd", backgroundColor:"transparent", borderWidth:1.5, pointRadius:2.5, pointBackgroundColor:"#ccc", pointBorderColor:"#ccc", tension:0.3, fill:false },
+        { label:"4-week rolling avg", data:rollingData, borderColor:"#c0392b", backgroundColor:"rgba(192,57,43,0.06)", borderWidth:2.5, pointRadius:0, fill:true, tension:0.4 }
       ]
     },
     options: {
