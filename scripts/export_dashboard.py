@@ -213,7 +213,7 @@ def fetch_next_round_sofascore() -> list[dict] | None:
     if not rounds:
         return None
 
-    # Find the first round that has notstarted events
+    # Find the first round that has at least one notstarted event, then return ALL events in that round
     for rnd in sorted(rounds, key=lambda r: r.get("round", 0)):
         round_num = rnd.get("round")
         try:
@@ -229,14 +229,21 @@ def fetch_next_round_sofascore() -> list[dict] | None:
         notstarted = [e for e in events if e.get("status", {}).get("type") == "notstarted"]
 
         if notstarted:
-            print(f"  Sofascore: using round {round_num} ({len(notstarted)} fixtures)")
+            print(f"  Sofascore: using round {round_num} ({len(events)} fixtures, {len(notstarted)} upcoming)")
             fixtures = []
-            for ev in notstarted:
+            for ev in events:
                 home_raw = ev["homeTeam"]["name"]
                 away_raw = ev["awayTeam"]["name"]
+                status_type = ev.get("status", {}).get("type", "notstarted")
+                finished = status_type in ("finished", "inprogress", "postponed")
+                home_score = ev.get("homeScore", {}).get("current") if finished else None
+                away_score = ev.get("awayScore", {}).get("current") if finished else None
                 fixtures.append({
                     "home_team": SOFASCORE_TO_DB.get(home_raw, home_raw),
                     "away_team": SOFASCORE_TO_DB.get(away_raw, away_raw),
+                    "finished": finished,
+                    "home_score": home_score,
+                    "away_score": away_score,
                 })
             return fixtures
 
@@ -251,6 +258,53 @@ def build_next_matches(con) -> list:
         rows = []
         for fix in sofascore_fixtures:
             home, away = fix["home_team"], fix["away_team"]
+            finished = fix.get("finished", False)
+            home_score = fix.get("home_score")
+            away_score = fix.get("away_score")
+
+            # For finished games, look up prediction from completed matches table
+            if finished:
+                hist = con.execute("""
+                    SELECT home_team, away_team, prob_home_win, prob_draw, prob_away_win, predicted_result
+                    FROM main_marts.match_predictions
+                    WHERE season = ? AND home_team = ? AND away_team = ?
+                    LIMIT 1
+                """, [CURRENT_SEASON, home, away]).fetchone()
+                if hist:
+                    raw = [hist[2], hist[3], hist[4]]
+                    total = sum(raw)
+                    scaled = [v / total for v in raw] if total > 0 else [1/3, 1/3, 1/3]
+                    ints = [round(v * 100) for v in scaled]
+                    diff = 100 - sum(ints)
+                    if diff != 0:
+                        ints[ints.index(max(ints))] += diff
+                    rows.append({
+                        "home_team": DB_TO_DISPLAY.get(hist[0], hist[0]),
+                        "away_team": DB_TO_DISPLAY.get(hist[1], hist[1]),
+                        "match_date": None,
+                        "prob_home": ints[0],
+                        "prob_draw": ints[1],
+                        "prob_away": ints[2],
+                        "predicted_result": hist[5],
+                        "finished": True,
+                        "home_score": home_score,
+                        "away_score": away_score,
+                    })
+                else:
+                    rows.append({
+                        "home_team": DB_TO_DISPLAY.get(home, home),
+                        "away_team": DB_TO_DISPLAY.get(away, away),
+                        "match_date": None,
+                        "prob_home": 33,
+                        "prob_draw": 34,
+                        "prob_away": 33,
+                        "predicted_result": "D",
+                        "finished": True,
+                        "home_score": home_score,
+                        "away_score": away_score,
+                    })
+                continue
+
             row = con.execute("""
                 SELECT
                     home_team,
@@ -267,7 +321,6 @@ def build_next_matches(con) -> list:
             """, [CURRENT_SEASON, home, away]).fetchone()
 
             if row is None:
-                # Include the fixture with unknown probabilities
                 rows.append({
                     "home_team": DB_TO_DISPLAY.get(home, home),
                     "away_team": DB_TO_DISPLAY.get(away, away),
@@ -276,6 +329,9 @@ def build_next_matches(con) -> list:
                     "prob_draw": 34,
                     "prob_away": 33,
                     "predicted_result": "D",
+                    "finished": False,
+                    "home_score": None,
+                    "away_score": None,
                 })
                 continue
 
@@ -295,6 +351,9 @@ def build_next_matches(con) -> list:
                 "prob_draw": ints[1],
                 "prob_away": ints[2],
                 "predicted_result": row[5],
+                "finished": False,
+                "home_score": None,
+                "away_score": None,
             })
         return rows
 
