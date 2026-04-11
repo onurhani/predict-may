@@ -13,6 +13,7 @@ DB_PATH = "data/football.duckdb"
 OUTPUT_PATH = "docs/data/dashboard.json"
 CURRENT_SEASON = 2025  # 2025-26 season
 MATCHDAY_TOTAL = 34
+MATCHES_PER_GAMEDAY = 9  # 18 teams → 9 games per round
 
 # Sofascore season ID for Süper Lig 2025-26
 SOFASCORE_SEASON_ID = 77805
@@ -29,6 +30,28 @@ SOFASCORE_TO_DB = {
     "Eyüpspor": "Eyupspor",
     "Gençlerbirliği": "Genclerbirligi",
     "Gaziantep FK": "Gaziantep",
+}
+
+# Map DB team names → display names (proper Turkish)
+DB_TO_DISPLAY = {
+    "Fenerbahce":    "Fenerbahçe",
+    "Besiktas":      "Beşiktaş",
+    "Buyuksehyr":    "Başakşehir",
+    "Goztep":        "Göztepe",
+    "Karagumruk":    "Karagümrük",
+    "Kasimpasa":     "Kasımpaşa",
+    "Eyupspor":      "Eyüpspor",
+    "Genclerbirligi":"Gençlerbirliği",
+    "Galatasaray":   "Galatasaray",
+    "Trabzonspor":   "Trabzonspor",
+    "Samsunspor":    "Samsunspor",
+    "Rizespor":      "Rizespor",
+    "Gaziantep":     "Gaziantep",
+    "Alanyaspor":    "Alanyaspor",
+    "Kocaelispor":   "Kocaelispor",
+    "Konyaspor":     "Konyaspor",
+    "Antalyaspor":   "Antalyaspor",
+    "Kayserispor":   "Kayserispor",
 }
 
 
@@ -65,14 +88,22 @@ def build_meta(con) -> dict:
 def build_standings(con) -> list:
     df = con.execute("""
         SELECT
-            "Team"                 AS team,
-            "Current Points"       AS current_pts,
-            "Expected Points"      AS expected_pts,
-            "Most Likely Position" AS likely_position,
-            "Prob Top 4"           AS top4_str,
-            "Prob Relegation"      AS relegation_str
-        FROM main_marts.season_projections
-    """).fetchdf()
+            sp."Team"                 AS team,
+            sp."Current Points"       AS current_pts,
+            sp."Expected Points"      AS expected_pts,
+            sp."Most Likely Position" AS likely_position,
+            sp."Prob Top 4"           AS top4_str,
+            sp."Prob Relegation"      AS relegation_str,
+            COALESCE(SUM(CASE WHEN f.home_team = sp."Team" THEN f.home_goals - f.away_goals
+                              WHEN f.away_team = sp."Team" THEN f.away_goals - f.home_goals
+                              ELSE 0 END), 0) AS goal_diff
+        FROM main_marts.season_projections sp
+        LEFT JOIN raw.fixtures f
+            ON (f.home_team = sp."Team" OR f.away_team = sp."Team")
+            AND f.season = ? AND f.status = 'FT'
+        GROUP BY sp."Team", sp."Current Points", sp."Expected Points",
+                 sp."Most Likely Position", sp."Prob Top 4", sp."Prob Relegation"
+    """, [CURRENT_SEASON]).fetchdf()
 
     if df.empty:
         return []
@@ -81,15 +112,16 @@ def build_standings(con) -> list:
     df["top4_pct"] = df["top4_str"].str.rstrip("%").astype(float)
     df["relegation_pct"] = df["relegation_str"].str.rstrip("%").astype(float)
 
-    # Rank by current points (ties share same rank; break by expected pts)
-    df = df.sort_values(["current_pts", "expected_pts"], ascending=False).reset_index(drop=True)
+    # Rank by current_pts, then goal_diff (proper league tiebreaker)
+    df = df.sort_values(["current_pts", "goal_diff"], ascending=False).reset_index(drop=True)
     df["rank"] = df.index + 1
 
     rows = []
     for _, r in df.iterrows():
+        display_name = DB_TO_DISPLAY.get(r["team"], r["team"])
         rows.append({
             "rank": int(r["rank"]),
-            "team": r["team"],
+            "team": display_name,
             "current_pts": int(r["current_pts"]),
             "expected_pts": float(r["expected_pts"]),
             "likely_position": int(r["likely_position"]),
@@ -101,18 +133,18 @@ def build_standings(con) -> list:
 
 
 def build_accuracy(con) -> dict:
-    df = con.execute("""
+    # Fetch per-match data and assign to matchday rounds by date clustering.
+    # A new matchday starts when the gap between consecutive match dates > 4 days.
+    match_df = con.execute("""
         SELECT
-            date_trunc('week', match_date) AS week_start,
-            COUNT(*)                        AS total,
-            SUM(correct_prediction)         AS correct
+            match_date,
+            correct_prediction
         FROM main_marts.match_predictions
         WHERE season = ?
-        GROUP BY week_start
-        ORDER BY week_start
+        ORDER BY match_date
     """, [CURRENT_SEASON]).fetchdf()
 
-    if df.empty:
+    if match_df.empty:
         return {
             "overall_pct": 0.0,
             "rolling_4week_pct": 0.0,
@@ -120,31 +152,35 @@ def build_accuracy(con) -> dict:
             "weekly": [],
         }
 
-    df["weekly_pct"] = (df["correct"] / df["total"] * 100).round(1)
+    # Assign each match a gameday number.
+    # Each matchday has exactly (n_teams / 2) = 9 games. Assign sequentially.
+    match_df["match_date"] = pd.to_datetime(match_df["match_date"])
+    match_df = match_df.sort_values("match_date").reset_index(drop=True)
+    matches_per_gd = MATCHES_PER_GAMEDAY
+    match_df["gameday"] = (match_df.index // matches_per_gd) + 1
 
-    # 4-week rolling average
-    df["rolling_pct"] = (
-        df["weekly_pct"].rolling(window=4, min_periods=1).mean().round(1)
+    # Aggregate by gameday
+    gd_df = match_df.groupby("gameday").agg(
+        total=("correct_prediction", "count"),
+        correct=("correct_prediction", "sum"),
+    ).reset_index()
+
+    gd_df["weekly_pct"] = (gd_df["correct"] / gd_df["total"] * 100).round(1)
+    gd_df["rolling_pct"] = (
+        gd_df["weekly_pct"].rolling(window=4, min_periods=1).mean().round(1)
     )
 
-    # Week label: "Aug W1", "Sep W3" etc (week of month = ceil(day/7))
-    def week_label(ts) -> str:
-        d = pd.Timestamp(ts)
-        month_abbr = d.strftime("%b")
-        week_in_month = (d.day - 1) // 7 + 1
-        return f"{month_abbr} W{week_in_month}"
-
     weekly = []
-    for _, row in df.iterrows():
+    for i, (_, row) in enumerate(gd_df.iterrows(), start=1):
         weekly.append({
-            "week_label": week_label(row["week_start"]),
+            "week_label": f"GD {i}",
             "weekly_pct": float(row["weekly_pct"]),
             "rolling_pct": float(row["rolling_pct"]),
         })
 
-    overall_pct = round(df["correct"].sum() / df["total"].sum() * 100, 1)
-    rolling_4week_pct = float(df["rolling_pct"].iloc[-1]) if len(df) >= 1 else 0.0
-    best_week_pct = float(df["weekly_pct"].max())
+    overall_pct = round(gd_df["correct"].sum() / gd_df["total"].sum() * 100, 1)
+    rolling_4week_pct = float(gd_df["rolling_pct"].iloc[-1]) if len(gd_df) >= 1 else 0.0
+    best_week_pct = float(gd_df["weekly_pct"].max())
 
     return {
         "overall_pct": overall_pct,
@@ -233,8 +269,8 @@ def build_next_matches(con) -> list:
             if row is None:
                 # Include the fixture with unknown probabilities
                 rows.append({
-                    "home_team": home,
-                    "away_team": away,
+                    "home_team": DB_TO_DISPLAY.get(home, home),
+                    "away_team": DB_TO_DISPLAY.get(away, away),
                     "match_date": None,
                     "prob_home": 33,
                     "prob_draw": 34,
@@ -252,8 +288,8 @@ def build_next_matches(con) -> list:
                 ints[ints.index(max(ints))] += diff
 
             rows.append({
-                "home_team": row[0],
-                "away_team": row[1],
+                "home_team": DB_TO_DISPLAY.get(row[0], row[0]),
+                "away_team": DB_TO_DISPLAY.get(row[1], row[1]),
                 "match_date": None,
                 "prob_home": ints[0],
                 "prob_draw": ints[1],
@@ -293,8 +329,8 @@ def build_next_matches(con) -> list:
         date_str = None if pd.isna(match_date_val) else pd.Timestamp(match_date_val).strftime("%Y-%m-%d")
 
         rows.append({
-            "home_team": r["home_team"],
-            "away_team": r["away_team"],
+            "home_team": DB_TO_DISPLAY.get(r["home_team"], r["home_team"]),
+            "away_team": DB_TO_DISPLAY.get(r["away_team"], r["away_team"]),
             "match_date": date_str,
             "prob_home": ints[0],
             "prob_draw": ints[1],
