@@ -6,148 +6,148 @@
     "matches_remaining_total": 54
   },
   "accuracy": {
-    "overall_pct": 47.2,
+    "overall_pct": 47.6,
     "rolling_4week_pct": 47.2,
     "best_week_pct": 77.8,
     "weekly": [
       {
         "week_label": "GD 1",
-        "weekly_pct": 22.2,
-        "rolling_pct": 22.2
+        "weekly_pct": 44.4,
+        "rolling_pct": 44.4
       },
       {
         "week_label": "GD 2",
-        "weekly_pct": 77.8,
-        "rolling_pct": 50.0
+        "weekly_pct": 66.7,
+        "rolling_pct": 55.6
       },
       {
         "week_label": "GD 3",
-        "weekly_pct": 44.4,
-        "rolling_pct": 48.1
+        "weekly_pct": 55.6,
+        "rolling_pct": 55.6
       },
       {
         "week_label": "GD 4",
         "weekly_pct": 22.2,
-        "rolling_pct": 41.6
+        "rolling_pct": 47.2
       },
       {
         "week_label": "GD 5",
-        "weekly_pct": 22.2,
-        "rolling_pct": 41.7
+        "weekly_pct": 44.4,
+        "rolling_pct": 47.2
       },
       {
         "week_label": "GD 6",
-        "weekly_pct": 66.7,
-        "rolling_pct": 38.9
+        "weekly_pct": 44.4,
+        "rolling_pct": 41.7
       },
       {
         "week_label": "GD 7",
-        "weekly_pct": 44.4,
-        "rolling_pct": 38.9
+        "weekly_pct": 66.7,
+        "rolling_pct": 44.4
       },
       {
         "week_label": "GD 8",
         "weekly_pct": 33.3,
-        "rolling_pct": 41.6
+        "rolling_pct": 47.2
       },
       {
         "week_label": "GD 9",
-        "weekly_pct": 66.7,
-        "rolling_pct": 52.8
+        "weekly_pct": 55.6,
+        "rolling_pct": 50.0
       },
       {
         "week_label": "GD 10",
         "weekly_pct": 33.3,
-        "rolling_pct": 44.4
+        "rolling_pct": 47.2
       },
       {
         "week_label": "GD 11",
         "weekly_pct": 55.6,
-        "rolling_pct": 47.2
+        "rolling_pct": 44.4
       },
       {
         "week_label": "GD 12",
-        "weekly_pct": 33.3,
+        "weekly_pct": 44.4,
         "rolling_pct": 47.2
       },
       {
         "week_label": "GD 13",
-        "weekly_pct": 77.8,
-        "rolling_pct": 50.0
+        "weekly_pct": 44.4,
+        "rolling_pct": 44.4
       },
       {
         "week_label": "GD 14",
-        "weekly_pct": 44.4,
-        "rolling_pct": 52.8
+        "weekly_pct": 55.6,
+        "rolling_pct": 50.0
       },
       {
         "week_label": "GD 15",
-        "weekly_pct": 33.3,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 16",
-        "weekly_pct": 33.3,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 17",
-        "weekly_pct": 55.6,
+        "weekly_pct": 22.2,
         "rolling_pct": 41.6
       },
       {
+        "week_label": "GD 16",
+        "weekly_pct": 22.2,
+        "rolling_pct": 36.1
+      },
+      {
+        "week_label": "GD 17",
+        "weekly_pct": 77.8,
+        "rolling_pct": 44.4
+      },
+      {
         "week_label": "GD 18",
-        "weekly_pct": 66.7,
-        "rolling_pct": 47.2
+        "weekly_pct": 44.4,
+        "rolling_pct": 41.6
       },
       {
         "week_label": "GD 19",
-        "weekly_pct": 66.7,
-        "rolling_pct": 55.6
+        "weekly_pct": 33.3,
+        "rolling_pct": 44.4
       },
       {
         "week_label": "GD 20",
         "weekly_pct": 55.6,
-        "rolling_pct": 61.2
+        "rolling_pct": 52.8
       },
       {
         "week_label": "GD 21",
-        "weekly_pct": 55.6,
-        "rolling_pct": 61.2
+        "weekly_pct": 66.7,
+        "rolling_pct": 50.0
       },
       {
         "week_label": "GD 22",
-        "weekly_pct": 22.2,
-        "rolling_pct": 50.0
+        "weekly_pct": 66.7,
+        "rolling_pct": 55.6
       },
       {
         "week_label": "GD 23",
-        "weekly_pct": 33.3,
-        "rolling_pct": 41.7
+        "weekly_pct": 44.4,
+        "rolling_pct": 58.4
       },
       {
         "week_label": "GD 24",
-        "weekly_pct": 66.7,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 25",
-        "weekly_pct": 77.8,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 26",
         "weekly_pct": 44.4,
         "rolling_pct": 55.6
       },
       {
-        "week_label": "GD 27",
+        "week_label": "GD 25",
+        "weekly_pct": 55.6,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 26",
         "weekly_pct": 44.4,
-        "rolling_pct": 58.3
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 27",
+        "weekly_pct": 77.8,
+        "rolling_pct": 55.6
       },
       {
         "week_label": "GD 28",
-        "weekly_pct": 22.2,
+        "weekly_pct": 11.1,
         "rolling_pct": 47.2
       }
     ]
@@ -357,13 +357,13 @@
       "home_team": "Kayserispor",
       "away_team": "Fenerbahçe",
       "match_date": null,
-      "prob_home": 31,
-      "prob_draw": 30,
-      "prob_away": 39,
+      "prob_home": 33,
+      "prob_draw": 34,
+      "prob_away": 33,
       "predicted_result": "D",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
+      "finished": true,
+      "home_score": 0,
+      "away_score": 1
     },
     {
       "home_team": "Konyaspor",

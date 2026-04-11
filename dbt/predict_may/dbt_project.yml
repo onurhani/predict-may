@@ -5,6 +5,16 @@ config-version: 2
 profile: predict_may
 
 model-paths: ["models"]
+seed-paths: ["seeds"]
+
+seeds:
+  predict_may:
+    schedule_2526:
+      +column_types:
+        season: integer
+        round_number: integer
+        home_team: varchar
+        away_team: varchar
 
 models:
   predict_may:

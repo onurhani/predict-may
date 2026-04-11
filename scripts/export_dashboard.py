@@ -133,15 +133,19 @@ def build_standings(con) -> list:
 
 
 def build_accuracy(con) -> dict:
-    # Fetch per-match data and assign to matchday rounds by date clustering.
-    # A new matchday starts when the gap between consecutive match dates > 4 days.
+    # Fetch per-match data joined with the schedule seed for correct round assignment.
     match_df = con.execute("""
         SELECT
-            match_date,
-            correct_prediction
-        FROM main_marts.match_predictions
-        WHERE season = ?
-        ORDER BY match_date
+            mp.match_date,
+            mp.correct_prediction,
+            s.round_number AS gameday
+        FROM main_marts.match_predictions mp
+        LEFT JOIN main.schedule_2526 s
+            ON mp.season = s.season
+            AND mp.home_team = s.home_team
+            AND mp.away_team = s.away_team
+        WHERE mp.season = ?
+        ORDER BY mp.match_date
     """, [CURRENT_SEASON]).fetchdf()
 
     if match_df.empty:
@@ -152,12 +156,9 @@ def build_accuracy(con) -> dict:
             "weekly": [],
         }
 
-    # Assign each match a gameday number.
-    # Each matchday has exactly (n_teams / 2) = 9 games. Assign sequentially.
-    match_df["match_date"] = pd.to_datetime(match_df["match_date"])
-    match_df = match_df.sort_values("match_date").reset_index(drop=True)
-    matches_per_gd = MATCHES_PER_GAMEDAY
-    match_df["gameday"] = (match_df.index // matches_per_gd) + 1
+    # Drop any matches not found in the schedule seed (shouldn't happen, but be safe)
+    match_df = match_df.dropna(subset=["gameday"])
+    match_df["gameday"] = match_df["gameday"].astype(int)
 
     # Aggregate by gameday
     gd_df = match_df.groupby("gameday").agg(
