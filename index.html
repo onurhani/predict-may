@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Predict May — Süper Lig Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>⚽</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg:           #08111e;
+      --bg-surface:   #0e1c2f;
+      --bg-card:      #121f33;
+      --bg-card2:     #162236;
+      --border:       #1e3048;
+      --border-soft:  #182840;
+      --text:         #dce8f5;
+      --text-muted:   #6d869e;
+      --text-dim:     #3a5068;
+      --accent-cl:    #3b8beb;
+      --accent-el:    #f0883e;
+      --accent-rel:   #e05c5c;
+      --accent-green: #2ec27e;
+      --accent-gold:  #d4a017;
+      --accent-purple:#9f7fe8;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Libre Franklin', system-ui, sans-serif;
+      color: var(--text);
+    }
+
+    /* ── Top nav bar ─────────────────────────────────────── */
+    .top-bar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .top-bar-brand {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-bar-brand span { color: var(--accent-cl); }
+
+    .top-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .about-toggle {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: transparent;
+      transition: color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+    .about-toggle:hover { color: var(--text); border-color: var(--accent-cl); }
+
+    .top-bar-link {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .top-bar-link:hover { color: var(--accent-cl); }
+
+    /* ── About drawer ────────────────────────────────────── */
+    .about-drawer {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .about-drawer.open {
+      max-height: 200px;
+      padding: 16px 28px;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .about-inner strong { color: var(--text); font-weight: 700; display: block; margin-bottom: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    /* ── Dashboard wrapper ───────────────────────────────── */
+    .dashboard {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 0 32px;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    .dash-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card2) 100%);
+    }
+
+    .dash-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dash-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin: 0 0 4px;
+      line-height: 1;
+    }
+    .dash-title span { color: var(--accent-cl); }
+
+    .dash-tagline {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .dash-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+      line-height: 1.6;
+    }
+    .dash-meta strong { color: var(--text); }
+
+    /* ── Stats strip ─────────────────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      padding: 16px 22px;
+      border-right: 1px solid var(--border-soft);
+      position: relative;
+    }
+    .stat-card:last-child { border-right: none; }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .stat-accent {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+    }
+
+    /* ── Main grid ───────────────────────────────────────── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      align-items: start;
+    }
+
+    /* ── Left panel ──────────────────────────────────────── */
+    .left-panel {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 22px 26px 28px;
+    }
+
+    /* ── Right panel ─────────────────────────────────────── */
+    .right-panel {
+      background: var(--bg-card2);
+      padding: 18px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Section headers ─────────────────────────────────── */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text);
+    }
+
+    .section-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── Zone legend ─────────────────────────────────────── */
+    .zone-legend {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .legend-pip {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Standings table ─────────────────────────────────── */
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    .standings-table thead th {
+      font-size: 8.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-dim);
+      padding: 6px 8px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .standings-table thead th:first-child { text-align: center; width: 26px; }
+    .standings-table thead th:nth-child(2) { text-align: left; }
+
+    .standings-table tbody td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border-soft);
+      text-align: right;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    .standings-table tbody td:first-child {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+
+    .standings-table tbody td:nth-child(2) {
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .standings-table tbody tr:hover td { background: rgba(59,139,235,0.05); }
+    .standings-table tbody tr.fb-row td { background: rgba(212,160,23,0.07); }
+    .standings-table tbody tr.fb-row:hover td { background: rgba(212,160,23,0.12); }
+
+    .team-cell {
+      display: flex;
+      align-items: center;
+    }
+
+    .zone-stripe {
+      width: 3px;
+      height: 18px;
+      border-radius: 1px;
+      margin-right: 9px;
+      flex-shrink: 0;
+    }
+
+    /* ── Mini bars ───────────────────────────────────────── */
+    .mini-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+    }
+
+    .mini-bar-pct {
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 32px;
+      text-align: right;
+    }
+
+    .mini-bar {
+      width: 44px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+
+    /* ── Match cards ─────────────────────────────────────── */
+    .match-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 11px 13px 10px;
+      margin-bottom: 7px;
+      border-radius: 2px;
+    }
+    .match-card:last-child { margin-bottom: 0; }
+
+    .match-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 7px;
+    }
+
+    .match-team-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text);
+      width: 36%;
+    }
+    .match-team-name.away { text-align: right; }
+
+    .match-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .match-vs-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .match-prediction-tag {
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    /* ── Prob bar ────────────────────────────────────────── */
+    .prob-bar-stack {
+      display: flex;
+      height: 16px;
+      border-radius: 2px;
+      overflow: hidden;
+      gap: 1px;
+    }
+
+    .prob-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.2px;
+      transition: flex 0.4s ease;
+    }
+    .prob-seg.small-seg { font-size: 0; }
+
+    .prob-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+    }
+
+    .prob-bar-label {
+      font-size: 8px;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Chart panel ─────────────────────────────────────── */
+    .chart-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 14px 14px 10px;
+      border-radius: 2px;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    .chart-legend-line {
+      width: 18px;
+      height: 2px;
+      border-radius: 1px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .dash-footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 10px 28px;
+      font-size: 10px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dash-footer a { color: var(--text-muted); text-decoration: none; font-weight: 600; }
+    .dash-footer a:hover { color: var(--accent-cl); }
+
+    /* ── Misc ────────────────────────────────────────────── */
+    .conf-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 0; }
+      .main-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .right-panel { border-top: 1px solid var(--border); }
+      .about-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Top nav bar ──────────────────────────────────── -->
+<div class="top-bar">
+  <div class="top-bar-brand">
+    <img src="../assets/pixelart_ball.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
+    <span>Predict<span style="color:var(--accent-cl)">May</span></span>
+  </div>
+  <div class="top-bar-actions">
+    <button class="about-toggle" onclick="toggleAbout()">About this project ↓</button>
+    <a class="top-bar-link" href="https://github.com/onurhani/predict-may" target="_blank">GitHub →</a>
+  </div>
+</div>
+
+<!-- ── About drawer ──────────────────────────────────── -->
+<div class="about-drawer" id="about-drawer">
+  <div class="about-inner">
+    <div>
+      <strong>What it is</strong>
+      A Turkish football analytics project modelling the Süper Lig season using historical match data and Monte Carlo simulation to project final standings.
+    </div>
+    <div>
+      <strong>How it works</strong>
+      Match data from football-data.co.uk → DuckDB + dbt transformations → logistic regression on rolling 5-match form → 10,000 Monte Carlo simulations over remaining fixtures.
+    </div>
+    <div>
+      <strong>Stack</strong>
+      Python · dbt · DuckDB · MotherDuck · API-Football<br>
+      <a href="https://github.com/onurhani/predict-may" target="_blank" style="color:var(--accent-cl);font-weight:600;">github.com/onurhani/predict-may</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Dashboard ─────────────────────────────────────── -->
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="dash-header-row">
+      <div>
+        <h1 class="dash-title">Predict<span>May</span></h1>
+        <p class="dash-tagline">Monte Carlo standings projections · SPI-based model · 10,000 simulations per update</p>
+      </div>
+      <div class="dash-meta" id="dash-meta">
+        Last updated: <strong>—</strong><br>
+        Loading…
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats strip -->
+  <div class="stats-strip" id="stats-strip">
+    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-green);"></div><div class="stat-label">4-Week Accuracy</div><div class="stat-value">—</div></div>
+    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-cl);"></div><div class="stat-label">Top of Table</div><div class="stat-value" style="font-size:18px;">—</div></div>
+    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-purple);"></div><div class="stat-label">Season Accuracy</div><div class="stat-value">—</div></div>
+    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-el);"></div><div class="stat-label">Matches Remaining</div><div class="stat-value">—</div></div>
+  </div>
+
+  <!-- Main grid -->
+  <div class="main-grid">
+
+    <!-- LEFT: Standings -->
+    <div class="left-panel">
+      <div class="section-head">
+        <span class="section-title">Projected Final Standings</span>
+        <span class="section-note">10,000 Monte Carlo simulations</span>
+      </div>
+
+      <div class="zone-legend">
+        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-cl);"></div> Champions League</div>
+        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-el);"></div> Europa League</div>
+        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-rel);"></div> Relegation</div>
+      </div>
+
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Pts</th>
+            <th>xPts</th>
+            <th>~Pos</th>
+            <th>Top 4%</th>
+            <th>Rel%</th>
+          </tr>
+        </thead>
+        <tbody id="standings-body"></tbody>
+      </table>
+
+      <p style="font-size:10px;color:var(--text-dim);margin-top:14px;line-height:1.5;">
+        ★ Fenerbahçe row highlighted &nbsp;·&nbsp;
+        <strong style="color:var(--text-muted);">Pts</strong> current &nbsp;·&nbsp;
+        <strong style="color:var(--text-muted);">xPts</strong> projected final &nbsp;·&nbsp;
+        <strong style="color:var(--text-muted);">~Pos</strong> most likely finish
+      </p>
+    </div>
+
+    <!-- RIGHT: Predictions + Chart -->
+    <div class="right-panel">
+
+      <!-- Next matchday -->
+      <div>
+        <div class="section-head">
+          <span class="section-title" id="matchday-title">Next Matchday</span>
+          <span class="section-note" id="matchday-dates"></span>
+        </div>
+        <div id="match-cards"></div>
+      </div>
+
+      <!-- Accuracy chart -->
+      <div class="chart-panel">
+        <div class="section-head" style="margin-bottom:10px;">
+          <span class="section-title">Prediction Accuracy</span>
+          <span class="section-note">2025–26 season</span>
+        </div>
+        <canvas id="accuracyChart" height="155"></canvas>
+        <div class="chart-legend">
+          <div class="chart-legend-item">
+            <div class="chart-legend-line" style="background:rgba(255,255,255,0.2);"></div>
+            Weekly %
+          </div>
+          <div class="chart-legend-item">
+            <div class="chart-legend-line" style="background:#00d4aa;"></div>
+            4-week rolling
+          </div>
+          <div class="chart-legend-item" style="margin-left:auto;">
+            <span style="font-size:9px;color:var(--text-dim);font-style:italic;">Dashed = 33% baseline</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="dash-footer">
+    <span>Built by <a href="https://onurhani.github.io">Onur Irkin</a> · Data: football-data.co.uk · Model: SPI + Monte Carlo</span>
+    <span>onurhani.github.io/predict-may</span>
+  </div>
+
+</div><!-- /dashboard -->
+
+
+<script>
+
+function toggleAbout() {
+  const d = document.getElementById('about-drawer');
+  d.classList.toggle('open');
+  document.querySelector('.about-toggle').textContent =
+    d.classList.contains('open') ? 'About this project ↑' : 'About this project ↓';
+}
+
+/* ── Data ──────────────────────────────────────────── */
+const MOCK = {
+  "meta": {
+    "updated_at": "2026-04-12",
+    "matchday_current": 28,
+    "matchday_total": 34,
+    "matches_remaining_total": 54
+  },
+  "accuracy": {
+    "overall_pct": 46.4,
+    "rolling_4week_pct": 41.7,
+    "best_week_pct": 77.8,
+    "weekly": [
+      {
+        "week_label": "GD 1",
+        "weekly_pct": 11.1,
+        "rolling_pct": 11.1
+      },
+      {
+        "week_label": "GD 2",
+        "weekly_pct": 77.8,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 3",
+        "weekly_pct": 44.4,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 4",
+        "weekly_pct": 33.3,
+        "rolling_pct": 41.6
+      },
+      {
+        "week_label": "GD 5",
+        "weekly_pct": 22.2,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 6",
+        "weekly_pct": 55.6,
+        "rolling_pct": 38.9
+      },
+      {
+        "week_label": "GD 7",
+        "weekly_pct": 77.8,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 8",
+        "weekly_pct": 44.4,
+        "rolling_pct": 50.0
+      },
+      {
+        "week_label": "GD 9",
+        "weekly_pct": 55.6,
+        "rolling_pct": 58.4
+      },
+      {
+        "week_label": "GD 10",
+        "weekly_pct": 33.3,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 11",
+        "weekly_pct": 44.4,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 12",
+        "weekly_pct": 33.3,
+        "rolling_pct": 41.6
+      },
+      {
+        "week_label": "GD 13",
+        "weekly_pct": 55.6,
+        "rolling_pct": 41.6
+      },
+      {
+        "week_label": "GD 14",
+        "weekly_pct": 55.6,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 15",
+        "weekly_pct": 22.2,
+        "rolling_pct": 41.7
+      },
+      {
+        "week_label": "GD 16",
+        "weekly_pct": 33.3,
+        "rolling_pct": 41.7
+      },
+      {
+        "week_label": "GD 17",
+        "weekly_pct": 66.7,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 18",
+        "weekly_pct": 66.7,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 19",
+        "weekly_pct": 44.4,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 20",
+        "weekly_pct": 55.6,
+        "rolling_pct": 58.4
+      },
+      {
+        "week_label": "GD 21",
+        "weekly_pct": 55.6,
+        "rolling_pct": 55.6
+      },
+      {
+        "week_label": "GD 22",
+        "weekly_pct": 44.4,
+        "rolling_pct": 50.0
+      },
+      {
+        "week_label": "GD 23",
+        "weekly_pct": 33.3,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 24",
+        "weekly_pct": 66.7,
+        "rolling_pct": 50.0
+      },
+      {
+        "week_label": "GD 25",
+        "weekly_pct": 66.7,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 26",
+        "weekly_pct": 44.4,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 27",
+        "weekly_pct": 55.6,
+        "rolling_pct": 58.4
+      },
+      {
+        "week_label": "GD 28",
+        "weekly_pct": 0.0,
+        "rolling_pct": 41.7
+      }
+    ]
+  },
+  "standings": [
+    {
+      "rank": 1,
+      "team": "Galatasaray",
+      "current_pts": 67,
+      "expected_pts": 77.2,
+      "likely_position": 1,
+      "top4_pct": 100.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 2,
+      "team": "Fenerbahçe",
+      "current_pts": 63,
+      "expected_pts": 71.2,
+      "likely_position": 3,
+      "top4_pct": 100.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 3,
+      "team": "Trabzonspor",
+      "current_pts": 63,
+      "expected_pts": 73.2,
+      "likely_position": 2,
+      "top4_pct": 100.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 4,
+      "team": "Beşiktaş",
+      "current_pts": 52,
+      "expected_pts": 62.3,
+      "likely_position": 4,
+      "top4_pct": 96.4,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 5,
+      "team": "Göztepe",
+      "current_pts": 46,
+      "expected_pts": 53.6,
+      "likely_position": 5,
+      "top4_pct": 2.5,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 6,
+      "team": "Başakşehir",
+      "current_pts": 44,
+      "expected_pts": 52.3,
+      "likely_position": 6,
+      "top4_pct": 1.1,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 7,
+      "team": "Samsunspor",
+      "current_pts": 36,
+      "expected_pts": 43.5,
+      "likely_position": 7,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 8,
+      "team": "Kocaelispor",
+      "current_pts": 34,
+      "expected_pts": 39.9,
+      "likely_position": 12,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.1
+    },
+    {
+      "rank": 9,
+      "team": "Gaziantep",
+      "current_pts": 34,
+      "expected_pts": 41.3,
+      "likely_position": 8,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 10,
+      "team": "Rizespor",
+      "current_pts": 33,
+      "expected_pts": 42.0,
+      "likely_position": 8,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.0
+    },
+    {
+      "rank": 11,
+      "team": "Alanyaspor",
+      "current_pts": 32,
+      "expected_pts": 41.0,
+      "likely_position": 9,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.1
+    },
+    {
+      "rank": 12,
+      "team": "Konyaspor",
+      "current_pts": 31,
+      "expected_pts": 39.4,
+      "likely_position": 12,
+      "top4_pct": 0.0,
+      "relegation_pct": 0.5
+    },
+    {
+      "rank": 13,
+      "team": "Antalyaspor",
+      "current_pts": 28,
+      "expected_pts": 34.1,
+      "likely_position": 14,
+      "top4_pct": 0.0,
+      "relegation_pct": 12.7
+    },
+    {
+      "rank": 14,
+      "team": "Kasımpaşa",
+      "current_pts": 27,
+      "expected_pts": 34.5,
+      "likely_position": 13,
+      "top4_pct": 0.0,
+      "relegation_pct": 13.6
+    },
+    {
+      "rank": 15,
+      "team": "Gençlerbirliği",
+      "current_pts": 25,
+      "expected_pts": 31.7,
+      "likely_position": 15,
+      "top4_pct": 0.0,
+      "relegation_pct": 46.7
+    },
+    {
+      "rank": 16,
+      "team": "Kayserispor",
+      "current_pts": 23,
+      "expected_pts": 30.3,
+      "likely_position": 17,
+      "top4_pct": 0.0,
+      "relegation_pct": 68.8
+    },
+    {
+      "rank": 17,
+      "team": "Eyüpspor",
+      "current_pts": 22,
+      "expected_pts": 29.1,
+      "likely_position": 17,
+      "top4_pct": 0.0,
+      "relegation_pct": 72.8
+    },
+    {
+      "rank": 18,
+      "team": "Karagümrük",
+      "current_pts": 20,
+      "expected_pts": 27.9,
+      "likely_position": 18,
+      "top4_pct": 0.0,
+      "relegation_pct": 84.7
+    }
+  ],
+  "next_matches": [
+    {
+      "home_team": "Beşiktaş",
+      "away_team": "Antalyaspor",
+      "match_date": null,
+      "prob_home": 60,
+      "prob_draw": 27,
+      "prob_away": 13,
+      "predicted_result": "H",
+      "finished": true,
+      "home_score": 4,
+      "away_score": 2
+    },
+    {
+      "home_team": "Başakşehir",
+      "away_team": "Gençlerbirliği",
+      "match_date": null,
+      "prob_home": 46,
+      "prob_draw": 31,
+      "prob_away": 23,
+      "predicted_result": "H",
+      "finished": true,
+      "home_score": 3,
+      "away_score": 0
+    },
+    {
+      "home_team": "Alanyaspor",
+      "away_team": "Trabzonspor",
+      "match_date": null,
+      "prob_home": 27,
+      "prob_draw": 31,
+      "prob_away": 42,
+      "predicted_result": "A",
+      "finished": true,
+      "home_score": 1,
+      "away_score": 1
+    },
+    {
+      "home_team": "Kayserispor",
+      "away_team": "Fenerbahçe",
+      "match_date": null,
+      "prob_home": 30,
+      "prob_draw": 33,
+      "prob_away": 37,
+      "predicted_result": "A",
+      "finished": true,
+      "home_score": 0,
+      "away_score": 4
+    },
+    {
+      "home_team": "Konyaspor",
+      "away_team": "Karagümrük",
+      "match_date": null,
+      "prob_home": 41,
+      "prob_draw": 33,
+      "prob_away": 26,
+      "predicted_result": "H",
+      "finished": true,
+      "home_score": 0,
+      "away_score": 0
+    },
+    {
+      "home_team": "Göztepe",
+      "away_team": "Kasımpaşa",
+      "match_date": null,
+      "prob_home": 33,
+      "prob_draw": 37,
+      "prob_away": 30,
+      "predicted_result": "D",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Galatasaray",
+      "away_team": "Kocaelispor",
+      "match_date": null,
+      "prob_home": 59,
+      "prob_draw": 27,
+      "prob_away": 14,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Eyüpspor",
+      "away_team": "Samsunspor",
+      "match_date": null,
+      "prob_home": 31,
+      "prob_draw": 34,
+      "prob_away": 35,
+      "predicted_result": "A",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Rizespor",
+      "away_team": "Gaziantep",
+      "match_date": null,
+      "prob_home": 46,
+      "prob_draw": 31,
+      "prob_away": 23,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    }
+  ]
+};
+
+fetch('./docs/data/dashboard.json?v=' + Date.now(), { cache: 'no-store' })
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(data => render(data))
+  .catch(() => render(MOCK));
+
+/* ── Color helpers ─────────────────────────────────── */
+function zoneColor(rank) {
+  if (rank <= 4)  return 'var(--accent-cl)';
+  if (rank === 5) return 'var(--accent-el)';
+  if (rank >= 16) return 'var(--accent-rel)';
+  return 'var(--border)';
+}
+
+function top4Color(v) {
+  if (v >= 70) return 'var(--accent-cl)';
+  if (v >= 20) return 'var(--text-muted)';
+  return 'var(--text-dim)';
+}
+
+function relColor(v) {
+  if (v >= 60) return 'var(--accent-rel)';
+  if (v >= 25) return 'var(--accent-el)';
+  if (v >= 5)  return '#d4a017';
+  return 'var(--text-dim)';
+}
+
+/* ── Render ────────────────────────────────────────── */
+function render(data) {
+  const meta = data.meta || {};
+  const acc  = data.accuracy || {};
+
+  document.getElementById('dash-meta').innerHTML =
+    `Last updated: <strong>${meta.updated_at || '—'}</strong><br>
+     Matchday ${meta.matchday_current} of ${meta.matchday_total} · ${meta.matches_remaining_total} matches remaining`;
+
+  // Stats strip — derive rolling avg from last weekly data point so stat matches chart
+  const weeklyArr = acc.weekly || [];
+  const lastRolling = weeklyArr.length > 0
+    ? weeklyArr[weeklyArr.length - 1].rolling_pct
+    : acc.rolling_4week_pct;
+  const top = (data.standings || [])[0] || {};
+  document.getElementById('stats-strip').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-accent" style="background:var(--accent-green);"></div>
+      <div class="stat-label">4-Week Accuracy</div>
+      <div class="stat-value" style="color:var(--accent-green);">${lastRolling}%</div>
+      <div class="stat-sub">vs. 33% random baseline</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:var(--accent-cl);"></div>
+      <div class="stat-label">Top of Table</div>
+      <div class="stat-value" style="font-size:20px;letter-spacing:-0.5px;padding-top:4px;">${top.team || '—'}</div>
+      <div class="stat-sub">${top.current_pts} pts · xPts ${top.expected_pts}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:var(--accent-purple);"></div>
+      <div class="stat-label">Season Accuracy</div>
+      <div class="stat-value">${acc.overall_pct}%</div>
+      <div class="stat-sub">best week: ${acc.best_week_pct}%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-accent" style="background:var(--accent-el);"></div>
+      <div class="stat-label">Matches Remaining</div>
+      <div class="stat-value">${meta.matches_remaining_total}</div>
+      <div class="stat-sub">${meta.matchday_total - meta.matchday_current} matchdays left</div>
+    </div>`;
+
+  // Standings
+  const tbody = document.getElementById('standings-body');
+  tbody.innerHTML = '';
+  (data.standings || []).forEach(t => {
+    const isFb = t.team.toLowerCase().includes('fenerbah');
+    tbody.innerHTML += `
+      <tr${isFb ? ' class="fb-row"' : ''}>
+        <td>${t.rank}</td>
+        <td><div class="team-cell"><span class="zone-stripe" style="background:${zoneColor(t.rank)};"></span>${t.team}${isFb ? ' <span style="color:var(--accent-gold);font-size:9px;">★</span>' : ''}</div></td>
+        <td style="font-weight:800;color:var(--text);">${t.current_pts}</td>
+        <td>${t.expected_pts.toFixed(1)}</td>
+        <td style="font-weight:600;">${t.likely_position}</td>
+        <td><div class="mini-bar-wrap"><span class="mini-bar-pct" style="color:${top4Color(t.top4_pct)};">${t.top4_pct}%</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${t.top4_pct}%;background:${top4Color(t.top4_pct)};"></div></div></div></td>
+        <td><div class="mini-bar-wrap"><span class="mini-bar-pct" style="color:${relColor(t.relegation_pct)};">${t.relegation_pct}%</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${t.relegation_pct}%;background:${relColor(t.relegation_pct)};"></div></div></div></td>
+      </tr>`;
+  });
+
+  // Matchday predictions
+  document.getElementById('matchday-title').textContent =
+    `Matchday ${meta.matchday_current + 1} Predictions`;
+
+  const PRED = {
+    H: { bg:'rgba(59,139,235,0.18)', color:'#60a5fa', label: m => `${m.home_team} to win` },
+    A: { bg:'rgba(224,92,92,0.18)',  color:'#f87171', label: m => `${m.away_team} to win` },
+    D: { bg:'rgba(255,255,255,0.07)',color:'#94a3b8', label: ()  => 'Draw likely'           },
+  };
+  const container = document.getElementById('match-cards');
+  container.innerHTML = '';
+  (data.next_matches || []).forEach(m => {
+    const s = PRED[m.predicted_result] || PRED.D;
+    const showH = m.prob_home >= 15 ? `${m.prob_home}%` : '';
+    const showD = m.prob_draw >= 15 ? `${m.prob_draw}%` : '';
+    const showA = m.prob_away >= 15 ? `${m.prob_away}%` : '';
+    container.innerHTML += `
+      <div class="match-card">
+        <div class="match-header">
+          <span class="match-team-name">${m.home_team}</span>
+          <div class="match-center">
+            <span class="match-vs-label">vs</span>
+            <span class="match-prediction-tag" style="background:${s.bg};color:${s.color};">▶ ${s.label(m)}</span>
+          </div>
+          <span class="match-team-name away">${m.away_team}</span>
+        </div>
+        <div class="prob-bar-stack">
+          <div class="prob-seg" style="flex:${m.prob_home};background:var(--accent-cl);">${showH}</div>
+          <div class="prob-seg" style="flex:${m.prob_draw};background:#374151;">${showD}</div>
+          <div class="prob-seg" style="flex:${m.prob_away};background:var(--accent-rel);">${showA}</div>
+        </div>
+        <div class="prob-bar-labels">
+          <span class="prob-bar-label">Home ${m.prob_home}%</span>
+          <span class="prob-bar-label">Draw ${m.prob_draw}%</span>
+          <span class="prob-bar-label">Away ${m.prob_away}%</span>
+        </div>
+      </div>`;
+  });
+
+  // Accuracy chart
+  const weekly = (acc.weekly || []).slice();
+
+  const labels      = weekly.map(w => w.week_label);
+  const weeklyData  = weekly.map(w => w.weekly_pct);
+  const rollingData = weekly.map(w => w.rolling_pct);
+  const baseline    = weekly.map(() => 33);
+
+  new Chart(document.getElementById('accuracyChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Baseline',
+          data: baseline,
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          borderDash: [4, 3],
+          pointRadius: 0,
+          fill: false,
+          tension: 0
+        },
+        {
+          label: 'Weekly',
+          data: weeklyData,
+          borderColor: 'rgba(255,255,255,0.25)',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          pointRadius: 2,
+          pointBackgroundColor: 'rgba(255,255,255,0.3)',
+          pointBorderColor: 'transparent',
+          tension: 0.3,
+          fill: false
+        },
+        {
+          label: '4-week rolling avg',
+          data: rollingData,
+          borderColor: '#00d4aa',
+          backgroundColor: 'rgba(0,212,170,0.08)',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: true,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0e1c2f',
+          borderColor: '#1e3048',
+          borderWidth: 1,
+          titleColor: '#6d869e',
+          bodyColor: '#dce8f5',
+          padding: 8,
+          titleFont: { family: "'Libre Franklin',sans-serif", size: 9, weight: '700' },
+          bodyFont:  { family: "'Libre Franklin',sans-serif", size: 11, weight: '600' },
+          callbacks: {
+            label: ctx => ctx.dataset.label !== 'Baseline' ? `${ctx.dataset.label}: ${ctx.raw}%` : null,
+            filter: item => item.dataset.label !== 'Baseline'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { family: "'Libre Franklin',sans-serif", size: 8 }, color: '#3a5068', maxRotation: 45, autoSkip: true, maxTicksLimit: 9 },
+          grid: { display: false },
+          border: { color: '#1e3048' }
+        },
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { font: { family: "'Libre Franklin',sans-serif", size: 9 }, color: '#3a5068', callback: v => v + '%', stepSize: 25 },
+          grid: { color: 'rgba(30,48,72,0.8)' },
+          border: { display: false }
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
