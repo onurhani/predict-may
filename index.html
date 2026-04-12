@@ -15,21 +15,21 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      --bg:           #08111e;
-      --bg-surface:   #0e1c2f;
-      --bg-card:      #121f33;
-      --bg-card2:     #162236;
-      --border:       #1e3048;
-      --border-soft:  #182840;
-      --text:         #dce8f5;
-      --text-muted:   #6d869e;
-      --text-dim:     #3a5068;
-      --accent-cl:    #3b8beb;
-      --accent-el:    #f0883e;
-      --accent-rel:   #e05c5c;
-      --accent-green: #2ec27e;
-      --accent-gold:  #d4a017;
-      --accent-purple:#9f7fe8;
+      --bg:           #0a0b0f;
+      --bg-surface:   #2B2D42;
+      --bg-card:      #16182a;
+      --border:       #2B2D42;
+      --border-soft:  #1e2035;
+      --text:         #FFFFFF;
+      --text-muted:   #8D99AE;
+      --text-dim:     #4a5068;
+      --accent:       #F8F32B;
+      --accent-dim:   rgba(248,243,43,0.1);
+      --zone-cl:      #F8F32B;
+      --zone-el:      #60a5fa;
+      --zone-rel:     #FF4D6D;
+      --correct:      #22c55e;
+      --incorrect:    #FF4D6D;
     }
 
     body {
@@ -44,12 +44,12 @@
     /* ── Top nav bar ─────────────────────────────────────── */
     .top-bar {
       background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 44px;
+      height: 46px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -57,15 +57,15 @@
 
     .top-bar-brand {
       font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
       color: var(--text);
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .top-bar-brand span { color: var(--accent-cl); }
+    .top-bar-brand .brand-accent { color: var(--accent); }
 
     .top-bar-actions {
       display: flex;
@@ -75,30 +75,31 @@
 
     .about-toggle {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
       padding: 4px 10px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 4px;
       background: transparent;
       transition: color 0.15s, border-color 0.15s;
       font-family: inherit;
     }
-    .about-toggle:hover { color: var(--text); border-color: var(--accent-cl); }
+    .about-toggle:hover { color: var(--accent); border-color: var(--accent); }
 
     .top-bar-link {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       text-decoration: none;
+      transition: color 0.15s;
     }
-    .top-bar-link:hover { color: var(--accent-cl); }
+    .top-bar-link:hover { color: var(--accent); }
 
     /* ── About drawer ────────────────────────────────────── */
     .about-drawer {
       background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       padding: 0 28px;
       max-height: 0;
       overflow: hidden;
@@ -118,70 +119,90 @@
       line-height: 1.6;
     }
 
-    .about-inner strong { color: var(--text); font-weight: 700; display: block; margin-bottom: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
-
-    /* ── Dashboard wrapper ───────────────────────────────── */
-    .dashboard {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 0 32px;
+    .about-inner strong {
+      color: var(--accent);
+      font-weight: 800;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    /* ── Header ──────────────────────────────────────────── */
+    /* ── Dashboard container ─────────────────────────────── */
+    .dashboard {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 0 48px;
+    }
+
+    /* ── Dashboard header ────────────────────────────────── */
     .dash-header {
-      padding: 24px 28px 20px;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card2) 100%);
+      padding: 32px 28px 24px;
+      border-bottom: 1px solid var(--border-soft);
     }
 
     .dash-header-row {
       display: flex;
-      align-items: baseline;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
     }
 
     .dash-title {
-      font-size: 32px;
+      font-size: 40px;
       font-weight: 900;
-      color: var(--text);
-      letter-spacing: -1px;
-      margin: 0 0 4px;
+      letter-spacing: -2px;
+      margin: 0 0 6px;
       line-height: 1;
+      color: var(--text);
     }
-    .dash-title span { color: var(--accent-cl); }
+    .dash-title .t-accent { color: var(--accent); }
 
     .dash-tagline {
       font-size: 12px;
-      font-weight: 400;
       color: var(--text-muted);
       margin: 0;
-      line-height: 1.4;
+      line-height: 1.5;
+      font-weight: 400;
     }
 
     .dash-meta {
       font-size: 11px;
       color: var(--text-muted);
       text-align: right;
-      line-height: 1.6;
+      line-height: 1.8;
     }
-    .dash-meta strong { color: var(--text); }
+    .dash-meta strong { color: var(--text); font-weight: 700; }
 
     /* ── Stats strip ─────────────────────────────────────── */
     .stats-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-soft);
+      gap: 0;
     }
 
     .stat-card {
-      background: var(--bg-card);
-      padding: 16px 22px;
+      padding: 20px 22px 18px;
       border-right: 1px solid var(--border-soft);
       position: relative;
+      overflow: hidden;
     }
     .stat-card:last-child { border-right: none; }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .stat-card.ac-lemon::before  { background: var(--accent); }
+    .stat-card.ac-blue::before   { background: var(--zone-el); }
+    .stat-card.ac-green::before  { background: var(--correct); }
+    .stat-card.ac-rel::before    { background: var(--zone-rel); }
 
     .stat-label {
       font-size: 9px;
@@ -189,82 +210,422 @@
       text-transform: uppercase;
       letter-spacing: 1.2px;
       color: var(--text-dim);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .stat-value {
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 900;
-      color: var(--text);
       line-height: 1;
       letter-spacing: -1px;
+      color: var(--text);
     }
 
+    .stat-value.lemon { color: var(--accent); }
+    .stat-value.green { color: var(--correct); }
+
     .stat-sub {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 5px;
       font-weight: 400;
     }
 
-    .stat-accent {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
+    /* ── Section wrapper ─────────────────────────────────── */
+    .section-wrap {
+      padding: 28px 28px 32px;
+      border-bottom: 1px solid var(--border-soft);
     }
+    .section-wrap:last-child { border-bottom: none; }
 
-    /* ── Main grid ───────────────────────────────────────── */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      align-items: start;
-    }
-
-    /* ── Left panel ──────────────────────────────────────── */
-    .left-panel {
-      background: var(--bg-card);
-      border-right: 1px solid var(--border);
-      padding: 22px 26px 28px;
-    }
-
-    /* ── Right panel ─────────────────────────────────────── */
-    .right-panel {
-      background: var(--bg-card2);
-      padding: 18px 18px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* ── Section headers ─────────────────────────────────── */
     .section-head {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .section-title {
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--text);
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+
+    .section-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--border-soft);
+      padding: 2px 8px;
+      border-radius: 20px;
     }
 
     .section-note {
       font-size: 10px;
-      color: var(--text-muted);
+      color: var(--text-dim);
       font-style: italic;
     }
 
-    /* ── Zone legend ─────────────────────────────────────── */
+    .history-btn {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .history-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    .history-panel {
+      display: none;
+      margin-bottom: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .history-panel.open { display: block; }
+
+    /* ── Match grid ──────────────────────────────────────── */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    /* ── Match card ──────────────────────────────────────── */
+    .match-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .match-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .match-card.finished {
+      opacity: 0.95;
+    }
+
+    .match-teams {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .match-team {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+      flex: 1;
+      line-height: 1.2;
+    }
+    .match-team.away { text-align: right; }
+
+    .match-score-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .match-score {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .match-vs {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .match-result-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      line-height: 1.3;
+    }
+    .match-result-badge.correct {
+      background: rgba(34,197,94,0.12);
+      color: var(--correct);
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+    .match-result-badge.incorrect {
+      background: rgba(255,77,109,0.12);
+      color: var(--incorrect);
+      border: 1px solid rgba(255,77,109,0.2);
+    }
+
+    .match-pred-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .match-pred-tag.ph {
+      background: rgba(248,243,43,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(248,243,43,0.2);
+    }
+    .match-pred-tag.pd {
+      background: rgba(141,153,174,0.12);
+      color: var(--text-muted);
+      border: 1px solid rgba(141,153,174,0.2);
+    }
+    .match-pred-tag.pa {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    /* ── Prob bar ────────────────────────────────────────── */
+    .prob-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .prob-bar-track {
+      display: flex;
+      height: 5px;
+      border-radius: 3px;
+      overflow: hidden;
+      gap: 1px;
+    }
+
+    .prob-seg-h { background: var(--accent); border-radius: 3px 0 0 3px; }
+    .prob-seg-d { background: var(--bg-surface); }
+    .prob-seg-a { background: var(--text-muted); border-radius: 0 3px 3px 0; }
+
+    .prob-labels {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .prob-lbl {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Standings table ─────────────────────────────────── */
+    .standings-table-wrap {
+      overflow-x: auto;
+    }
+
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    .standings-table thead th {
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      padding: 7px 10px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .standings-table thead th:nth-child(1) { width: 8px; padding: 0; text-align: left; }
+    .standings-table thead th:nth-child(2) { text-align: center; width: 32px; }
+    .standings-table thead th:nth-child(3) { text-align: left; }
+
+    .standings-table tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-soft);
+      text-align: right;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+    .standings-table tbody tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+    .standings-table tbody tr.fb-row td {
+      background: rgba(248,243,43,0.045);
+    }
+    .standings-table tbody tr.fb-row:hover td {
+      background: rgba(248,243,43,0.08);
+    }
+    .standings-table tbody tr:hover td {
+      background: rgba(248,243,43,0.03);
+      border-left: 2px solid transparent;
+    }
+    .standings-table tbody tr:hover td:first-child {
+      border-left: 3px solid var(--accent);
+    }
+
+    .zone-stripe-td {
+      padding: 0 !important;
+      width: 3px;
+    }
+    .zone-stripe {
+      display: block;
+      width: 3px;
+      height: 100%;
+      min-height: 36px;
+    }
+
+    .standings-table tbody td:nth-child(2) {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+    .standings-table tbody td:nth-child(3) {
+      text-align: left;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .td-xpts {
+      font-weight: 800;
+      color: var(--text) !important;
+    }
+
+    .td-pts {
+      color: var(--text-muted) !important;
+    }
+
+    .move-up   { color: var(--correct); font-size: 10px; font-weight: 700; }
+    .move-down { color: var(--incorrect); font-size: 10px; font-weight: 700; }
+    .move-flat { color: var(--text-dim); font-size: 10px; font-weight: 700; }
+
+    .mini-bar-cell {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+    }
+
+    .mini-bar-pct {
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 34px;
+      text-align: right;
+    }
+
+    .mini-bar {
+      width: 40px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .outcome-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 10px;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    .ob-title {
+      background: var(--accent);
+      color: #000;
+    }
+    .ob-cl {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .ob-cl-race {
+      background: transparent;
+      color: rgba(248,243,43,0.5);
+      border: 1px solid rgba(248,243,43,0.25);
+    }
+    .ob-el {
+      background: transparent;
+      color: var(--zone-el);
+      border: 1px solid var(--zone-el);
+    }
+    .ob-safe {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border-soft);
+    }
+    .ob-risk {
+      background: rgba(255,160,0,0.12);
+      color: #ffa500;
+      border: 1px solid rgba(255,160,0,0.3);
+    }
+    .ob-rel {
+      background: var(--zone-rel);
+      color: #fff;
+    }
+
+    .table-separator td {
+      padding: 0 !important;
+      height: 0;
+      border-bottom: 2px solid var(--border);
+      background: transparent !important;
+    }
+
+    .table-legend {
+      margin-top: 14px;
+      font-size: 10px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
     .zone-legend {
       display: flex;
       gap: 18px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
 
@@ -284,203 +645,24 @@
       flex-shrink: 0;
     }
 
-    /* ── Standings table ─────────────────────────────────── */
-    .standings-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-    }
-
-    .standings-table thead th {
-      font-size: 8.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-dim);
-      padding: 6px 8px;
-      text-align: right;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    .standings-table thead th:first-child { text-align: center; width: 26px; }
-    .standings-table thead th:nth-child(2) { text-align: left; }
-
-    .standings-table tbody td {
-      padding: 7px 8px;
-      border-bottom: 1px solid var(--border-soft);
-      text-align: right;
-      color: var(--text-muted);
-      line-height: 1.2;
-    }
-
-    .standings-table tbody td:first-child {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-dim);
-      font-weight: 700;
-    }
-
-    .standings-table tbody td:nth-child(2) {
-      text-align: left;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .standings-table tbody tr:hover td { background: rgba(59,139,235,0.05); }
-    .standings-table tbody tr.fb-row td { background: rgba(212,160,23,0.07); }
-    .standings-table tbody tr.fb-row:hover td { background: rgba(212,160,23,0.12); }
-
-    .team-cell {
-      display: flex;
-      align-items: center;
-    }
-
-    .zone-stripe {
-      width: 3px;
-      height: 18px;
-      border-radius: 1px;
-      margin-right: 9px;
-      flex-shrink: 0;
-    }
-
-    /* ── Mini bars ───────────────────────────────────────── */
-    .mini-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      justify-content: flex-end;
-    }
-
-    .mini-bar-pct {
-      font-size: 11px;
-      font-weight: 700;
-      min-width: 32px;
-      text-align: right;
-    }
-
-    .mini-bar {
-      width: 44px;
-      height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .mini-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-      transition: width 0.6s ease;
-    }
-
-    /* ── Match cards ─────────────────────────────────────── */
-    .match-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-soft);
-      padding: 11px 13px 10px;
-      margin-bottom: 7px;
-      border-radius: 2px;
-    }
-    .match-card:last-child { margin-bottom: 0; }
-
-    .match-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 7px;
-    }
-
-    .match-team-name {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text);
-      width: 36%;
-    }
-    .match-team-name.away { text-align: right; }
-
-    .match-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-
-    .match-vs-label {
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .match-prediction-tag {
-      font-size: 8px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      padding: 2px 6px;
-      border-radius: 2px;
-    }
-
-    /* ── Prob bar ────────────────────────────────────────── */
-    .prob-bar-stack {
-      display: flex;
-      height: 16px;
-      border-radius: 2px;
-      overflow: hidden;
-      gap: 1px;
-    }
-
-    .prob-seg {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: 800;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 0.2px;
-      transition: flex 0.4s ease;
-    }
-    .prob-seg.small-seg { font-size: 0; }
-
-    .prob-bar-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 3px;
-    }
-
-    .prob-bar-label {
-      font-size: 8px;
-      color: var(--text-dim);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    /* ── Chart panel ─────────────────────────────────────── */
-    .chart-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-soft);
-      padding: 14px 14px 10px;
-      border-radius: 2px;
-    }
-
+    /* ── Accuracy chart ──────────────────────────────────── */
     .chart-legend {
       display: flex;
-      gap: 14px;
-      margin-top: 8px;
+      gap: 16px;
+      margin-top: 12px;
+      flex-wrap: wrap;
     }
 
     .chart-legend-item {
       display: flex;
       align-items: center;
-      gap: 5px;
-      font-size: 9.5px;
+      gap: 6px;
+      font-size: 10px;
       color: var(--text-muted);
     }
 
     .chart-legend-line {
-      width: 18px;
+      width: 20px;
       height: 2px;
       border-radius: 1px;
     }
@@ -488,35 +670,36 @@
     /* ── Footer ──────────────────────────────────────────── */
     .dash-footer {
       background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      padding: 10px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 28px;
       font-size: 10px;
       color: var(--text-dim);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .dash-footer a { color: var(--text-muted); text-decoration: none; font-weight: 600; }
-    .dash-footer a:hover { color: var(--accent-cl); }
-
-    /* ── Misc ────────────────────────────────────────────── */
-    .conf-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 9px;
+    .dash-footer a {
+      color: var(--text-muted);
+      text-decoration: none;
       font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 2px;
     }
+    .dash-footer a:hover { color: var(--accent); }
 
+    /* ── Responsive ──────────────────────────────────────── */
     @media (max-width: 700px) {
-      body { padding: 0; }
-      .main-grid { grid-template-columns: 1fr; }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); }
-      .right-panel { border-top: 1px solid var(--border); }
-      .about-inner { grid-template-columns: 1fr; }
+      .about-inner        { grid-template-columns: 1fr; }
+      .stats-strip        { grid-template-columns: repeat(2, 1fr); }
+      .stat-card:nth-child(2) { border-right: none; }
+      .match-grid         { grid-template-columns: 1fr; }
+      .section-wrap       { padding: 20px 16px 24px; }
+      .dash-header        { padding: 20px 16px 18px; }
+      .dash-title         { font-size: 28px; }
+      .top-bar            { padding: 0 16px; }
+      .standings-table thead th.hide-mobile,
+      .standings-table tbody td.hide-mobile { display: none; }
     }
   </style>
 </head>
@@ -526,7 +709,7 @@
 <div class="top-bar">
   <div class="top-bar-brand">
     <img src="../assets/pixelart_ball.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
-    <span>Predict<span style="color:var(--accent-cl)">May</span></span>
+    Predict<span class="brand-accent">May</span>
   </div>
   <div class="top-bar-actions">
     <button class="about-toggle" onclick="toggleAbout()">About this project ↓</button>
@@ -548,7 +731,7 @@
     <div>
       <strong>Stack</strong>
       Python · dbt · DuckDB · MotherDuck · API-Football<br>
-      <a href="https://github.com/onurhani/predict-may" target="_blank" style="color:var(--accent-cl);font-weight:600;">github.com/onurhani/predict-may</a>
+      <a href="https://github.com/onurhani/predict-may" target="_blank" style="color:var(--accent);font-weight:700;">github.com/onurhani/predict-may</a>
     </div>
   </div>
 </div>
@@ -560,7 +743,7 @@
   <div class="dash-header">
     <div class="dash-header-row">
       <div>
-        <h1 class="dash-title">Predict<span>May</span></h1>
+        <h1 class="dash-title">Predict<span class="t-accent">May</span></h1>
         <p class="dash-tagline">Monte Carlo standings projections · SPI-based model · 10,000 simulations per update</p>
       </div>
       <div class="dash-meta" id="dash-meta">
@@ -572,85 +755,109 @@
 
   <!-- Stats strip -->
   <div class="stats-strip" id="stats-strip">
-    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-green);"></div><div class="stat-label">4-Week Accuracy</div><div class="stat-value">—</div></div>
-    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-cl);"></div><div class="stat-label">Top of Table</div><div class="stat-value" style="font-size:18px;">—</div></div>
-    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-purple);"></div><div class="stat-label">Season Accuracy</div><div class="stat-value">—</div></div>
-    <div class="stat-card"><div class="stat-accent" style="background:var(--accent-el);"></div><div class="stat-label">Matches Remaining</div><div class="stat-value">—</div></div>
+    <div class="stat-card ac-lemon">
+      <div class="stat-label">4-Week Accuracy</div>
+      <div class="stat-value lemon">—</div>
+      <div class="stat-sub">vs 33% random baseline</div>
+    </div>
+    <div class="stat-card ac-blue">
+      <div class="stat-label">Top of Table</div>
+      <div class="stat-value" style="font-size:20px;">—</div>
+      <div class="stat-sub">—</div>
+    </div>
+    <div class="stat-card ac-green">
+      <div class="stat-label">Season Accuracy</div>
+      <div class="stat-value green">—</div>
+      <div class="stat-sub">best week: —</div>
+    </div>
+    <div class="stat-card ac-rel">
+      <div class="stat-label">Matches Remaining</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">— matchdays left</div>
+    </div>
   </div>
 
-  <!-- Main grid -->
-  <div class="main-grid">
+  <!-- Matchday Fixtures -->
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-title-group">
+        <span class="section-title" id="matchday-title">Matchday Fixtures</span>
+        <span class="section-badge" id="matchday-correct-badge"></span>
+      </div>
+      <button class="history-btn" onclick="toggleHistory()">📅 History</button>
+    </div>
+    <div class="history-panel" id="history-panel">
+      Previous matchday breakdowns will appear here once this round is fully completed.
+    </div>
+    <div class="match-grid" id="match-grid"></div>
+  </div>
 
-    <!-- LEFT: Standings -->
-    <div class="left-panel">
-      <div class="section-head">
+  <!-- Prediction Accuracy Chart -->
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-title-group">
+        <span class="section-title">Prediction Accuracy</span>
+        <span class="section-note">2025–26 season</span>
+      </div>
+    </div>
+    <canvas id="accuracyChart" height="130"></canvas>
+    <div class="chart-legend">
+      <div class="chart-legend-item">
+        <div class="chart-legend-line" style="background:rgba(255,255,255,0.25);"></div>
+        Weekly %
+      </div>
+      <div class="chart-legend-item">
+        <div class="chart-legend-line" style="background:var(--accent);"></div>
+        4-week rolling avg
+      </div>
+      <div class="chart-legend-item" style="margin-left:auto;">
+        <span style="font-size:9px;color:var(--text-dim);font-style:italic;">Dashed = 33% baseline</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projected Final Standings -->
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-title-group">
         <span class="section-title">Projected Final Standings</span>
         <span class="section-note">10,000 Monte Carlo simulations</span>
       </div>
+    </div>
 
-      <div class="zone-legend">
-        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-cl);"></div> Champions League</div>
-        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-el);"></div> Europa League</div>
-        <div class="legend-item"><div class="legend-pip" style="background:var(--accent-rel);"></div> Relegation</div>
-      </div>
+    <div class="zone-legend">
+      <div class="legend-item"><div class="legend-pip" style="background:var(--zone-cl);"></div>Champions League</div>
+      <div class="legend-item"><div class="legend-pip" style="background:var(--zone-el);"></div>Europa League</div>
+      <div class="legend-item"><div class="legend-pip" style="background:var(--zone-rel);"></div>Relegation Zone</div>
+    </div>
 
+    <div class="standings-table-wrap">
       <table class="standings-table">
         <thead>
           <tr>
+            <th></th>
             <th>#</th>
             <th>Team</th>
             <th>Pts</th>
-            <th>xPts</th>
-            <th>~Pos</th>
-            <th>Top 4%</th>
-            <th>Rel%</th>
+            <th>→ xPts</th>
+            <th>Proj.</th>
+            <th>CL%</th>
+            <th>REL%</th>
+            <th class="hide-mobile">Outcome</th>
           </tr>
         </thead>
         <tbody id="standings-body"></tbody>
       </table>
-
-      <p style="font-size:10px;color:var(--text-dim);margin-top:14px;line-height:1.5;">
-        ★ Fenerbahçe row highlighted &nbsp;·&nbsp;
-        <strong style="color:var(--text-muted);">Pts</strong> current &nbsp;·&nbsp;
-        <strong style="color:var(--text-muted);">xPts</strong> projected final &nbsp;·&nbsp;
-        <strong style="color:var(--text-muted);">~Pos</strong> most likely finish
-      </p>
     </div>
 
-    <!-- RIGHT: Predictions + Chart -->
-    <div class="right-panel">
-
-      <!-- Next matchday -->
-      <div>
-        <div class="section-head">
-          <span class="section-title" id="matchday-title">Next Matchday</span>
-          <span class="section-note" id="matchday-dates"></span>
-        </div>
-        <div id="match-cards"></div>
-      </div>
-
-      <!-- Accuracy chart -->
-      <div class="chart-panel">
-        <div class="section-head" style="margin-bottom:10px;">
-          <span class="section-title">Prediction Accuracy</span>
-          <span class="section-note">2025–26 season</span>
-        </div>
-        <canvas id="accuracyChart" height="155"></canvas>
-        <div class="chart-legend">
-          <div class="chart-legend-item">
-            <div class="chart-legend-line" style="background:rgba(255,255,255,0.2);"></div>
-            Weekly %
-          </div>
-          <div class="chart-legend-item">
-            <div class="chart-legend-line" style="background:#00d4aa;"></div>
-            4-week rolling
-          </div>
-          <div class="chart-legend-item" style="margin-left:auto;">
-            <span style="font-size:9px;color:var(--text-dim);font-style:italic;">Dashed = 33% baseline</span>
-          </div>
-        </div>
-      </div>
-
+    <div class="table-legend">
+      <strong style="color:var(--text-muted);">#</strong> current standing &nbsp;·&nbsp;
+      <strong style="color:var(--text-muted);">xPts</strong> projected season-end points &nbsp;·&nbsp;
+      <strong style="color:var(--text-muted);">Proj.</strong> expected final position &nbsp;·&nbsp;
+      <strong style="color:var(--text-muted);">CL%</strong> chance of Champions League qualification (top 4) &nbsp;·&nbsp;
+      <strong style="color:var(--text-muted);">REL%</strong> relegation probability &nbsp;·&nbsp;
+      Movement ↑↓ compares projected finish to current rank &nbsp;·&nbsp;
+      ★ Fenerbahçe highlighted
     </div>
   </div>
 
@@ -672,7 +879,12 @@ function toggleAbout() {
     d.classList.contains('open') ? 'About this project ↑' : 'About this project ↓';
 }
 
-/* ── Data ──────────────────────────────────────────── */
+function toggleHistory() {
+  const p = document.getElementById('history-panel');
+  p.classList.toggle('open');
+}
+
+/* ── MOCK Data ─────────────────────────────────────── */
 const MOCK = {
   "meta": {
     "updated_at": "2026-04-12",
@@ -685,422 +897,68 @@ const MOCK = {
     "rolling_4week_pct": 41.7,
     "best_week_pct": 77.8,
     "weekly": [
-      {
-        "week_label": "GD 1",
-        "weekly_pct": 11.1,
-        "rolling_pct": 11.1
-      },
-      {
-        "week_label": "GD 2",
-        "weekly_pct": 77.8,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 3",
-        "weekly_pct": 44.4,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 4",
-        "weekly_pct": 33.3,
-        "rolling_pct": 41.6
-      },
-      {
-        "week_label": "GD 5",
-        "weekly_pct": 22.2,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 6",
-        "weekly_pct": 55.6,
-        "rolling_pct": 38.9
-      },
-      {
-        "week_label": "GD 7",
-        "weekly_pct": 77.8,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 8",
-        "weekly_pct": 44.4,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 9",
-        "weekly_pct": 55.6,
-        "rolling_pct": 58.4
-      },
-      {
-        "week_label": "GD 10",
-        "weekly_pct": 33.3,
-        "rolling_pct": 52.8
-      },
-      {
-        "week_label": "GD 11",
-        "weekly_pct": 44.4,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 12",
-        "weekly_pct": 33.3,
-        "rolling_pct": 41.6
-      },
-      {
-        "week_label": "GD 13",
-        "weekly_pct": 55.6,
-        "rolling_pct": 41.6
-      },
-      {
-        "week_label": "GD 14",
-        "weekly_pct": 55.6,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 15",
-        "weekly_pct": 22.2,
-        "rolling_pct": 41.7
-      },
-      {
-        "week_label": "GD 16",
-        "weekly_pct": 33.3,
-        "rolling_pct": 41.7
-      },
-      {
-        "week_label": "GD 17",
-        "weekly_pct": 66.7,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 18",
-        "weekly_pct": 66.7,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 19",
-        "weekly_pct": 44.4,
-        "rolling_pct": 52.8
-      },
-      {
-        "week_label": "GD 20",
-        "weekly_pct": 55.6,
-        "rolling_pct": 58.4
-      },
-      {
-        "week_label": "GD 21",
-        "weekly_pct": 55.6,
-        "rolling_pct": 55.6
-      },
-      {
-        "week_label": "GD 22",
-        "weekly_pct": 44.4,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 23",
-        "weekly_pct": 33.3,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 24",
-        "weekly_pct": 66.7,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 25",
-        "weekly_pct": 66.7,
-        "rolling_pct": 52.8
-      },
-      {
-        "week_label": "GD 26",
-        "weekly_pct": 44.4,
-        "rolling_pct": 52.8
-      },
-      {
-        "week_label": "GD 27",
-        "weekly_pct": 55.6,
-        "rolling_pct": 58.4
-      },
-      {
-        "week_label": "GD 28",
-        "weekly_pct": 0.0,
-        "rolling_pct": 41.7
-      }
+      { "week_label": "GD 1",  "weekly_pct": 11.1, "rolling_pct": 11.1 },
+      { "week_label": "GD 2",  "weekly_pct": 77.8, "rolling_pct": 44.4 },
+      { "week_label": "GD 3",  "weekly_pct": 44.4, "rolling_pct": 44.4 },
+      { "week_label": "GD 4",  "weekly_pct": 33.3, "rolling_pct": 41.6 },
+      { "week_label": "GD 5",  "weekly_pct": 22.2, "rolling_pct": 44.4 },
+      { "week_label": "GD 6",  "weekly_pct": 55.6, "rolling_pct": 38.9 },
+      { "week_label": "GD 7",  "weekly_pct": 77.8, "rolling_pct": 47.2 },
+      { "week_label": "GD 8",  "weekly_pct": 44.4, "rolling_pct": 50.0 },
+      { "week_label": "GD 9",  "weekly_pct": 55.6, "rolling_pct": 58.4 },
+      { "week_label": "GD 10", "weekly_pct": 33.3, "rolling_pct": 52.8 },
+      { "week_label": "GD 11", "weekly_pct": 44.4, "rolling_pct": 44.4 },
+      { "week_label": "GD 12", "weekly_pct": 33.3, "rolling_pct": 41.6 },
+      { "week_label": "GD 13", "weekly_pct": 55.6, "rolling_pct": 41.6 },
+      { "week_label": "GD 14", "weekly_pct": 55.6, "rolling_pct": 47.2 },
+      { "week_label": "GD 15", "weekly_pct": 22.2, "rolling_pct": 41.7 },
+      { "week_label": "GD 16", "weekly_pct": 33.3, "rolling_pct": 41.7 },
+      { "week_label": "GD 17", "weekly_pct": 66.7, "rolling_pct": 44.4 },
+      { "week_label": "GD 18", "weekly_pct": 66.7, "rolling_pct": 47.2 },
+      { "week_label": "GD 19", "weekly_pct": 44.4, "rolling_pct": 52.8 },
+      { "week_label": "GD 20", "weekly_pct": 55.6, "rolling_pct": 58.4 },
+      { "week_label": "GD 21", "weekly_pct": 55.6, "rolling_pct": 55.6 },
+      { "week_label": "GD 22", "weekly_pct": 44.4, "rolling_pct": 50.0 },
+      { "week_label": "GD 23", "weekly_pct": 33.3, "rolling_pct": 47.2 },
+      { "week_label": "GD 24", "weekly_pct": 66.7, "rolling_pct": 50.0 },
+      { "week_label": "GD 25", "weekly_pct": 66.7, "rolling_pct": 52.8 },
+      { "week_label": "GD 26", "weekly_pct": 44.4, "rolling_pct": 52.8 },
+      { "week_label": "GD 27", "weekly_pct": 55.6, "rolling_pct": 58.4 },
+      { "week_label": "GD 28", "weekly_pct": 0.0,  "rolling_pct": 41.7 }
     ]
   },
   "standings": [
-    {
-      "rank": 1,
-      "team": "Galatasaray",
-      "current_pts": 67,
-      "expected_pts": 77.2,
-      "likely_position": 1,
-      "top4_pct": 100.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 2,
-      "team": "Fenerbahçe",
-      "current_pts": 63,
-      "expected_pts": 71.2,
-      "likely_position": 3,
-      "top4_pct": 100.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 3,
-      "team": "Trabzonspor",
-      "current_pts": 63,
-      "expected_pts": 73.2,
-      "likely_position": 2,
-      "top4_pct": 100.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 4,
-      "team": "Beşiktaş",
-      "current_pts": 52,
-      "expected_pts": 62.3,
-      "likely_position": 4,
-      "top4_pct": 96.4,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 5,
-      "team": "Göztepe",
-      "current_pts": 46,
-      "expected_pts": 53.6,
-      "likely_position": 5,
-      "top4_pct": 2.5,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 6,
-      "team": "Başakşehir",
-      "current_pts": 44,
-      "expected_pts": 52.3,
-      "likely_position": 6,
-      "top4_pct": 1.1,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 7,
-      "team": "Samsunspor",
-      "current_pts": 36,
-      "expected_pts": 43.5,
-      "likely_position": 7,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 8,
-      "team": "Kocaelispor",
-      "current_pts": 34,
-      "expected_pts": 39.9,
-      "likely_position": 12,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.1
-    },
-    {
-      "rank": 9,
-      "team": "Gaziantep",
-      "current_pts": 34,
-      "expected_pts": 41.3,
-      "likely_position": 8,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 10,
-      "team": "Rizespor",
-      "current_pts": 33,
-      "expected_pts": 42.0,
-      "likely_position": 8,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.0
-    },
-    {
-      "rank": 11,
-      "team": "Alanyaspor",
-      "current_pts": 32,
-      "expected_pts": 41.0,
-      "likely_position": 9,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.1
-    },
-    {
-      "rank": 12,
-      "team": "Konyaspor",
-      "current_pts": 31,
-      "expected_pts": 39.4,
-      "likely_position": 12,
-      "top4_pct": 0.0,
-      "relegation_pct": 0.5
-    },
-    {
-      "rank": 13,
-      "team": "Antalyaspor",
-      "current_pts": 28,
-      "expected_pts": 34.1,
-      "likely_position": 14,
-      "top4_pct": 0.0,
-      "relegation_pct": 12.7
-    },
-    {
-      "rank": 14,
-      "team": "Kasımpaşa",
-      "current_pts": 27,
-      "expected_pts": 34.5,
-      "likely_position": 13,
-      "top4_pct": 0.0,
-      "relegation_pct": 13.6
-    },
-    {
-      "rank": 15,
-      "team": "Gençlerbirliği",
-      "current_pts": 25,
-      "expected_pts": 31.7,
-      "likely_position": 15,
-      "top4_pct": 0.0,
-      "relegation_pct": 46.7
-    },
-    {
-      "rank": 16,
-      "team": "Kayserispor",
-      "current_pts": 23,
-      "expected_pts": 30.3,
-      "likely_position": 17,
-      "top4_pct": 0.0,
-      "relegation_pct": 68.8
-    },
-    {
-      "rank": 17,
-      "team": "Eyüpspor",
-      "current_pts": 22,
-      "expected_pts": 29.1,
-      "likely_position": 17,
-      "top4_pct": 0.0,
-      "relegation_pct": 72.8
-    },
-    {
-      "rank": 18,
-      "team": "Karagümrük",
-      "current_pts": 20,
-      "expected_pts": 27.9,
-      "likely_position": 18,
-      "top4_pct": 0.0,
-      "relegation_pct": 84.7
-    }
+    { "rank": 1,  "team": "Galatasaray",    "current_pts": 67, "expected_pts": 77.2, "likely_position": 1,  "top4_pct": 100.0, "relegation_pct": 0.0  },
+    { "rank": 2,  "team": "Fenerbahçe",     "current_pts": 63, "expected_pts": 71.2, "likely_position": 3,  "top4_pct": 100.0, "relegation_pct": 0.0  },
+    { "rank": 3,  "team": "Trabzonspor",    "current_pts": 63, "expected_pts": 73.2, "likely_position": 2,  "top4_pct": 100.0, "relegation_pct": 0.0  },
+    { "rank": 4,  "team": "Beşiktaş",       "current_pts": 52, "expected_pts": 62.3, "likely_position": 4,  "top4_pct": 96.4,  "relegation_pct": 0.0  },
+    { "rank": 5,  "team": "Göztepe",        "current_pts": 46, "expected_pts": 53.6, "likely_position": 5,  "top4_pct": 2.5,   "relegation_pct": 0.0  },
+    { "rank": 6,  "team": "Başakşehir",     "current_pts": 44, "expected_pts": 52.3, "likely_position": 6,  "top4_pct": 1.1,   "relegation_pct": 0.0  },
+    { "rank": 7,  "team": "Samsunspor",     "current_pts": 36, "expected_pts": 43.5, "likely_position": 7,  "top4_pct": 0.0,   "relegation_pct": 0.0  },
+    { "rank": 8,  "team": "Kocaelispor",    "current_pts": 34, "expected_pts": 39.9, "likely_position": 12, "top4_pct": 0.0,   "relegation_pct": 0.1  },
+    { "rank": 9,  "team": "Gaziantep",      "current_pts": 34, "expected_pts": 41.3, "likely_position": 8,  "top4_pct": 0.0,   "relegation_pct": 0.0  },
+    { "rank": 10, "team": "Rizespor",       "current_pts": 33, "expected_pts": 42.0, "likely_position": 8,  "top4_pct": 0.0,   "relegation_pct": 0.0  },
+    { "rank": 11, "team": "Alanyaspor",     "current_pts": 32, "expected_pts": 41.0, "likely_position": 9,  "top4_pct": 0.0,   "relegation_pct": 0.1  },
+    { "rank": 12, "team": "Konyaspor",      "current_pts": 31, "expected_pts": 39.4, "likely_position": 12, "top4_pct": 0.0,   "relegation_pct": 0.5  },
+    { "rank": 13, "team": "Antalyaspor",    "current_pts": 28, "expected_pts": 34.1, "likely_position": 14, "top4_pct": 0.0,   "relegation_pct": 12.7 },
+    { "rank": 14, "team": "Kasımpaşa",      "current_pts": 27, "expected_pts": 34.5, "likely_position": 13, "top4_pct": 0.0,   "relegation_pct": 13.6 },
+    { "rank": 15, "team": "Gençlerbirliği", "current_pts": 25, "expected_pts": 31.7, "likely_position": 15, "top4_pct": 0.0,   "relegation_pct": 46.7 },
+    { "rank": 16, "team": "Kayserispor",    "current_pts": 23, "expected_pts": 30.3, "likely_position": 17, "top4_pct": 0.0,   "relegation_pct": 68.8 },
+    { "rank": 17, "team": "Eyüpspor",       "current_pts": 22, "expected_pts": 29.1, "likely_position": 17, "top4_pct": 0.0,   "relegation_pct": 72.8 },
+    { "rank": 18, "team": "Karagümrük",     "current_pts": 20, "expected_pts": 27.9, "likely_position": 18, "top4_pct": 0.0,   "relegation_pct": 84.7 }
   ],
   "next_matches": [
-    {
-      "home_team": "Beşiktaş",
-      "away_team": "Antalyaspor",
-      "match_date": null,
-      "prob_home": 60,
-      "prob_draw": 27,
-      "prob_away": 13,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 4,
-      "away_score": 2
-    },
-    {
-      "home_team": "Başakşehir",
-      "away_team": "Gençlerbirliği",
-      "match_date": null,
-      "prob_home": 46,
-      "prob_draw": 31,
-      "prob_away": 23,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 3,
-      "away_score": 0
-    },
-    {
-      "home_team": "Alanyaspor",
-      "away_team": "Trabzonspor",
-      "match_date": null,
-      "prob_home": 27,
-      "prob_draw": 31,
-      "prob_away": 42,
-      "predicted_result": "A",
-      "finished": true,
-      "home_score": 1,
-      "away_score": 1
-    },
-    {
-      "home_team": "Kayserispor",
-      "away_team": "Fenerbahçe",
-      "match_date": null,
-      "prob_home": 30,
-      "prob_draw": 33,
-      "prob_away": 37,
-      "predicted_result": "A",
-      "finished": true,
-      "home_score": 0,
-      "away_score": 4
-    },
-    {
-      "home_team": "Konyaspor",
-      "away_team": "Karagümrük",
-      "match_date": null,
-      "prob_home": 41,
-      "prob_draw": 33,
-      "prob_away": 26,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 0,
-      "away_score": 0
-    },
-    {
-      "home_team": "Göztepe",
-      "away_team": "Kasımpaşa",
-      "match_date": null,
-      "prob_home": 33,
-      "prob_draw": 37,
-      "prob_away": 30,
-      "predicted_result": "D",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
-    },
-    {
-      "home_team": "Galatasaray",
-      "away_team": "Kocaelispor",
-      "match_date": null,
-      "prob_home": 59,
-      "prob_draw": 27,
-      "prob_away": 14,
-      "predicted_result": "H",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
-    },
-    {
-      "home_team": "Eyüpspor",
-      "away_team": "Samsunspor",
-      "match_date": null,
-      "prob_home": 31,
-      "prob_draw": 34,
-      "prob_away": 35,
-      "predicted_result": "A",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
-    },
-    {
-      "home_team": "Rizespor",
-      "away_team": "Gaziantep",
-      "match_date": null,
-      "prob_home": 46,
-      "prob_draw": 31,
-      "prob_away": 23,
-      "predicted_result": "H",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
-    }
-  ]
+    { "home_team": "Beşiktaş",    "away_team": "Antalyaspor",    "match_date": null, "prob_home": 60, "prob_draw": 27, "prob_away": 13, "predicted_result": "H", "finished": true,  "home_score": 4, "away_score": 2 },
+    { "home_team": "Başakşehir",  "away_team": "Gençlerbirliği", "match_date": null, "prob_home": 46, "prob_draw": 31, "prob_away": 23, "predicted_result": "H", "finished": true,  "home_score": 3, "away_score": 0 },
+    { "home_team": "Alanyaspor",  "away_team": "Trabzonspor",    "match_date": null, "prob_home": 27, "prob_draw": 31, "prob_away": 42, "predicted_result": "A", "finished": true,  "home_score": 1, "away_score": 1 },
+    { "home_team": "Kayserispor", "away_team": "Fenerbahçe",     "match_date": null, "prob_home": 30, "prob_draw": 33, "prob_away": 37, "predicted_result": "A", "finished": true,  "home_score": 0, "away_score": 4 },
+    { "home_team": "Konyaspor",   "away_team": "Karagümrük",     "match_date": null, "prob_home": 41, "prob_draw": 33, "prob_away": 26, "predicted_result": "H", "finished": true,  "home_score": 0, "away_score": 0 },
+    { "home_team": "Göztepe",     "away_team": "Kasımpaşa",      "match_date": null, "prob_home": 33, "prob_draw": 37, "prob_away": 30, "predicted_result": "D", "finished": false, "home_score": null, "away_score": null },
+    { "home_team": "Galatasaray", "away_team": "Kocaelispor",    "match_date": null, "prob_home": 59, "prob_draw": 27, "prob_away": 14, "predicted_result": "H", "finished": false, "home_score": null, "away_score": null },
+    { "home_team": "Eyüpspor",    "away_team": "Samsunspor",     "match_date": null, "prob_home": 31, "prob_draw": 34, "prob_away": 35, "predicted_result": "A", "finished": false, "home_score": null, "away_score": null },
+    { "home_team": "Rizespor",    "away_team": "Gaziantep",      "match_date": null, "prob_home": 46, "prob_draw": 31, "prob_away": 23, "predicted_result": "H", "finished": false, "home_score": null, "away_score": null }
+  ],
+  "past_matchdays": []
 };
 
 fetch('./docs/data/dashboard.json?v=' + Date.now(), { cache: 'no-store' })
@@ -1108,127 +966,246 @@ fetch('./docs/data/dashboard.json?v=' + Date.now(), { cache: 'no-store' })
   .then(data => render(data))
   .catch(() => render(MOCK));
 
-/* ── Color helpers ─────────────────────────────────── */
+/* ── Helpers ───────────────────────────────────────── */
 function zoneColor(rank) {
-  if (rank <= 4)  return 'var(--accent-cl)';
-  if (rank === 5) return 'var(--accent-el)';
-  if (rank >= 16) return 'var(--accent-rel)';
-  return 'var(--border)';
+  if (rank <= 4)  return 'var(--zone-cl)';
+  if (rank === 5) return 'var(--zone-el)';
+  if (rank >= 16) return 'var(--zone-rel)';
+  return 'transparent';
 }
 
 function top4Color(v) {
-  if (v >= 70) return 'var(--accent-cl)';
-  if (v >= 20) return 'var(--text-muted)';
+  if (v >= 50) return 'var(--accent)';
+  if (v >= 10) return 'var(--text-muted)';
   return 'var(--text-dim)';
 }
 
 function relColor(v) {
-  if (v >= 60) return 'var(--accent-rel)';
-  if (v >= 25) return 'var(--accent-el)';
-  if (v >= 5)  return '#d4a017';
+  if (v >= 20) return 'var(--zone-rel)';
+  if (v >= 5)  return '#ffa500';
   return 'var(--text-dim)';
+}
+
+function outcomeBadge(t) {
+  const r = t.rank;
+  const rel = t.relegation_pct;
+  const top4 = t.top4_pct;
+  if (r === 1) return '<span class="outcome-badge ob-title">🏆 Title</span>';
+  if (r <= 4 && top4 > 80) return '<span class="outcome-badge ob-cl">CL</span>';
+  if (top4 > 20) return '<span class="outcome-badge ob-cl-race">CL Race</span>';
+  if (r === 5) return '<span class="outcome-badge ob-el">EL</span>';
+  if (rel > 50) return '<span class="outcome-badge ob-rel">↓ Rel</span>';
+  if (rel > 10) return '<span class="outcome-badge ob-risk">⚠ Risk</span>';
+  return '<span class="outcome-badge ob-safe">Safe</span>';
+}
+
+function movementHtml(current, projected) {
+  const diff = current - projected; // positive = moved up
+  if (diff > 0) return `<span class="move-up">↑${diff}</span>`;
+  if (diff < 0) return `<span class="move-down">↓${Math.abs(diff)}</span>`;
+  return '<span class="move-flat">→</span>';
+}
+
+function predLabel(m) {
+  if (m.predicted_result === 'H') return `▶ Home Win`;
+  if (m.predicted_result === 'A') return `▶ Away Win`;
+  return '▶ Draw Likely';
+}
+
+function predClass(r) {
+  if (r === 'H') return 'ph';
+  if (r === 'A') return 'pa';
+  return 'pd';
 }
 
 /* ── Render ────────────────────────────────────────── */
 function render(data) {
-  const meta = data.meta || {};
-  const acc  = data.accuracy || {};
+  renderMeta(data);
+  renderStats(data);
+  renderMatchday(data);
+  renderChart(data);
+  renderStandings(data);
+}
 
+function renderMeta(data) {
+  const meta = data.meta || {};
   document.getElementById('dash-meta').innerHTML =
     `Last updated: <strong>${meta.updated_at || '—'}</strong><br>
-     Matchday ${meta.matchday_current} of ${meta.matchday_total} · ${meta.matches_remaining_total} matches remaining`;
+     Matchday ${meta.matchday_current} of ${meta.matchday_total} &nbsp;·&nbsp; ${meta.matches_remaining_total} matches remaining`;
+}
 
-  // Stats strip — derive rolling avg from last weekly data point so stat matches chart
+function renderStats(data) {
+  const meta = data.meta || {};
+  const acc  = data.accuracy || {};
   const weeklyArr = acc.weekly || [];
   const lastRolling = weeklyArr.length > 0
     ? weeklyArr[weeklyArr.length - 1].rolling_pct
     : acc.rolling_4week_pct;
   const top = (data.standings || [])[0] || {};
-  document.getElementById('stats-strip').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-accent" style="background:var(--accent-green);"></div>
+  const strip = document.getElementById('stats-strip');
+  strip.innerHTML = `
+    <div class="stat-card ac-lemon">
       <div class="stat-label">4-Week Accuracy</div>
-      <div class="stat-value" style="color:var(--accent-green);">${lastRolling}%</div>
-      <div class="stat-sub">vs. 33% random baseline</div>
+      <div class="stat-value lemon">${lastRolling}%</div>
+      <div class="stat-sub">vs 33% random baseline</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-accent" style="background:var(--accent-cl);"></div>
+    <div class="stat-card ac-blue">
       <div class="stat-label">Top of Table</div>
       <div class="stat-value" style="font-size:20px;letter-spacing:-0.5px;padding-top:4px;">${top.team || '—'}</div>
-      <div class="stat-sub">${top.current_pts} pts · xPts ${top.expected_pts}</div>
+      <div class="stat-sub">${top.current_pts} pts &nbsp;·&nbsp; xPts ${top.expected_pts}</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-accent" style="background:var(--accent-purple);"></div>
+    <div class="stat-card ac-green">
       <div class="stat-label">Season Accuracy</div>
-      <div class="stat-value">${acc.overall_pct}%</div>
+      <div class="stat-value green">${acc.overall_pct}%</div>
       <div class="stat-sub">best week: ${acc.best_week_pct}%</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-accent" style="background:var(--accent-el);"></div>
+    <div class="stat-card ac-rel">
       <div class="stat-label">Matches Remaining</div>
       <div class="stat-value">${meta.matches_remaining_total}</div>
       <div class="stat-sub">${meta.matchday_total - meta.matchday_current} matchdays left</div>
     </div>`;
+}
 
-  // Standings
+function renderMatchday(data) {
+  const meta = data.meta || {};
+  const matches = data.next_matches || [];
+
+  const hasFinished = matches.some(m => m.finished);
+  const mdTitle = hasFinished
+    ? `Matchday ${meta.matchday_current} — In Progress`
+    : `Matchday ${meta.matchday_current + 1} — Upcoming`;
+
+  document.getElementById('matchday-title').textContent = mdTitle;
+
+  const finished = matches.filter(m => m.finished);
+  const correct  = finished.filter(m => {
+    const actual = m.home_score > m.away_score ? 'H' : m.home_score < m.away_score ? 'A' : 'D';
+    return actual === m.predicted_result;
+  });
+
+  const badge = document.getElementById('matchday-correct-badge');
+  if (finished.length > 0) {
+    badge.textContent = `${correct.length}/${finished.length} correct`;
+  } else {
+    badge.textContent = '';
+  }
+
+  const grid = document.getElementById('match-grid');
+  grid.innerHTML = '';
+
+  matches.forEach(m => {
+    if (m.finished) {
+      const actual = m.home_score > m.away_score ? 'H' : m.home_score < m.away_score ? 'A' : 'D';
+      const isCorrect = actual === m.predicted_result;
+      const resultMap = { H: 'Home Win', A: 'Away Win', D: 'Draw' };
+      const badgeCls  = isCorrect ? 'correct' : 'incorrect';
+      const icon      = isCorrect ? '✓' : '✗';
+      const text      = isCorrect
+        ? `Correct — predicted ${resultMap[m.predicted_result]}`
+        : `Wrong — predicted ${resultMap[m.predicted_result]}, result: ${resultMap[actual]}`;
+
+      grid.innerHTML += `
+        <div class="match-card finished">
+          <div class="match-teams">
+            <span class="match-team">${m.home_team}</span>
+            <div class="match-score-center">
+              <span class="match-score">${m.home_score} – ${m.away_score}</span>
+            </div>
+            <span class="match-team away">${m.away_team}</span>
+          </div>
+          <div>
+            <span class="match-result-badge ${badgeCls}">${icon} ${text}</span>
+          </div>
+          <div class="prob-bar-wrap" style="opacity:0.45;">
+            <div class="prob-bar-track">
+              <div class="prob-seg-h" style="flex:${m.prob_home};"></div>
+              <div class="prob-seg-d" style="flex:${m.prob_draw};"></div>
+              <div class="prob-seg-a" style="flex:${m.prob_away};"></div>
+            </div>
+            <div class="prob-labels">
+              <span class="prob-lbl">H ${m.prob_home}%</span>
+              <span class="prob-lbl">D ${m.prob_draw}%</span>
+              <span class="prob-lbl">A ${m.prob_away}%</span>
+            </div>
+          </div>
+        </div>`;
+    } else {
+      grid.innerHTML += `
+        <div class="match-card">
+          <div class="match-teams">
+            <span class="match-team">${m.home_team}</span>
+            <div class="match-score-center">
+              <span class="match-vs">vs</span>
+            </div>
+            <span class="match-team away">${m.away_team}</span>
+          </div>
+          <div>
+            <span class="match-pred-tag ${predClass(m.predicted_result)}">${predLabel(m)}</span>
+          </div>
+          <div class="prob-bar-wrap">
+            <div class="prob-bar-track">
+              <div class="prob-seg-h" style="flex:${m.prob_home};"></div>
+              <div class="prob-seg-d" style="flex:${m.prob_draw};"></div>
+              <div class="prob-seg-a" style="flex:${m.prob_away};"></div>
+            </div>
+            <div class="prob-labels">
+              <span class="prob-lbl">Home ${m.prob_home}%</span>
+              <span class="prob-lbl">Draw ${m.prob_draw}%</span>
+              <span class="prob-lbl">Away ${m.prob_away}%</span>
+            </div>
+          </div>
+        </div>`;
+    }
+  });
+}
+
+function renderStandings(data) {
   const tbody = document.getElementById('standings-body');
   tbody.innerHTML = '';
-  (data.standings || []).forEach(t => {
+  const standings = data.standings || [];
+
+  standings.forEach((t, idx) => {
     const isFb = t.team.toLowerCase().includes('fenerbah');
+    const zc   = zoneColor(t.rank);
+
+    // Zone separator rows
+    if (t.rank === 5 || t.rank === 16) {
+      tbody.innerHTML += `<tr class="table-separator"><td colspan="9"></td></tr>`;
+    }
+
+    const top4c = top4Color(t.top4_pct);
+    const relc  = relColor(t.relegation_pct);
+    const move  = movementHtml(t.rank, t.likely_position);
+    const badge = outcomeBadge(t);
+
     tbody.innerHTML += `
       <tr${isFb ? ' class="fb-row"' : ''}>
+        <td class="zone-stripe-td"><span class="zone-stripe" style="background:${zc};"></span></td>
         <td>${t.rank}</td>
-        <td><div class="team-cell"><span class="zone-stripe" style="background:${zoneColor(t.rank)};"></span>${t.team}${isFb ? ' <span style="color:var(--accent-gold);font-size:9px;">★</span>' : ''}</div></td>
-        <td style="font-weight:800;color:var(--text);">${t.current_pts}</td>
-        <td>${t.expected_pts.toFixed(1)}</td>
-        <td style="font-weight:600;">${t.likely_position}</td>
-        <td><div class="mini-bar-wrap"><span class="mini-bar-pct" style="color:${top4Color(t.top4_pct)};">${t.top4_pct}%</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${t.top4_pct}%;background:${top4Color(t.top4_pct)};"></div></div></div></td>
-        <td><div class="mini-bar-wrap"><span class="mini-bar-pct" style="color:${relColor(t.relegation_pct)};">${t.relegation_pct}%</span><div class="mini-bar"><div class="mini-bar-fill" style="width:${t.relegation_pct}%;background:${relColor(t.relegation_pct)};"></div></div></div></td>
+        <td>${t.team}${isFb ? ' <span style="color:var(--accent);font-size:9px;">★</span>' : ''}</td>
+        <td class="td-pts">${t.current_pts}</td>
+        <td class="td-xpts">${t.expected_pts.toFixed(1)}</td>
+        <td style="font-weight:600;color:var(--text);">${t.likely_position} ${move}</td>
+        <td>
+          <div class="mini-bar-cell">
+            <span class="mini-bar-pct" style="color:${top4c};">${t.top4_pct}%</span>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(t.top4_pct,100)}%;background:${top4c};"></div></div>
+          </div>
+        </td>
+        <td>
+          <div class="mini-bar-cell">
+            <span class="mini-bar-pct" style="color:${relc};">${t.relegation_pct}%</span>
+            <div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.min(t.relegation_pct,100)}%;background:${relc};"></div></div>
+          </div>
+        </td>
+        <td class="hide-mobile">${badge}</td>
       </tr>`;
   });
+}
 
-  // Matchday predictions
-  document.getElementById('matchday-title').textContent =
-    `Matchday ${meta.matchday_current + 1} Predictions`;
-
-  const PRED = {
-    H: { bg:'rgba(59,139,235,0.18)', color:'#60a5fa', label: m => `${m.home_team} to win` },
-    A: { bg:'rgba(224,92,92,0.18)',  color:'#f87171', label: m => `${m.away_team} to win` },
-    D: { bg:'rgba(255,255,255,0.07)',color:'#94a3b8', label: ()  => 'Draw likely'           },
-  };
-  const container = document.getElementById('match-cards');
-  container.innerHTML = '';
-  (data.next_matches || []).forEach(m => {
-    const s = PRED[m.predicted_result] || PRED.D;
-    const showH = m.prob_home >= 15 ? `${m.prob_home}%` : '';
-    const showD = m.prob_draw >= 15 ? `${m.prob_draw}%` : '';
-    const showA = m.prob_away >= 15 ? `${m.prob_away}%` : '';
-    container.innerHTML += `
-      <div class="match-card">
-        <div class="match-header">
-          <span class="match-team-name">${m.home_team}</span>
-          <div class="match-center">
-            <span class="match-vs-label">vs</span>
-            <span class="match-prediction-tag" style="background:${s.bg};color:${s.color};">▶ ${s.label(m)}</span>
-          </div>
-          <span class="match-team-name away">${m.away_team}</span>
-        </div>
-        <div class="prob-bar-stack">
-          <div class="prob-seg" style="flex:${m.prob_home};background:var(--accent-cl);">${showH}</div>
-          <div class="prob-seg" style="flex:${m.prob_draw};background:#374151;">${showD}</div>
-          <div class="prob-seg" style="flex:${m.prob_away};background:var(--accent-rel);">${showA}</div>
-        </div>
-        <div class="prob-bar-labels">
-          <span class="prob-bar-label">Home ${m.prob_home}%</span>
-          <span class="prob-bar-label">Draw ${m.prob_draw}%</span>
-          <span class="prob-bar-label">Away ${m.prob_away}%</span>
-        </div>
-      </div>`;
-  });
-
-  // Accuracy chart
+function renderChart(data) {
+  const acc = data.accuracy || {};
   const weekly = (acc.weekly || []).slice();
-
   const labels      = weekly.map(w => w.week_label);
   const weeklyData  = weekly.map(w => w.weekly_pct);
   const rollingData = weekly.map(w => w.rolling_pct);
@@ -1264,8 +1241,8 @@ function render(data) {
         {
           label: '4-week rolling avg',
           data: rollingData,
-          borderColor: '#00d4aa',
-          backgroundColor: 'rgba(0,212,170,0.08)',
+          borderColor: '#F8F32B',
+          backgroundColor: 'rgba(248,243,43,0.06)',
           borderWidth: 2.5,
           pointRadius: 0,
           fill: true,
@@ -1279,12 +1256,12 @@ function render(data) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: '#0e1c2f',
-          borderColor: '#1e3048',
+          backgroundColor: '#2B2D42',
+          borderColor: 'rgba(255,255,255,0.08)',
           borderWidth: 1,
-          titleColor: '#6d869e',
-          bodyColor: '#dce8f5',
-          padding: 8,
+          titleColor: '#8D99AE',
+          bodyColor: '#FFFFFF',
+          padding: 10,
           titleFont: { family: "'Libre Franklin',sans-serif", size: 9, weight: '700' },
           bodyFont:  { family: "'Libre Franklin',sans-serif", size: 11, weight: '600' },
           callbacks: {
@@ -1295,21 +1272,33 @@ function render(data) {
       },
       scales: {
         x: {
-          ticks: { font: { family: "'Libre Franklin',sans-serif", size: 8 }, color: '#3a5068', maxRotation: 45, autoSkip: true, maxTicksLimit: 9 },
+          ticks: {
+            font: { family: "'Libre Franklin',sans-serif", size: 8 },
+            color: '#4a5068',
+            maxRotation: 45,
+            autoSkip: true,
+            maxTicksLimit: 9
+          },
           grid: { display: false },
-          border: { color: '#1e3048' }
+          border: { color: '#2B2D42' }
         },
         y: {
           min: 0,
           max: 100,
-          ticks: { font: { family: "'Libre Franklin',sans-serif", size: 9 }, color: '#3a5068', callback: v => v + '%', stepSize: 25 },
-          grid: { color: 'rgba(30,48,72,0.8)' },
+          ticks: {
+            font: { family: "'Libre Franklin',sans-serif", size: 9 },
+            color: '#4a5068',
+            callback: v => v + '%',
+            stepSize: 25
+          },
+          grid: { color: 'rgba(43,45,66,0.8)' },
           border: { display: false }
         }
       }
     }
   });
 }
+
 </script>
 </body>
 </html>
