@@ -417,6 +417,83 @@ def build_next_matches(con) -> list:
     return rows
 
 
+def build_past_matchdays(con) -> list:
+    """Return match-level prediction + result data for every completed round.
+
+    Only rounds where all scheduled games are FT are included (same guard as
+    build_accuracy).  Probabilities are normalised to integer percentages that
+    sum to 100.
+    """
+    df = con.execute("""
+        WITH scheduled AS (
+            SELECT round_number, COUNT(*) AS expected
+            FROM main.schedule_2526
+            WHERE season = ?
+            GROUP BY round_number
+        ),
+        completed AS (
+            SELECT s.round_number, COUNT(*) AS ft_count
+            FROM main_marts.match_predictions mp
+            JOIN main.schedule_2526 s
+                ON  mp.season    = s.season
+                AND mp.home_team = s.home_team
+                AND mp.away_team = s.away_team
+            WHERE mp.season = ?
+            GROUP BY s.round_number
+        ),
+        full_rounds AS (
+            SELECT sc.round_number
+            FROM scheduled sc
+            JOIN completed c ON c.round_number = sc.round_number
+            WHERE c.ft_count = sc.expected
+        )
+        SELECT
+            s.round_number          AS matchday,
+            mp.home_team,
+            mp.away_team,
+            mp.prob_home_win,
+            mp.prob_draw,
+            mp.prob_away_win,
+            mp.predicted_result,
+            mp.actual_home_goals    AS home_score,
+            mp.actual_away_goals    AS away_score
+        FROM main_marts.match_predictions mp
+        JOIN main.schedule_2526 s
+            ON  mp.season    = s.season
+            AND mp.home_team = s.home_team
+            AND mp.away_team = s.away_team
+        JOIN full_rounds fr ON fr.round_number = s.round_number
+        WHERE mp.season = ?
+        ORDER BY s.round_number, mp.home_team
+    """, [CURRENT_SEASON, CURRENT_SEASON, CURRENT_SEASON]).fetchdf()
+
+    past_matchdays = []
+    for matchday, group in df.groupby("matchday", sort=True):
+        matches = []
+        for _, row in group.iterrows():
+            raw = [row["prob_home_win"], row["prob_draw"], row["prob_away_win"]]
+            total = sum(raw)
+            scaled = [v / total for v in raw] if total > 0 else [1/3, 1/3, 1/3]
+            ints = [round(v * 100) for v in scaled]
+            diff = 100 - sum(ints)
+            if diff != 0:
+                ints[ints.index(max(ints))] += diff
+            matches.append({
+                "home_team":       DB_TO_DISPLAY.get(row["home_team"], row["home_team"]),
+                "away_team":       DB_TO_DISPLAY.get(row["away_team"], row["away_team"]),
+                "prob_home":       ints[0],
+                "prob_draw":       ints[1],
+                "prob_away":       ints[2],
+                "predicted_result": row["predicted_result"],
+                "finished":        True,
+                "home_score":      int(row["home_score"]),
+                "away_score":      int(row["away_score"]),
+            })
+        past_matchdays.append({"matchday": int(matchday), "matches": matches})
+
+    return past_matchdays
+
+
 def main():
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 
@@ -438,6 +515,10 @@ def main():
     next_matches = build_next_matches(con)
     print(f"  Next matches: {len(next_matches)} fixtures")
 
+    past_matchdays = build_past_matchdays(con)
+    print(f"  Past matchdays: {len(past_matchdays)} rounds, "
+          f"{sum(len(md['matches']) for md in past_matchdays)} matches")
+
     con.close()
 
     dashboard = {
@@ -445,6 +526,7 @@ def main():
         "accuracy": accuracy,
         "standings": standings,
         "next_matches": next_matches,
+        "past_matchdays": past_matchdays,
     }
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
