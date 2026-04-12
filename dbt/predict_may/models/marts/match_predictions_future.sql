@@ -125,10 +125,10 @@ final as (
         expected_home_goals,
         expected_away_goals,
         
-        -- Predicted result using improved logic with draw threshold
+        -- Predicted result: draw if prob_draw >= threshold, else argmax of home/away
         case
             when prob_draw >= {{ get_constant('draw_prediction_threshold') }} then 'D'
-            when prob_home_win > prob_away_win then 'H'
+            when prob_home_win >= prob_away_win then 'H'
             else 'A'
         end as predicted_result,
         

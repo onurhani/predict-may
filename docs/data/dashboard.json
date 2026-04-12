@@ -1,154 +1,154 @@
 {
   "meta": {
-    "updated_at": "2026-04-11",
+    "updated_at": "2026-04-12",
     "matchday_current": 28,
     "matchday_total": 34,
     "matches_remaining_total": 54
   },
   "accuracy": {
-    "overall_pct": 47.6,
-    "rolling_4week_pct": 47.2,
+    "overall_pct": 46.4,
+    "rolling_4week_pct": 41.7,
     "best_week_pct": 77.8,
     "weekly": [
       {
         "week_label": "GD 1",
-        "weekly_pct": 44.4,
-        "rolling_pct": 44.4
+        "weekly_pct": 11.1,
+        "rolling_pct": 11.1
       },
       {
         "week_label": "GD 2",
-        "weekly_pct": 66.7,
-        "rolling_pct": 55.6
-      },
-      {
-        "week_label": "GD 3",
-        "weekly_pct": 55.6,
-        "rolling_pct": 55.6
-      },
-      {
-        "week_label": "GD 4",
-        "weekly_pct": 22.2,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 5",
-        "weekly_pct": 44.4,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 6",
-        "weekly_pct": 44.4,
-        "rolling_pct": 41.7
-      },
-      {
-        "week_label": "GD 7",
-        "weekly_pct": 66.7,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 8",
-        "weekly_pct": 33.3,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 9",
-        "weekly_pct": 55.6,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 10",
-        "weekly_pct": 33.3,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 11",
-        "weekly_pct": 55.6,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 12",
-        "weekly_pct": 44.4,
-        "rolling_pct": 47.2
-      },
-      {
-        "week_label": "GD 13",
-        "weekly_pct": 44.4,
-        "rolling_pct": 44.4
-      },
-      {
-        "week_label": "GD 14",
-        "weekly_pct": 55.6,
-        "rolling_pct": 50.0
-      },
-      {
-        "week_label": "GD 15",
-        "weekly_pct": 22.2,
-        "rolling_pct": 41.6
-      },
-      {
-        "week_label": "GD 16",
-        "weekly_pct": 22.2,
-        "rolling_pct": 36.1
-      },
-      {
-        "week_label": "GD 17",
         "weekly_pct": 77.8,
         "rolling_pct": 44.4
       },
       {
-        "week_label": "GD 18",
+        "week_label": "GD 3",
         "weekly_pct": 44.4,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 4",
+        "weekly_pct": 33.3,
         "rolling_pct": 41.6
       },
       {
-        "week_label": "GD 19",
-        "weekly_pct": 33.3,
+        "week_label": "GD 5",
+        "weekly_pct": 22.2,
         "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 6",
+        "weekly_pct": 55.6,
+        "rolling_pct": 38.9
+      },
+      {
+        "week_label": "GD 7",
+        "weekly_pct": 77.8,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 8",
+        "weekly_pct": 44.4,
+        "rolling_pct": 50.0
+      },
+      {
+        "week_label": "GD 9",
+        "weekly_pct": 55.6,
+        "rolling_pct": 58.4
+      },
+      {
+        "week_label": "GD 10",
+        "weekly_pct": 33.3,
+        "rolling_pct": 52.8
+      },
+      {
+        "week_label": "GD 11",
+        "weekly_pct": 44.4,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 12",
+        "weekly_pct": 33.3,
+        "rolling_pct": 41.6
+      },
+      {
+        "week_label": "GD 13",
+        "weekly_pct": 55.6,
+        "rolling_pct": 41.6
+      },
+      {
+        "week_label": "GD 14",
+        "weekly_pct": 55.6,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 15",
+        "weekly_pct": 22.2,
+        "rolling_pct": 41.7
+      },
+      {
+        "week_label": "GD 16",
+        "weekly_pct": 33.3,
+        "rolling_pct": 41.7
+      },
+      {
+        "week_label": "GD 17",
+        "weekly_pct": 66.7,
+        "rolling_pct": 44.4
+      },
+      {
+        "week_label": "GD 18",
+        "weekly_pct": 66.7,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 19",
+        "weekly_pct": 44.4,
+        "rolling_pct": 52.8
       },
       {
         "week_label": "GD 20",
         "weekly_pct": 55.6,
-        "rolling_pct": 52.8
+        "rolling_pct": 58.4
       },
       {
         "week_label": "GD 21",
+        "weekly_pct": 55.6,
+        "rolling_pct": 55.6
+      },
+      {
+        "week_label": "GD 22",
+        "weekly_pct": 44.4,
+        "rolling_pct": 50.0
+      },
+      {
+        "week_label": "GD 23",
+        "weekly_pct": 33.3,
+        "rolling_pct": 47.2
+      },
+      {
+        "week_label": "GD 24",
         "weekly_pct": 66.7,
         "rolling_pct": 50.0
       },
       {
-        "week_label": "GD 22",
-        "weekly_pct": 66.7,
-        "rolling_pct": 55.6
-      },
-      {
-        "week_label": "GD 23",
-        "weekly_pct": 44.4,
-        "rolling_pct": 58.4
-      },
-      {
-        "week_label": "GD 24",
-        "weekly_pct": 44.4,
-        "rolling_pct": 55.6
-      },
-      {
         "week_label": "GD 25",
-        "weekly_pct": 55.6,
+        "weekly_pct": 66.7,
         "rolling_pct": 52.8
       },
       {
         "week_label": "GD 26",
         "weekly_pct": 44.4,
-        "rolling_pct": 47.2
+        "rolling_pct": 52.8
       },
       {
         "week_label": "GD 27",
-        "weekly_pct": 77.8,
-        "rolling_pct": 55.6
+        "weekly_pct": 55.6,
+        "rolling_pct": 58.4
       },
       {
         "week_label": "GD 28",
-        "weekly_pct": 11.1,
-        "rolling_pct": 47.2
+        "weekly_pct": 0.0,
+        "rolling_pct": 41.7
       }
     ]
   },
@@ -157,7 +157,7 @@
       "rank": 1,
       "team": "Galatasaray",
       "current_pts": 67,
-      "expected_pts": 77.3,
+      "expected_pts": 77.2,
       "likely_position": 1,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
@@ -166,7 +166,7 @@
       "rank": 2,
       "team": "Fenerbahçe",
       "current_pts": 63,
-      "expected_pts": 71.4,
+      "expected_pts": 71.2,
       "likely_position": 3,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
@@ -175,7 +175,7 @@
       "rank": 3,
       "team": "Trabzonspor",
       "current_pts": 63,
-      "expected_pts": 73.3,
+      "expected_pts": 73.2,
       "likely_position": 2,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
@@ -184,34 +184,34 @@
       "rank": 4,
       "team": "Beşiktaş",
       "current_pts": 52,
-      "expected_pts": 62.4,
+      "expected_pts": 62.3,
       "likely_position": 4,
-      "top4_pct": 95.7,
+      "top4_pct": 96.6,
       "relegation_pct": 0.0
     },
     {
       "rank": 5,
       "team": "Göztepe",
       "current_pts": 46,
-      "expected_pts": 53.7,
+      "expected_pts": 53.6,
       "likely_position": 5,
-      "top4_pct": 2.9,
+      "top4_pct": 2.7,
       "relegation_pct": 0.0
     },
     {
       "rank": 6,
       "team": "Başakşehir",
       "current_pts": 44,
-      "expected_pts": 52.4,
+      "expected_pts": 52.3,
       "likely_position": 6,
-      "top4_pct": 1.4,
+      "top4_pct": 0.7,
       "relegation_pct": 0.0
     },
     {
       "rank": 7,
       "team": "Samsunspor",
       "current_pts": 36,
-      "expected_pts": 43.6,
+      "expected_pts": 43.5,
       "likely_position": 7,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
@@ -223,13 +223,13 @@
       "expected_pts": 39.9,
       "likely_position": 11,
       "top4_pct": 0.0,
-      "relegation_pct": 0.1
+      "relegation_pct": 0.0
     },
     {
       "rank": 9,
       "team": "Gaziantep",
       "current_pts": 34,
-      "expected_pts": 41.4,
+      "expected_pts": 41.3,
       "likely_position": 9,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
@@ -238,7 +238,7 @@
       "rank": 10,
       "team": "Rizespor",
       "current_pts": 33,
-      "expected_pts": 42.2,
+      "expected_pts": 42.0,
       "likely_position": 8,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
@@ -247,10 +247,10 @@
       "rank": 11,
       "team": "Alanyaspor",
       "current_pts": 32,
-      "expected_pts": 41.0,
+      "expected_pts": 40.9,
       "likely_position": 10,
       "top4_pct": 0.0,
-      "relegation_pct": 0.2
+      "relegation_pct": 0.1
     },
     {
       "rank": 12,
@@ -259,7 +259,7 @@
       "expected_pts": 39.4,
       "likely_position": 12,
       "top4_pct": 0.0,
-      "relegation_pct": 0.8
+      "relegation_pct": 0.6
     },
     {
       "rank": 13,
@@ -268,43 +268,43 @@
       "expected_pts": 34.2,
       "likely_position": 14,
       "top4_pct": 0.0,
-      "relegation_pct": 12.8
+      "relegation_pct": 17.6
     },
     {
       "rank": 14,
       "team": "Kasımpaşa",
       "current_pts": 27,
       "expected_pts": 34.5,
-      "likely_position": 14,
+      "likely_position": 13,
       "top4_pct": 0.0,
-      "relegation_pct": 14.3
+      "relegation_pct": 13.8
     },
     {
       "rank": 15,
       "team": "Gençlerbirliği",
       "current_pts": 25,
-      "expected_pts": 31.8,
+      "expected_pts": 31.7,
       "likely_position": 15,
       "top4_pct": 0.0,
-      "relegation_pct": 46.6
+      "relegation_pct": 39.6
     },
     {
       "rank": 16,
       "team": "Kayserispor",
       "current_pts": 23,
-      "expected_pts": 30.4,
-      "likely_position": 17,
+      "expected_pts": 30.3,
+      "likely_position": 16,
       "top4_pct": 0.0,
-      "relegation_pct": 68.6
+      "relegation_pct": 61.7
     },
     {
       "rank": 17,
       "team": "Eyüpspor",
       "current_pts": 22,
-      "expected_pts": 29.2,
+      "expected_pts": 29.1,
       "likely_position": 17,
       "top4_pct": 0.0,
-      "relegation_pct": 72.4
+      "relegation_pct": 78.2
     },
     {
       "rank": 18,
@@ -313,7 +313,7 @@
       "expected_pts": 27.9,
       "likely_position": 18,
       "top4_pct": 0.0,
-      "relegation_pct": 84.1
+      "relegation_pct": 88.2
     }
   ],
   "next_matches": [
@@ -363,16 +363,16 @@
       "predicted_result": "D",
       "finished": true,
       "home_score": 0,
-      "away_score": 1
+      "away_score": 4
     },
     {
       "home_team": "Konyaspor",
       "away_team": "Karagümrük",
       "match_date": null,
-      "prob_home": 43,
-      "prob_draw": 30,
-      "prob_away": 27,
-      "predicted_result": "D",
+      "prob_home": 41,
+      "prob_draw": 33,
+      "prob_away": 26,
+      "predicted_result": "H",
       "finished": false,
       "home_score": null,
       "away_score": null
@@ -381,9 +381,9 @@
       "home_team": "Göztepe",
       "away_team": "Kasımpaşa",
       "match_date": null,
-      "prob_home": 36,
-      "prob_draw": 32,
-      "prob_away": 32,
+      "prob_home": 33,
+      "prob_draw": 37,
+      "prob_away": 30,
       "predicted_result": "D",
       "finished": false,
       "home_score": null,
@@ -405,10 +405,10 @@
       "home_team": "Eyüpspor",
       "away_team": "Samsunspor",
       "match_date": null,
-      "prob_home": 33,
-      "prob_draw": 31,
-      "prob_away": 36,
-      "predicted_result": "D",
+      "prob_home": 31,
+      "prob_draw": 34,
+      "prob_away": 35,
+      "predicted_result": "A",
       "finished": false,
       "home_score": null,
       "away_score": null
@@ -417,8 +417,8 @@
       "home_team": "Rizespor",
       "away_team": "Gaziantep",
       "match_date": null,
-      "prob_home": 48,
-      "prob_draw": 29,
+      "prob_home": 46,
+      "prob_draw": 31,
       "prob_away": 23,
       "predicted_result": "H",
       "finished": false,

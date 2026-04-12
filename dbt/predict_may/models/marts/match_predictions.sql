@@ -88,9 +88,9 @@ final as (
         expected_home_goals,
         expected_away_goals,
         
-        -- Predicted result using argmax: predict whichever outcome has highest probability
+        -- Predicted result: draw if prob_draw >= threshold, else argmax of home/away
         case
-            when prob_draw >= prob_home_win and prob_draw >= prob_away_win then 'D'
+            when prob_draw >= {{ get_constant('draw_prediction_threshold') }} then 'D'
             when prob_home_win >= prob_away_win then 'H'
             else 'A'
         end as predicted_result,
@@ -101,9 +101,9 @@ final as (
 
         -- Accuracy flag
         case
-            when prob_draw >= prob_home_win and prob_draw >= prob_away_win and actual_result = 'D' then 1
-            when prob_home_win > prob_draw and prob_home_win >= prob_away_win and actual_result = 'H' then 1
-            when prob_away_win > prob_draw and prob_away_win > prob_home_win and actual_result = 'A' then 1
+            when prob_draw >= {{ get_constant('draw_prediction_threshold') }} and actual_result = 'D' then 1
+            when prob_draw < {{ get_constant('draw_prediction_threshold') }} and prob_home_win >= prob_away_win and actual_result = 'H' then 1
+            when prob_draw < {{ get_constant('draw_prediction_threshold') }} and prob_away_win > prob_home_win and actual_result = 'A' then 1
             else 0
         end as correct_prediction
         
