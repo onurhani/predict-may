@@ -271,6 +271,14 @@ def build_next_matches(con) -> list:
                     WHERE season = ? AND home_team = ? AND away_team = ?
                     LIMIT 1
                 """, [CURRENT_SEASON, home, away]).fetchone()
+                # Fall back to future predictions if not yet in completed table
+                if not hist:
+                    hist = con.execute("""
+                        SELECT home_team, away_team, prob_home_win, prob_draw, prob_away_win, predicted_result
+                        FROM main_marts.match_predictions_future
+                        WHERE season = ? AND home_team = ? AND away_team = ?
+                        LIMIT 1
+                    """, [CURRENT_SEASON, home, away]).fetchone()
                 if hist:
                     raw = [hist[2], hist[3], hist[4]]
                     total = sum(raw)
