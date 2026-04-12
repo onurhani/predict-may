@@ -48,7 +48,7 @@
       padding: 0 28px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       height: 46px;
       position: sticky;
       top: 0;
@@ -298,11 +298,51 @@
       border: 1px solid var(--border-soft);
       border-radius: 4px;
       padding: 14px 16px;
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
     }
     .history-panel.open { display: block; }
+
+    .gd-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 0;
+    }
+    .gd-btn {
+      font-family: inherit;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      min-width: 50px;
+      transition: border-color 0.15s;
+    }
+    .gd-btn:hover, .gd-btn.gd-selected { border-color: var(--accent); }
+    .gd-btn.gd-selected { background: var(--accent-dim); }
+    .gd-wk  { font-size: 9px; font-weight: 700; color: var(--text-dim); letter-spacing: 0.3px; }
+    .gd-pct { font-size: 13px; font-weight: 900; }
+    .gd-good .gd-pct { color: var(--correct); }
+    .gd-ok   .gd-pct { color: var(--text-muted); }
+    .gd-bad  .gd-pct { color: var(--zone-rel); }
+
+    .gd-detail {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .gd-detail-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .gd-detail-title { font-size: 12px; font-weight: 900; color: var(--text); }
+    .gd-detail-acc   { font-size: 11px; color: var(--text-muted); }
+    .gd-no-data { font-size: 11px; color: var(--text-dim); font-style: italic; }
 
     /* ── Match grid ──────────────────────────────────────── */
     .match-grid {
@@ -707,10 +747,6 @@
 
 <!-- ── Top nav bar ──────────────────────────────────── -->
 <div class="top-bar">
-  <div class="top-bar-brand">
-    <img src="../assets/pixelart_ball.png" alt="" style="width:16px;height:16px;image-rendering:pixelated;">
-    Predict<span class="brand-accent">May</span>
-  </div>
   <div class="top-bar-actions">
     <button class="about-toggle" onclick="toggleAbout()">About this project ↓</button>
     <a class="top-bar-link" href="https://github.com/onurhani/predict-may" target="_blank">GitHub →</a>
@@ -786,9 +822,7 @@
       </div>
       <button class="history-btn" onclick="toggleHistory()">📅 History</button>
     </div>
-    <div class="history-panel" id="history-panel">
-      Previous matchday breakdowns will appear here once this round is fully completed.
-    </div>
+    <div class="history-panel" id="history-panel"></div>
     <div class="match-grid" id="match-grid"></div>
   </div>
 
@@ -879,9 +913,66 @@ function toggleAbout() {
     d.classList.contains('open') ? 'About this project ↑' : 'About this project ↓';
 }
 
+let _dashData = null;
+
 function toggleHistory() {
   const p = document.getElementById('history-panel');
-  p.classList.toggle('open');
+  if (p.classList.contains('open')) { p.classList.remove('open'); return; }
+  if (!_dashData) return;
+  const weekly = (_dashData.accuracy || {}).weekly || [];
+  let html = '<div class="gd-grid">';
+  weekly.forEach((w, i) => {
+    const pct = w.weekly_pct;
+    const cls = pct >= 55 ? 'gd-good' : pct >= 33 ? 'gd-ok' : 'gd-bad';
+    html += `<button class="gd-btn ${cls}" data-gd="${i}" onclick="showGDDetail(${i})">
+      <span class="gd-wk">${w.week_label}</span>
+      <span class="gd-pct">${pct}%</span>
+    </button>`;
+  });
+  html += '</div><div class="gd-detail" id="gd-detail"></div>';
+  p.innerHTML = html;
+  p.classList.add('open');
+}
+
+function showGDDetail(idx) {
+  document.querySelectorAll('.gd-btn').forEach(b => b.classList.remove('gd-selected'));
+  const btn = document.querySelector(`.gd-btn[data-gd="${idx}"]`);
+  if (btn) btn.classList.add('gd-selected');
+
+  const weekly = (_dashData.accuracy || {}).weekly || [];
+  const w = weekly[idx];
+  if (!w) return;
+
+  const pastMatchdays = _dashData.past_matchdays || [];
+  const past = pastMatchdays.find(d => d.matchday === idx + 1);
+  const detail = document.getElementById('gd-detail');
+
+  let html = `<div class="gd-detail-head">
+    <span class="gd-detail-title">${w.week_label}</span>
+    <span class="gd-detail-acc">${w.weekly_pct}% accuracy &nbsp;·&nbsp; 4-wk rolling: ${w.rolling_pct}%</span>
+  </div>`;
+
+  if (past && past.matches && past.matches.length > 0) {
+    html += '<div class="match-grid">';
+    past.matches.forEach(m => {
+      const actual = m.home_score > m.away_score ? 'H' : m.home_score < m.away_score ? 'A' : 'D';
+      const ok = actual === m.predicted_result;
+      const scoreStr = m.finished ? `${m.home_score} – ${m.away_score}` : 'vs';
+      html += `<div class="match-card">
+        <div class="match-header-row">
+          <span class="match-team home">${m.home_team}</span>
+          <span class="match-score-box">${scoreStr}</span>
+          <span class="match-team away">${m.away_team}</span>
+        </div>
+        <span class="result-badge ${ok ? 'rb-correct' : 'rb-wrong'}">${ok ? '✓ Correct' : '✗ Wrong'} — pred. ${m.predicted_result === 'H' ? 'Home' : m.predicted_result === 'A' ? 'Away' : 'Draw'}</span>
+      </div>`;
+    });
+    html += '</div>';
+  } else {
+    html += `<p class="gd-no-data">Match-level data for ${w.week_label} is not stored yet — only the accuracy summary is available.</p>`;
+  }
+
+  detail.innerHTML = html;
 }
 
 /* ── MOCK Data ─────────────────────────────────────── */
@@ -1020,6 +1111,7 @@ function predClass(r) {
 
 /* ── Render ────────────────────────────────────────── */
 function render(data) {
+  _dashData = data;
   renderMeta(data);
   renderStats(data);
   renderMatchday(data);
