@@ -344,6 +344,40 @@
     .gd-detail-acc   { font-size: 11px; color: var(--text-muted); }
     .gd-no-data { font-size: 11px; color: var(--text-dim); font-style: italic; }
 
+    /* ── History detail match cards ──────────────────────── */
+    .match-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .match-score-box {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--accent);
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+    .result-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .rb-correct {
+      background: rgba(34,197,94,0.12);
+      color: var(--correct);
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+    .rb-wrong {
+      background: rgba(255,77,109,0.12);
+      color: var(--incorrect);
+      border: 1px solid rgba(255,77,109,0.2);
+    }
+
     /* ── Match grid ──────────────────────────────────────── */
     .match-grid {
       display: grid;
