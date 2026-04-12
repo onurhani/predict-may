@@ -133,22 +133,39 @@ def build_standings(con) -> list:
 
 
 def build_accuracy(con) -> dict:
-    # Fetch per-match data joined with the schedule seed for correct round assignment.
-    match_df = con.execute("""
-        SELECT
-            mp.match_date,
-            mp.correct_prediction,
-            s.round_number AS gameday
-        FROM main_marts.match_predictions mp
-        LEFT JOIN main.schedule_2526 s
-            ON mp.season = s.season
-            AND mp.home_team = s.home_team
-            AND mp.away_team = s.away_team
-        WHERE mp.season = ?
-        ORDER BY mp.match_date
-    """, [CURRENT_SEASON]).fetchdf()
+    # Build accuracy grouped strictly by schedule round_number.
+    # Only include rounds where every scheduled match has a completed prediction
+    # (prevents partial gamedays from skewing percentages).
+    # Sort by round_number — never by match_date — so postponed games don't
+    # reorder the chart.
+    gd_df = con.execute("""
+        WITH scheduled AS (
+            SELECT round_number, COUNT(*) AS expected
+            FROM main.schedule_2526
+            WHERE season = ?
+            GROUP BY round_number
+        ),
+        results AS (
+            SELECT
+                s.round_number,
+                COUNT(*)                  AS total,
+                SUM(mp.correct_prediction) AS correct
+            FROM main_marts.match_predictions mp
+            JOIN main.schedule_2526 s
+                ON  mp.season     = s.season
+                AND mp.home_team  = s.home_team
+                AND mp.away_team  = s.away_team
+            WHERE mp.season = ?
+            GROUP BY s.round_number
+        )
+        SELECT r.round_number, r.total, r.correct
+        FROM results r
+        JOIN scheduled sc ON r.round_number = sc.round_number
+        WHERE r.total = sc.expected          -- only fully-completed rounds
+        ORDER BY r.round_number
+    """, [CURRENT_SEASON, CURRENT_SEASON]).fetchdf()
 
-    if match_df.empty:
+    if gd_df.empty:
         return {
             "overall_pct": 0.0,
             "rolling_4week_pct": 0.0,
@@ -156,28 +173,19 @@ def build_accuracy(con) -> dict:
             "weekly": [],
         }
 
-    # Drop any matches not found in the schedule seed (shouldn't happen, but be safe)
-    match_df = match_df.dropna(subset=["gameday"])
-    match_df["gameday"] = match_df["gameday"].astype(int)
-
-    # Aggregate by gameday
-    gd_df = match_df.groupby("gameday").agg(
-        total=("correct_prediction", "count"),
-        correct=("correct_prediction", "sum"),
-    ).reset_index()
-
     gd_df["weekly_pct"] = (gd_df["correct"] / gd_df["total"] * 100).round(1)
     gd_df["rolling_pct"] = (
         gd_df["weekly_pct"].rolling(window=4, min_periods=1).mean().round(1)
     )
 
-    weekly = []
-    for i, (_, row) in enumerate(gd_df.iterrows(), start=1):
-        weekly.append({
-            "week_label": f"GD {i}",
+    weekly = [
+        {
+            "week_label": f"GD {int(row['round_number'])}",
             "weekly_pct": float(row["weekly_pct"]),
             "rolling_pct": float(row["rolling_pct"]),
-        })
+        }
+        for _, row in gd_df.iterrows()
+    ]
 
     overall_pct = round(gd_df["correct"].sum() / gd_df["total"].sum() * 100, 1)
     rolling_4week_pct = float(gd_df["rolling_pct"].iloc[-1]) if len(gd_df) >= 1 else 0.0

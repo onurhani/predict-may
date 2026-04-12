@@ -186,7 +186,7 @@
       "current_pts": 52,
       "expected_pts": 62.3,
       "likely_position": 4,
-      "top4_pct": 96.6,
+      "top4_pct": 96.4,
       "relegation_pct": 0.0
     },
     {
@@ -195,7 +195,7 @@
       "current_pts": 46,
       "expected_pts": 53.6,
       "likely_position": 5,
-      "top4_pct": 2.7,
+      "top4_pct": 2.5,
       "relegation_pct": 0.0
     },
     {
@@ -204,7 +204,7 @@
       "current_pts": 44,
       "expected_pts": 52.3,
       "likely_position": 6,
-      "top4_pct": 0.7,
+      "top4_pct": 1.1,
       "relegation_pct": 0.0
     },
     {
@@ -221,16 +221,16 @@
       "team": "Kocaelispor",
       "current_pts": 34,
       "expected_pts": 39.9,
-      "likely_position": 11,
+      "likely_position": 12,
       "top4_pct": 0.0,
-      "relegation_pct": 0.0
+      "relegation_pct": 0.1
     },
     {
       "rank": 9,
       "team": "Gaziantep",
       "current_pts": 34,
       "expected_pts": 41.3,
-      "likely_position": 9,
+      "likely_position": 8,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
     },
@@ -247,8 +247,8 @@
       "rank": 11,
       "team": "Alanyaspor",
       "current_pts": 32,
-      "expected_pts": 40.9,
-      "likely_position": 10,
+      "expected_pts": 41.0,
+      "likely_position": 9,
       "top4_pct": 0.0,
       "relegation_pct": 0.1
     },
@@ -259,16 +259,16 @@
       "expected_pts": 39.4,
       "likely_position": 12,
       "top4_pct": 0.0,
-      "relegation_pct": 0.6
+      "relegation_pct": 0.5
     },
     {
       "rank": 13,
       "team": "Antalyaspor",
       "current_pts": 28,
-      "expected_pts": 34.2,
+      "expected_pts": 34.1,
       "likely_position": 14,
       "top4_pct": 0.0,
-      "relegation_pct": 17.6
+      "relegation_pct": 12.7
     },
     {
       "rank": 14,
@@ -277,7 +277,7 @@
       "expected_pts": 34.5,
       "likely_position": 13,
       "top4_pct": 0.0,
-      "relegation_pct": 13.8
+      "relegation_pct": 13.6
     },
     {
       "rank": 15,
@@ -286,16 +286,16 @@
       "expected_pts": 31.7,
       "likely_position": 15,
       "top4_pct": 0.0,
-      "relegation_pct": 39.6
+      "relegation_pct": 46.7
     },
     {
       "rank": 16,
       "team": "Kayserispor",
       "current_pts": 23,
       "expected_pts": 30.3,
-      "likely_position": 16,
+      "likely_position": 17,
       "top4_pct": 0.0,
-      "relegation_pct": 61.7
+      "relegation_pct": 68.8
     },
     {
       "rank": 17,
@@ -304,7 +304,7 @@
       "expected_pts": 29.1,
       "likely_position": 17,
       "top4_pct": 0.0,
-      "relegation_pct": 78.2
+      "relegation_pct": 72.8
     },
     {
       "rank": 18,
@@ -313,7 +313,7 @@
       "expected_pts": 27.9,
       "likely_position": 18,
       "top4_pct": 0.0,
-      "relegation_pct": 88.2
+      "relegation_pct": 84.7
     }
   ],
   "next_matches": [
@@ -373,9 +373,9 @@
       "prob_draw": 33,
       "prob_away": 26,
       "predicted_result": "H",
-      "finished": false,
-      "home_score": null,
-      "away_score": null
+      "finished": true,
+      "home_score": 0,
+      "away_score": 0
     },
     {
       "home_team": "Göztepe",
