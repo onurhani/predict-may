@@ -9,8 +9,11 @@ import duckdb
 import pandas as pd
 from datetime import date, datetime
 
+import pathlib
+
 DB_PATH = "data/football.duckdb"
 OUTPUT_PATH = "docs/data/dashboard.json"
+ML_PREDS_PATH = pathlib.Path("scripts/ml_predictions.json")
 CURRENT_SEASON = 2025  # 2025-26 season
 MATCHDAY_TOTAL = 34
 MATCHES_PER_GAMEDAY = 9  # 18 teams → 9 games per round
@@ -259,7 +262,40 @@ def fetch_next_round_sofascore() -> list[dict] | None:
     return None
 
 
+def load_ml_predictions() -> dict:
+    """Load ML predictions keyed by (home_csv, away_csv) if file exists and is current."""
+    if not ML_PREDS_PATH.exists():
+        return {}
+    try:
+        data = json.loads(ML_PREDS_PATH.read_text())
+        lookup = {}
+        for m in data.get("matches", []):
+            lookup[(m["home"], m["away"])] = m
+        print(f"  ML predictions loaded: GD{data.get('gameday')} ({len(lookup)} matches, "
+              f"generated {data.get('generated_at')})")
+        return lookup
+    except Exception as e:
+        print(f"  ⚠️  Could not load ML predictions: {e}")
+        return {}
+
+
+def normalise_probs(ph, pd, pa):
+    """Normalise raw floats to integer percentages summing to 100."""
+    total = ph + pd + pa
+    if total == 0:
+        return 33, 34, 33
+    scaled = [ph / total, pd / total, pa / total]
+    ints = [round(v * 100) for v in scaled]
+    diff = 100 - sum(ints)
+    if diff != 0:
+        ints[ints.index(max(ints))] += diff
+    return ints[0], ints[1], ints[2]
+
+
 def build_next_matches(con) -> list:
+    # Load ML predictions (DC+XGBoost+Referee) — used for upcoming unfinished matches
+    ml = load_ml_predictions()
+
     # Try to get actual next-round fixtures from Sofascore
     sofascore_fixtures = fetch_next_round_sofascore()
 
@@ -271,7 +307,7 @@ def build_next_matches(con) -> list:
             home_score = fix.get("home_score")
             away_score = fix.get("away_score")
 
-            # For finished games, look up prediction from completed matches table
+            # Finished games: use completed predictions table (SPI baseline is fine here)
             if finished:
                 hist = con.execute("""
                     SELECT home_team, away_team, prob_home_win, prob_draw, prob_away_win, predicted_result
@@ -279,7 +315,6 @@ def build_next_matches(con) -> list:
                     WHERE season = ? AND home_team = ? AND away_team = ?
                     LIMIT 1
                 """, [CURRENT_SEASON, home, away]).fetchone()
-                # Fall back to future predictions if not yet in completed table
                 if not hist:
                     hist = con.execute("""
                         SELECT home_team, away_team, prob_home_win, prob_draw, prob_away_win, predicted_result
@@ -288,52 +323,50 @@ def build_next_matches(con) -> list:
                         LIMIT 1
                     """, [CURRENT_SEASON, home, away]).fetchone()
                 if hist:
-                    raw = [hist[2], hist[3], hist[4]]
-                    total = sum(raw)
-                    scaled = [v / total for v in raw] if total > 0 else [1/3, 1/3, 1/3]
-                    ints = [round(v * 100) for v in scaled]
-                    diff = 100 - sum(ints)
-                    if diff != 0:
-                        ints[ints.index(max(ints))] += diff
+                    ph, pd_, pa = normalise_probs(hist[2], hist[3], hist[4])
                     rows.append({
                         "home_team": DB_TO_DISPLAY.get(hist[0], hist[0]),
                         "away_team": DB_TO_DISPLAY.get(hist[1], hist[1]),
                         "match_date": None,
-                        "prob_home": ints[0],
-                        "prob_draw": ints[1],
-                        "prob_away": ints[2],
+                        "prob_home": ph, "prob_draw": pd_, "prob_away": pa,
                         "predicted_result": hist[5],
                         "finished": True,
-                        "home_score": home_score,
-                        "away_score": away_score,
+                        "home_score": home_score, "away_score": away_score,
                     })
                 else:
                     rows.append({
                         "home_team": DB_TO_DISPLAY.get(home, home),
                         "away_team": DB_TO_DISPLAY.get(away, away),
                         "match_date": None,
-                        "prob_home": 33,
-                        "prob_draw": 34,
-                        "prob_away": 33,
+                        "prob_home": 33, "prob_draw": 34, "prob_away": 33,
                         "predicted_result": "D",
                         "finished": True,
-                        "home_score": home_score,
-                        "away_score": away_score,
+                        "home_score": home_score, "away_score": away_score,
                     })
                 continue
 
+            # Upcoming match: prefer ML predictions (DC+XGB+Referee) over SPI
+            ml_match = ml.get((home, away))
+            if ml_match:
+                ph, pd_, pa = normalise_probs(
+                    ml_match["prob_home"], ml_match["prob_draw"], ml_match["prob_away"]
+                )
+                rows.append({
+                    "home_team": DB_TO_DISPLAY.get(home, home),
+                    "away_team": DB_TO_DISPLAY.get(away, away),
+                    "match_date": None,
+                    "prob_home": ph, "prob_draw": pd_, "prob_away": pa,
+                    "predicted_result": ml_match["predicted"],
+                    "finished": False,
+                    "home_score": None, "away_score": None,
+                })
+                continue
+
+            # Fallback to SPI/dbt predictions
             row = con.execute("""
-                SELECT
-                    home_team,
-                    away_team,
-                    prob_home_win,
-                    prob_draw,
-                    prob_away_win,
-                    predicted_result
+                SELECT home_team, away_team, prob_home_win, prob_draw, prob_away_win, predicted_result
                 FROM main_marts.match_predictions_future
-                WHERE season = ?
-                  AND home_team = ?
-                  AND away_team = ?
+                WHERE season = ? AND home_team = ? AND away_team = ?
                 LIMIT 1
             """, [CURRENT_SEASON, home, away]).fetchone()
 
@@ -342,49 +375,29 @@ def build_next_matches(con) -> list:
                     "home_team": DB_TO_DISPLAY.get(home, home),
                     "away_team": DB_TO_DISPLAY.get(away, away),
                     "match_date": None,
-                    "prob_home": 33,
-                    "prob_draw": 34,
-                    "prob_away": 33,
+                    "prob_home": 33, "prob_draw": 34, "prob_away": 33,
                     "predicted_result": "D",
                     "finished": False,
-                    "home_score": None,
-                    "away_score": None,
+                    "home_score": None, "away_score": None,
                 })
                 continue
 
-            raw = [row[2], row[3], row[4]]
-            total = sum(raw)
-            scaled = [v / total for v in raw] if total > 0 else [1/3, 1/3, 1/3]
-            ints = [round(v * 100) for v in scaled]
-            diff = 100 - sum(ints)
-            if diff != 0:
-                ints[ints.index(max(ints))] += diff
-
+            ph, pd_, pa = normalise_probs(row[2], row[3], row[4])
             rows.append({
                 "home_team": DB_TO_DISPLAY.get(row[0], row[0]),
                 "away_team": DB_TO_DISPLAY.get(row[1], row[1]),
                 "match_date": None,
-                "prob_home": ints[0],
-                "prob_draw": ints[1],
-                "prob_away": ints[2],
+                "prob_home": ph, "prob_draw": pd_, "prob_away": pa,
                 "predicted_result": row[5],
                 "finished": False,
-                "home_score": None,
-                "away_score": None,
+                "home_score": None, "away_score": None,
             })
         return rows
 
-    # Fallback: first 9 NS fixtures from DB (dates are NULL so ordering is arbitrary)
+    # Fallback: first 9 NS fixtures from DB
     print("  ⚠️  Sofascore unavailable, falling back to DB fixture order")
     df = con.execute("""
-        SELECT
-            home_team,
-            away_team,
-            match_date,
-            prob_home_win,
-            prob_draw,
-            prob_away_win,
-            predicted_result
+        SELECT home_team, away_team, match_date, prob_home_win, prob_draw, prob_away_win, predicted_result
         FROM main_marts.match_predictions_future
         WHERE season = ?
         ORDER BY home_team
@@ -393,25 +406,25 @@ def build_next_matches(con) -> list:
 
     rows = []
     for _, r in df.iterrows():
-        raw = [r["prob_home_win"], r["prob_draw"], r["prob_away_win"]]
-        total = sum(raw)
-        scaled = [v / total for v in raw] if total > 0 else [1/3, 1/3, 1/3]
-        ints = [round(v * 100) for v in scaled]
-        diff = 100 - sum(ints)
-        if diff != 0:
-            ints[ints.index(max(ints))] += diff
+        home, away = r["home_team"], r["away_team"]
+        ml_match = ml.get((home, away))
+        if ml_match:
+            ph, pd_, pa = normalise_probs(
+                ml_match["prob_home"], ml_match["prob_draw"], ml_match["prob_away"]
+            )
+            predicted = ml_match["predicted"]
+        else:
+            ph, pd_, pa = normalise_probs(r["prob_home_win"], r["prob_draw"], r["prob_away_win"])
+            predicted = r["predicted_result"]
 
         match_date_val = r["match_date"]
         date_str = None if pd.isna(match_date_val) else pd.Timestamp(match_date_val).strftime("%Y-%m-%d")
-
         rows.append({
-            "home_team": DB_TO_DISPLAY.get(r["home_team"], r["home_team"]),
-            "away_team": DB_TO_DISPLAY.get(r["away_team"], r["away_team"]),
+            "home_team": DB_TO_DISPLAY.get(home, home),
+            "away_team": DB_TO_DISPLAY.get(away, away),
             "match_date": date_str,
-            "prob_home": ints[0],
-            "prob_draw": ints[1],
-            "prob_away": ints[2],
-            "predicted_result": r["predicted_result"],
+            "prob_home": ph, "prob_draw": pd_, "prob_away": pa,
+            "predicted_result": predicted,
         })
 
     return rows

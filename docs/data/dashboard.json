@@ -1,12 +1,12 @@
 {
   "meta": {
-    "updated_at": "2026-04-12",
-    "matchday_current": 28,
+    "updated_at": "2026-04-15",
+    "matchday_current": 29,
     "matchday_total": 34,
-    "matches_remaining_total": 54
+    "matches_remaining_total": 45
   },
   "accuracy": {
-    "overall_pct": 46.4,
+    "overall_pct": 47.1,
     "rolling_4week_pct": 41.7,
     "best_week_pct": 77.8,
     "weekly": [
@@ -149,6 +149,11 @@
         "week_label": "GD 28",
         "weekly_pct": 0.0,
         "rolling_pct": 41.7
+      },
+      {
+        "week_label": "GD 29",
+        "weekly_pct": 66.7,
+        "rolling_pct": 41.7
       }
     ]
   },
@@ -156,8 +161,8 @@
     {
       "rank": 1,
       "team": "Galatasaray",
-      "current_pts": 67,
-      "expected_pts": 77.1,
+      "current_pts": 68,
+      "expected_pts": 77.6,
       "likely_position": 1,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
@@ -165,261 +170,261 @@
     {
       "rank": 2,
       "team": "Fenerbahçe",
-      "current_pts": 63,
-      "expected_pts": 71.3,
-      "likely_position": 3,
+      "current_pts": 66,
+      "expected_pts": 74.5,
+      "likely_position": 2,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
     },
     {
       "rank": 3,
       "team": "Trabzonspor",
-      "current_pts": 63,
-      "expected_pts": 73.2,
-      "likely_position": 2,
+      "current_pts": 64,
+      "expected_pts": 73.0,
+      "likely_position": 3,
       "top4_pct": 100.0,
       "relegation_pct": 0.0
     },
     {
       "rank": 4,
       "team": "Beşiktaş",
-      "current_pts": 52,
-      "expected_pts": 62.3,
+      "current_pts": 55,
+      "expected_pts": 61.8,
       "likely_position": 4,
-      "top4_pct": 95.7,
+      "top4_pct": 98.3,
       "relegation_pct": 0.0
     },
     {
       "rank": 5,
-      "team": "Göztepe",
-      "current_pts": 46,
-      "expected_pts": 53.6,
-      "likely_position": 5,
-      "top4_pct": 2.9,
+      "team": "Başakşehir",
+      "current_pts": 47,
+      "expected_pts": 53.3,
+      "likely_position": 6,
+      "top4_pct": 0.8,
       "relegation_pct": 0.0
     },
     {
       "rank": 6,
-      "team": "Başakşehir",
-      "current_pts": 44,
-      "expected_pts": 52.3,
-      "likely_position": 6,
-      "top4_pct": 1.4,
+      "team": "Göztepe",
+      "current_pts": 47,
+      "expected_pts": 53.3,
+      "likely_position": 5,
+      "top4_pct": 0.8,
       "relegation_pct": 0.0
     },
     {
       "rank": 7,
       "team": "Samsunspor",
-      "current_pts": 36,
-      "expected_pts": 43.5,
+      "current_pts": 39,
+      "expected_pts": 44.2,
       "likely_position": 7,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
     },
     {
       "rank": 8,
-      "team": "Kocaelispor",
-      "current_pts": 34,
-      "expected_pts": 39.9,
-      "likely_position": 11,
+      "team": "Rizespor",
+      "current_pts": 36,
+      "expected_pts": 43.4,
+      "likely_position": 8,
       "top4_pct": 0.0,
-      "relegation_pct": 0.1
+      "relegation_pct": 0.0
     },
     {
       "rank": 9,
-      "team": "Gaziantep",
-      "current_pts": 34,
-      "expected_pts": 41.3,
-      "likely_position": 9,
+      "team": "Kocaelispor",
+      "current_pts": 35,
+      "expected_pts": 40.5,
+      "likely_position": 11,
       "top4_pct": 0.0,
       "relegation_pct": 0.0
     },
     {
       "rank": 10,
-      "team": "Rizespor",
-      "current_pts": 33,
-      "expected_pts": 42.0,
-      "likely_position": 8,
+      "team": "Konyaspor",
+      "current_pts": 34,
+      "expected_pts": 40.1,
+      "likely_position": 12,
       "top4_pct": 0.0,
-      "relegation_pct": 0.1
+      "relegation_pct": 0.0
     },
     {
       "rank": 11,
-      "team": "Alanyaspor",
-      "current_pts": 32,
-      "expected_pts": 40.9,
-      "likely_position": 9,
+      "team": "Gaziantep",
+      "current_pts": 34,
+      "expected_pts": 41.5,
+      "likely_position": 10,
       "top4_pct": 0.0,
-      "relegation_pct": 0.2
+      "relegation_pct": 0.0
     },
     {
       "rank": 12,
-      "team": "Konyaspor",
-      "current_pts": 31,
-      "expected_pts": 39.4,
-      "likely_position": 12,
+      "team": "Alanyaspor",
+      "current_pts": 33,
+      "expected_pts": 40.8,
+      "likely_position": 11,
       "top4_pct": 0.0,
-      "relegation_pct": 0.6
+      "relegation_pct": 0.0
     },
     {
       "rank": 13,
-      "team": "Antalyaspor",
+      "team": "Kasımpaşa",
       "current_pts": 28,
-      "expected_pts": 34.2,
-      "likely_position": 14,
+      "expected_pts": 34.8,
+      "likely_position": 13,
       "top4_pct": 0.0,
-      "relegation_pct": 16.5
+      "relegation_pct": 4.7
     },
     {
       "rank": 14,
-      "team": "Kasımpaşa",
-      "current_pts": 27,
-      "expected_pts": 34.5,
-      "likely_position": 13,
+      "team": "Antalyaspor",
+      "current_pts": 28,
+      "expected_pts": 34.3,
+      "likely_position": 14,
       "top4_pct": 0.0,
-      "relegation_pct": 16.9
+      "relegation_pct": 5.4
     },
     {
       "rank": 15,
       "team": "Gençlerbirliği",
       "current_pts": 25,
-      "expected_pts": 31.8,
+      "expected_pts": 29.7,
       "likely_position": 15,
       "top4_pct": 0.0,
-      "relegation_pct": 37.8
+      "relegation_pct": 47.2
     },
     {
       "rank": 16,
       "team": "Kayserispor",
       "current_pts": 23,
-      "expected_pts": 30.3,
+      "expected_pts": 28.4,
       "likely_position": 16,
       "top4_pct": 0.0,
-      "relegation_pct": 62.9
+      "relegation_pct": 72.2
     },
     {
       "rank": 17,
       "team": "Eyüpspor",
       "current_pts": 22,
-      "expected_pts": 29.1,
+      "expected_pts": 26.9,
       "likely_position": 18,
       "top4_pct": 0.0,
-      "relegation_pct": 78.2
+      "relegation_pct": 87.8
     },
     {
       "rank": 18,
       "team": "Karagümrük",
       "current_pts": 20,
-      "expected_pts": 27.9,
+      "expected_pts": 27.2,
       "likely_position": 18,
       "top4_pct": 0.0,
-      "relegation_pct": 86.6
+      "relegation_pct": 82.7
     }
   ],
   "next_matches": [
     {
-      "home_team": "Beşiktaş",
-      "away_team": "Antalyaspor",
+      "home_team": "Antalyaspor",
+      "away_team": "Konyaspor",
       "match_date": null,
-      "prob_home": 60,
-      "prob_draw": 27,
-      "prob_away": 13,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 4,
-      "away_score": 2
-    },
-    {
-      "home_team": "Başakşehir",
-      "away_team": "Gençlerbirliği",
-      "match_date": null,
-      "prob_home": 46,
-      "prob_draw": 31,
-      "prob_away": 23,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 3,
-      "away_score": 0
-    },
-    {
-      "home_team": "Alanyaspor",
-      "away_team": "Trabzonspor",
-      "match_date": null,
-      "prob_home": 27,
-      "prob_draw": 31,
-      "prob_away": 42,
-      "predicted_result": "A",
-      "finished": true,
-      "home_score": 1,
-      "away_score": 1
-    },
-    {
-      "home_team": "Kayserispor",
-      "away_team": "Fenerbahçe",
-      "match_date": null,
-      "prob_home": 30,
-      "prob_draw": 33,
-      "prob_away": 37,
-      "predicted_result": "A",
-      "finished": true,
-      "home_score": 0,
-      "away_score": 4
-    },
-    {
-      "home_team": "Konyaspor",
-      "away_team": "Karagümrük",
-      "match_date": null,
-      "prob_home": 41,
-      "prob_draw": 33,
-      "prob_away": 26,
-      "predicted_result": "H",
-      "finished": true,
-      "home_score": 3,
-      "away_score": 0
-    },
-    {
-      "home_team": "Göztepe",
-      "away_team": "Kasımpaşa",
-      "match_date": null,
-      "prob_home": 33,
-      "prob_draw": 37,
-      "prob_away": 30,
-      "predicted_result": "D",
-      "finished": true,
-      "home_score": 1,
-      "away_score": 2
-    },
-    {
-      "home_team": "Galatasaray",
-      "away_team": "Kocaelispor",
-      "match_date": null,
-      "prob_home": 59,
-      "prob_draw": 27,
-      "prob_away": 14,
+      "prob_home": 36,
+      "prob_draw": 28,
+      "prob_away": 36,
       "predicted_result": "H",
       "finished": false,
       "home_score": null,
       "away_score": null
     },
     {
-      "home_team": "Eyüpspor",
-      "away_team": "Samsunspor",
+      "home_team": "Fenerbahçe",
+      "away_team": "Rizespor",
+      "match_date": null,
+      "prob_home": 77,
+      "prob_draw": 15,
+      "prob_away": 8,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Karagümrük",
+      "away_team": "Eyüpspor",
+      "match_date": null,
+      "prob_home": 42,
+      "prob_draw": 26,
+      "prob_away": 32,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Kocaelispor",
+      "away_team": "Göztepe",
       "match_date": null,
       "prob_home": 31,
-      "prob_draw": 34,
-      "prob_away": 35,
+      "prob_draw": 33,
+      "prob_away": 36,
       "predicted_result": "A",
       "finished": false,
       "home_score": null,
       "away_score": null
     },
     {
-      "home_team": "Rizespor",
-      "away_team": "Gaziantep",
+      "home_team": "Gençlerbirliği",
+      "away_team": "Galatasaray",
       "match_date": null,
-      "prob_home": 46,
-      "prob_draw": 31,
-      "prob_away": 23,
+      "prob_home": 8,
+      "prob_draw": 16,
+      "prob_away": 76,
+      "predicted_result": "A",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Kasımpaşa",
+      "away_team": "Alanyaspor",
+      "match_date": null,
+      "prob_home": 38,
+      "prob_draw": 30,
+      "prob_away": 32,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Samsunspor",
+      "away_team": "Beşiktaş",
+      "match_date": null,
+      "prob_home": 26,
+      "prob_draw": 27,
+      "prob_away": 47,
+      "predicted_result": "A",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Trabzonspor",
+      "away_team": "Başakşehir",
+      "match_date": null,
+      "prob_home": 48,
+      "prob_draw": 28,
+      "prob_away": 24,
+      "predicted_result": "H",
+      "finished": false,
+      "home_score": null,
+      "away_score": null
+    },
+    {
+      "home_team": "Gaziantep",
+      "away_team": "Kayserispor",
+      "match_date": null,
+      "prob_home": 51,
+      "prob_draw": 28,
+      "prob_away": 21,
       "predicted_result": "H",
       "finished": false,
       "home_score": null,
@@ -3333,6 +3338,110 @@
           "prob_draw": 36,
           "prob_away": 32,
           "predicted_result": "D",
+          "finished": true,
+          "home_score": 2,
+          "away_score": 1
+        }
+      ]
+    },
+    {
+      "matchday": 29,
+      "matches": [
+        {
+          "home_team": "Alanyaspor",
+          "away_team": "Trabzonspor",
+          "prob_home": 28,
+          "prob_draw": 32,
+          "prob_away": 40,
+          "predicted_result": "A",
+          "finished": true,
+          "home_score": 1,
+          "away_score": 1
+        },
+        {
+          "home_team": "Beşiktaş",
+          "away_team": "Antalyaspor",
+          "prob_home": 41,
+          "prob_draw": 33,
+          "prob_away": 26,
+          "predicted_result": "H",
+          "finished": true,
+          "home_score": 4,
+          "away_score": 2
+        },
+        {
+          "home_team": "Başakşehir",
+          "away_team": "Gençlerbirliği",
+          "prob_home": 46,
+          "prob_draw": 31,
+          "prob_away": 23,
+          "predicted_result": "H",
+          "finished": true,
+          "home_score": 3,
+          "away_score": 0
+        },
+        {
+          "home_team": "Eyüpspor",
+          "away_team": "Samsunspor",
+          "prob_home": 30,
+          "prob_draw": 33,
+          "prob_away": 37,
+          "predicted_result": "A",
+          "finished": true,
+          "home_score": 1,
+          "away_score": 2
+        },
+        {
+          "home_team": "Galatasaray",
+          "away_team": "Kocaelispor",
+          "prob_home": 61,
+          "prob_draw": 27,
+          "prob_away": 12,
+          "predicted_result": "H",
+          "finished": true,
+          "home_score": 1,
+          "away_score": 1
+        },
+        {
+          "home_team": "Göztepe",
+          "away_team": "Kasımpaşa",
+          "prob_home": 33,
+          "prob_draw": 37,
+          "prob_away": 30,
+          "predicted_result": "D",
+          "finished": true,
+          "home_score": 3,
+          "away_score": 3
+        },
+        {
+          "home_team": "Kayserispor",
+          "away_team": "Fenerbahçe",
+          "prob_home": 23,
+          "prob_draw": 29,
+          "prob_away": 48,
+          "predicted_result": "A",
+          "finished": true,
+          "home_score": 0,
+          "away_score": 4
+        },
+        {
+          "home_team": "Konyaspor",
+          "away_team": "Karagümrük",
+          "prob_home": 33,
+          "prob_draw": 37,
+          "prob_away": 30,
+          "predicted_result": "D",
+          "finished": true,
+          "home_score": 3,
+          "away_score": 0
+        },
+        {
+          "home_team": "Rizespor",
+          "away_team": "Gaziantep",
+          "prob_home": 46,
+          "prob_draw": 31,
+          "prob_away": 23,
+          "predicted_result": "H",
           "finished": true,
           "home_score": 2,
           "away_score": 1

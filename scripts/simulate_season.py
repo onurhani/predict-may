@@ -2,12 +2,15 @@
 Monte Carlo simulation for final league standings
 Runs 10,000 simulations of remaining matches to project May standings
 """
+import json
+import pathlib
 import duckdb
 import numpy as np
 import pandas as pd
 from collections import defaultdict
 
 DB_PATH = "data/football.duckdb"
+ML_PREDS_PATH = pathlib.Path("scripts/ml_predictions.json")
 N_SIMULATIONS = 10000
 CURRENT_SEASON = 2025  # 2025-26 season
 
@@ -22,6 +25,22 @@ def get_current_standings(con):
     GROUP BY team
     """
     return con.execute(query, [CURRENT_SEASON]).fetchdf().set_index('team')['current_points'].to_dict()
+
+def load_ml_overrides() -> dict:
+    """Load ML predictions as {(home, away): (ph, pd, pa)} for the current gameday."""
+    if not ML_PREDS_PATH.exists():
+        return {}
+    try:
+        data = json.loads(ML_PREDS_PATH.read_text())
+        overrides = {}
+        for m in data.get("matches", []):
+            overrides[(m["home"], m["away"])] = (m["prob_home"], m["prob_draw"], m["prob_away"])
+        print(f"   ML overrides loaded: GD{data.get('gameday')} — {len(overrides)} matches will use DC+XGB probs")
+        return overrides
+    except Exception as e:
+        print(f"   ⚠️  Could not load ML overrides: {e}")
+        return {}
+
 
 def get_future_match_probabilities(con):
     """Get predictions for all remaining matches"""
@@ -143,6 +162,21 @@ def main():
     print("📅 Loading future match predictions...")
     future_matches = get_future_match_probabilities(con)
     print(f"   {len(future_matches)} matches remaining")
+
+    # Override current gameday with ML (DC+XGB+Referee) probabilities
+    ml_overrides = load_ml_overrides()
+    if ml_overrides:
+        overridden = 0
+        for idx, row in future_matches.iterrows():
+            key = (row["home_team"], row["away_team"])
+            if key in ml_overrides:
+                ph, pd_, pa = ml_overrides[key]
+                future_matches.at[idx, "prob_home_win"] = ph
+                future_matches.at[idx, "prob_draw"]     = pd_
+                future_matches.at[idx, "prob_away_win"] = pa
+                overridden += 1
+        if overridden:
+            print(f"   ✓ {overridden} matches updated with ML probabilities")
     
     con.close()
     
