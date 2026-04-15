@@ -15,8 +15,12 @@
 #   4. Run ML prediction pipeline  (DC + XGBoost + Referee bias → ml_predictions.json + Obsidian MD)
 #   5. Monte Carlo season sim      (10k runs, using ML probs for this week → season_projections)
 #   6. Export dashboard            (combines everything → docs/data/dashboard.json)
-#   7. Git commit + push           (publishes to GitHub Pages)
+#   7. Push predict-may repo       (keeps source repo in sync)
+#   8. Sync + push onurhani.github.io (publishes live to onurhani.github.io/predict-may/)
 # ─────────────────────────────────────────────────────────────────────────────
+
+# Path to the GitHub Pages repo that serves the live dashboard
+PAGES_REPO="$(cd "$(dirname "$0")/../onurhani.github.io" 2>/dev/null && pwd || true)"
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -74,28 +78,54 @@ echo "▶  [6/6] Exporting dashboard JSON..."
 python scripts/export_dashboard.py
 echo ""
 
-# ─── Step 7: Git commit + push ───────────────────────────────────────────────
-if [ "$PUSH" = true ]; then
-    echo "▶  Publishing dashboard to GitHub Pages..."
-    GAMEDAY=$(python -c "
+# Detect gameday from ml_predictions.json
+GAMEDAY=$(python -c "
 import json, pathlib
 p = pathlib.Path('scripts/ml_predictions.json')
 print(json.loads(p.read_text())['gameday'] if p.exists() else '??')
 ")
+
+# ─── Step 7: Push predict-may repo ───────────────────────────────────────────
+if [ "$PUSH" = true ]; then
+    echo "▶  [7/8] Pushing predict-may repo..."
     git add docs/data/dashboard.json
     if git diff --cached --quiet; then
-        echo "   No changes to dashboard.json — nothing to push."
+        echo "   No changes to predict-may — skipping."
     else
         git commit -m "data: GD${GAMEDAY} predictions + standings update"
         git push
-        echo "   ✓ Dashboard published."
+        echo "   ✓ predict-may pushed."
     fi
 else
-    echo "   Skipping git push (--no-push)."
+    echo "▶  [7/8] Skipping predict-may push (--no-push)."
+fi
+echo ""
+
+# ─── Step 8: Sync + push onurhani.github.io (live dashboard) ─────────────────
+if [ "$PUSH" = true ]; then
+    echo "▶  [8/8] Publishing live dashboard → onurhani.github.io/predict-may/..."
+    if [ -z "$PAGES_REPO" ] || [ ! -d "$PAGES_REPO" ]; then
+        echo "   ⚠️  onurhani.github.io repo not found at ../onurhani.github.io — skipping."
+        echo "   Clone it next to this repo: git clone https://github.com/onurhani/onurhani.github.io.git ../onurhani.github.io"
+    else
+        cp docs/data/dashboard.json "$PAGES_REPO/predict-may/dashboard.json"
+        (
+            cd "$PAGES_REPO"
+            git add predict-may/dashboard.json
+            if git diff --cached --quiet; then
+                echo "   No changes — live dashboard already up to date."
+            else
+                git commit -m "data: GD${GAMEDAY} predictions + standings update"
+                git push
+                echo "   ✓ Live dashboard published → onurhani.github.io/predict-may/"
+            fi
+        )
+    fi
+else
+    echo "▶  [8/8] Skipping live publish (--no-push)."
     echo "   To publish manually:"
-    echo "     git add docs/data/dashboard.json"
-    echo "     git commit -m 'data: matchday update'"
-    echo "     git push"
+    echo "     cp docs/data/dashboard.json ../onurhani.github.io/predict-may/dashboard.json"
+    echo "     cd ../onurhani.github.io && git add predict-may/dashboard.json && git commit -m 'data: GD${GAMEDAY} update' && git push"
 fi
 
 echo ""
